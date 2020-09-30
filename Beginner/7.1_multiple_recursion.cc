@@ -32,8 +32,8 @@ int notViolating(int board[SIZE][SIZE], int i, int j, int k){
     
     // The below two lines make sure that we reach TOP LEFT Corner of each square box.
 
-    t = i/2 *2 ;
-    l = j/2 *2 ;
+    t = i/sqrt(SIZE) *sqrt(SIZE) ;
+    l = j/sqrt(SIZE) *sqrt(SIZE) ;
     
 
     if (board[t][l] == k) return 0; 
