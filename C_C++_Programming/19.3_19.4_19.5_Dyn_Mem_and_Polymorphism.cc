@@ -89,22 +89,25 @@ void Vector::print(){
 }
 
 int main(){
+   
+/*
+The new operator is an operator which denotes a request for memory allocation on the Heap. 
+If sufficient memory is available, new operator initializes the memory and returns the address of the newly allocated and
+initialized memory to the pointer variable. When you create an object of class using new keyword(normal new).
 
-/*  
-    // new is a KEYWORD
+- The memory for the object is allocated using operator new from heap.
+- The constructor of the class is invoked to properly initialize this memory.
 
+    // Allocating the Memory using `new`
     Vector *v = new Vector(); 
     Vector *v2 = new Vector(3,6);
-
-    // set is used for Memory Allocation. We need not specify size.
     
     v->set(10,20);
     v->print();
     v-> print(2);
-
     v2->print();
 
-    // Freeing the Memory using delete
+    // Freeing the Memory using `delete`
     delete v ;
     delete v2;
 

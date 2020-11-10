@@ -28,6 +28,22 @@ int main(int argc , char * argv[]){
 }
 
 /*
+
+NOTE :
+
+When ever we are dealing with Header files in Cpp in VS CODE & g++ Compiler, We may encounter :-
+
+`Undefined reference`  means that whilst the compiler understands how the function should work 
+(which means it understands the name of the function, the input types and the return type), the linker cannot find the actual
+compiled code that actually does the work.
+
+So, it's always advisable to compile in this way `g++ main.cc header_file.cc`
+
+Here : In this Example : - `g++ bmp.cc image.cc` 
+This will create `a.exe`. Now run this Executable.
+
+
+
 STEPS TO RUN  THE PACKAGE (image):- 
 
 `gcc -c image.cc` just makes it Compile
