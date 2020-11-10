@@ -1,10 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "image.h"
+#include "image.h"   // This is very Important 
 
-// <---> Notation searches in the place where all the Libraries are present
+/*
+<name_of_header.h> Notation searches in the place where all the Libraries are present
+To tell Compiler to search for the header in the same directory, We use "name_of_header.h" notation.
 
+Since we had a Corresponding Header File for this image.cc file,
+In this file We just have Function Definitions whose declarations are already present in image.h file.  
+*/
 
 struct Image readImage(FILE *fp, int height, int width){
     int i ;
@@ -142,6 +147,5 @@ struct BMP* readBMP(char *filename){
 
 /*
 Be careful about Padding done by C to make number of bytes as Multiple of 4.
-
 */
   

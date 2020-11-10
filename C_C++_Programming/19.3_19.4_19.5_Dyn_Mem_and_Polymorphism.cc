@@ -1,29 +1,42 @@
 #include <stdio.h>
 
 class Vector{
+
 private:
     int x;
     int y;
 
 public:
+    // We can define numerous Constructors for a Same Class.
+
     Vector();
-    Vector(int c, int d); // Even for Constructors, we can do Overloading
+    Vector(int c, int d); // Even for Constructors, we can do Function Overloading, i.e. Same Name with different Arguments.
+
     void set(int x1, int y1){x = x1 ; y = y1;}
     int squarenorm();
     void print(); 
-    void print(int z); // Function Overloading (Type of Polymorphism)
-    // Ploymorphism means Multiple Things having the Same Name
+    void print(int z); // Function Overloading (Type of Polymorphism. Polymorphism means, Multiple Objects having the Same Name)
     
     Vector add(Vector v);
 
-    // Operator Overloading
+    // Operator Overloading 
     Vector operator + (Vector v);
     int operator * (Vector v);
-    
     Vector operator ++ ();
-
     void operator ++ (int);
 };
+
+
+Vector :: Vector ()
+{
+     x =0;y=0;
+}
+
+
+Vector :: Vector (int c , int d)
+{
+     x = c ; y=d;
+}
 
 
 // We can even Return Vectors if required
@@ -39,7 +52,7 @@ void Vector::operator ++(int){
     y++;
 }
 
-
+// Dot Product of Two Vectors
 int Vector:: operator * (Vector v){
     return (x*v.x + y*v.y);
 }
@@ -75,35 +88,27 @@ void Vector::print(){
     printf("\nNorm = %d",nm);
 }
 
-Vector :: Vector ()
-{
-     x =0;y=0;
-}
-
-
-Vector :: Vector (int c , int d)
-{
-     x = c ; y=d;
-}
-
-
-
-
 int main(){
 
-    // Vector *v = new Vector(); // new is a KEYWORD
-    // Vector *v2 = new Vector(3,6);
+/*  
+    // new is a KEYWORD
 
-    // // set is used for Memory Allocation. We need not specify size.
-    // v->set(10,20);
-    // v->print();
-    // v-> print(2);
+    Vector *v = new Vector(); 
+    Vector *v2 = new Vector(3,6);
 
-    // v2->print();
+    // set is used for Memory Allocation. We need not specify size.
+    
+    v->set(10,20);
+    v->print();
+    v-> print(2);
 
-    // // Freeing the Memory using delete
-    // delete v ;
-    // delete v2;
+    v2->print();
+
+    // Freeing the Memory using delete
+    delete v ;
+    delete v2;
+
+*/    
 
     Vector u(3,5);
     Vector z(0,5);

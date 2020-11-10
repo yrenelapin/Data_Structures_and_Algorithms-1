@@ -1,7 +1,11 @@
+/*
+In this file, We are testing our image Package (image.cc, image.h)
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "image.h"
+#include "image.h"   // This is very Important 
 
 int main(int argc , char * argv[]){
     if (argc < 2 ) {
@@ -29,11 +33,9 @@ STEPS TO RUN  THE PACKAGE (image):-
 `gcc -c image.cc` just makes it Compile
 `ls im*` to see the Output file
 `gcc bmp.cc image.o`
-`./a.out pic.bmp`
+`a.exe pic.bmp`
 
-
+To use custom Package like Inbuilt ones :-
 Put image.o in to the Library folder and then image.h in the headers folder. Put the image header in your code and use it.
-
-From now always use this Package Mode for solving !!
 */
 
