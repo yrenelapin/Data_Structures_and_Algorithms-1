@@ -53,7 +53,7 @@ struct BMP {
 };
 
 /* 
- Declaring the Functions whose defintions are present in image.cc file.
+ Declaring the Functions whose definitions are present in image.cc file.
 */
 struct Image readImage(FILE *fp, int height, int width);
 void freeImage(struct Image pic);

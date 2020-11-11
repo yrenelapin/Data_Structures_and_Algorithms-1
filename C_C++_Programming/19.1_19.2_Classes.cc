@@ -59,8 +59,9 @@ just keeping the names and types in the class and then copy the entire Class to 
 
 int main(){
 
+    // Different ways of instantiating an object of a class
     class Student std;
-    class Student std2;
+    Student std2;
     
     std.scan();    
     std.print();

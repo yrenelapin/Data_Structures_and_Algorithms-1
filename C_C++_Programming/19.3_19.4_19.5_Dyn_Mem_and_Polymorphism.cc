@@ -98,8 +98,8 @@ initialized memory to the pointer variable. When you create an object of class u
 - The memory for the object is allocated using operator new from heap.
 - The constructor of the class is invoked to properly initialize this memory.
 
-    // Allocating the Memory using `new`
-    Vector *v = new Vector(); 
+    // Allocating the Memory using `new` i.e. DYNAMIC MEMORY ALLOCATION.
+    Vector *v = new Vector();  
     Vector *v2 = new Vector(3,6);
     
     v->set(10,20);
@@ -113,7 +113,7 @@ initialized memory to the pointer variable. When you create an object of class u
 
 */    
 
-    Vector u(3,5);
+    Vector u(3,5);  // Static Memory Allocation
     Vector z(0,5);
     Vector v = u.add(z);
     v.print();
