@@ -1,48 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-
-class Node{
-private:
-    int elem;
-    class Node* next;  // Pointer to the Next Node
-
-public:
-    // Defining multiple constructors of the same Class.
-    Node(int x, class Node* nxt){elem = x; next = nxt;}
-    Node(int x){elem = x; next = NULL;}
-    Node(){next = NULL;}
-
-// It gives access of its Private Members to "LinkedList" class only.
-friend class LinkedList;
-};
-
-class LinkedList{
-    class Node* head;  // "Node* head;" This is Equivalent  
-    int length;
-
-
-public:
-    LinkedList();
-    ~LinkedList();
-
-    // Operator Overloading
-    int operator [] (int indx);
-
-    void addFront(int x);
-    void removeFront();
-    void add(int x);
-    void remove();
-
-    int len();
-    bool search(int x);
-    int element(int indx);
-
-    int returnFront();
-    bool isEmpty();
-
-    void print();
-
-};
+#include "2.1_Linked_List.h"
 
 // It prints all the elements of the List
 void LinkedList::print(){
@@ -147,23 +105,23 @@ bool LinkedList::search (int x){
         return false ;    
 }
 
-int main(){
-    LinkedList ll;   // Equivalent to `class LinkedList ll;` 
-    ll.addFront(10);
-    ll.addFront(20);
-    ll.addFront(3);
+// int main(){
+//     LinkedList ll;   // Equivalent to `class LinkedList ll;` 
+//     ll.addFront(10);
+//     ll.addFront(20);
+//     ll.addFront(3);
 
-    ll.print();
+//     ll.print();
 
-    if (ll.search(20)){printf("\nYes ! %d  is there in the list",20);}
+//     if (ll.search(20)){printf("\nYes ! %d  is there in the list",20);}
     
-    // Getting ith Element
-    printf("\n%d \n",ll.element(1));
+//     // Getting ith Element
+//     printf("\n%d \n",ll.element(1));
 
-    // Better Notation using Operator Overloading
-    printf("%d \n",ll[1]);
+//     // Better Notation using Operator Overloading
+//     printf("%d \n",ll[1]);
 
-    ll.removeFront();
-    printf("%d",ll.element(1));
+//     ll.removeFront();
+//     printf("%d",ll.element(1));
 
-}
+// }
