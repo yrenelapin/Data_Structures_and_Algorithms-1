@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "4.3_Stacks.h"  // Need to make the Header 
+#include "4.3_Stacks.h" 
 
 
 int numberofsymb = 3;
@@ -9,7 +9,7 @@ char closesymb[] = ")]}" ;
 
 bool isOpenBracket(char ch){
     for (int i =0; i<numberofsymb; i++){
-        if (opensymb[i] == ch) return 1 ;
+        if (opensymb[i] == ch) return true ;
     }
     return false;
 }
@@ -43,4 +43,11 @@ bool ParenthesesMatch(char ar[], int len)
     if (stk.isEmpty()) return true;
     return false;
 
+}
+
+int main(){
+    char ar[] = "{[]}[]()";
+    int len = 8 ;
+    if (ParenthesesMatch(ar,len)) {printf("Parentheses Matched !") ;}
+    else printf("Parentheses did not match :(");
 }

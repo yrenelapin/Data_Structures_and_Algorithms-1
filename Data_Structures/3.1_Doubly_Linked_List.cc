@@ -12,12 +12,12 @@ Node:: Node(){prev= NULL; next = NULL;}
 
 int LinkedList::returnFront(){
     if (head == NULL) return ERROR ; 
-    return tail->elem;
+    return head->elem;
 }
 
 int LinkedList::returnBack(){
-    if (head == NULL) return ERROR ;
-    return head->elem;
+    if (tail == NULL) return ERROR ;
+    return tail->elem;
 }
 
 bool LinkedList::isEmpty(){
@@ -31,7 +31,7 @@ int LinkedList:: operator [] (int indx){
 
 
 int LinkedList::element(int indx){
-    if (indx > length) return ERROR ;
+    if (indx > length-1) return ERROR ;
 
     class Node* iter = head;
     while (iter != NULL){
@@ -89,7 +89,7 @@ void LinkedList::print(){
 
 void LinkedList::addFront(int x){
     if (head== NULL){ head = new Node(x,NULL,NULL);
-                     tail = head;
+                     tail = head; // Since only one element exists, Head & Tail points to same Node
     }
     else {
         head = new Node (x,NULL,head);
@@ -98,6 +98,7 @@ void LinkedList::addFront(int x){
     length++;
 }
 
+// In a Doubly Linked List, We can do in a Symmetric Manner.
 void LinkedList::addBack(int x){
     if (tail== NULL) { 
         tail = new Node(x,NULL,NULL);

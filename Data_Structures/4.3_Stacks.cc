@@ -1,16 +1,5 @@
 #include <stdio.h>
-#include "2.1_Linked_List.h"
-
-class Stack{
-private:
-    LinkedList lst;
-
-public:
-    Stack();
-    void push(int x);
-    int pop();
-    void print();
-};
+#include "4.3_Stacks.h"
 
 Stack::Stack(){}
 
@@ -29,21 +18,10 @@ void Stack::print(){
     lst.print();
 }
 
-int main(){
-    class Stack stk;
-    stk.push(10);
-    stk.push(20);
-    stk.print();
+bool Stack::isEmpty(){
+    return lst.isEmpty() ;
+}
 
-    printf("\n Popped: %d",stk.pop());
-    stk.print();
-
-    stk.push(30);
-    stk.print();
-
-    printf("\n Popped: %d",stk.pop());
-    stk.print();
-
-    printf("\n Popped: %d",stk.pop());
-    stk.print();
+int Stack::top(){
+    return lst[0];
 }
