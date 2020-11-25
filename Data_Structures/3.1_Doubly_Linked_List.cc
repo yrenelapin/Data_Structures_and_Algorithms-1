@@ -142,3 +142,26 @@ void LinkedList::removeBack(){
     length--;
 
 }
+
+int LinkedList::Insert(int x , int indx){
+  
+   if (indx > length) return ERROR ;
+
+    class Node* iter = head;
+    
+    while (iter != NULL){
+         if  (indx==0) {
+            Node* New_Node = new Node(x,iter->prev,iter);     
+            iter->prev->next = New_Node;
+            iter->prev = New_Node;
+            return 1;
+            }
+
+
+         iter = iter->next;
+         indx--;
+    }
+
+    return ERROR ;
+
+}

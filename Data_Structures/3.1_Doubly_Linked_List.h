@@ -45,4 +45,5 @@ public:
 
     void print();
 
+    int Insert(int x ,int indx); // Insert x at Index 'indx'
 };
