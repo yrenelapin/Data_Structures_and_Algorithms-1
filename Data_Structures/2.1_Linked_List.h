@@ -42,4 +42,6 @@ public:
 
     void print();
 
+    bool Check_Repetitions();
+
 };
