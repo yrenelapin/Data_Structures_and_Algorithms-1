@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "2.1_Linked_List.h"
+#include "3.1_Doubly_Linked_List.h"
 
 
 class Node{
@@ -13,7 +13,10 @@ public:
     Node(int el, Node* par, Node *child){
         elem = el;
         parent = par;
-        children = child;
+        printf("Enter the Number of Children for Node %d",el);
+        int no;
+        scanf("%d",&no);
+        children = (Node *)calloc(no,sizeof(Node));
     }
     Node(int el){
         elem = el;
@@ -26,17 +29,18 @@ friend class Tree;
 
 class Tree{
 public:
-    void insertChild(int val, int pos);
-    int numberOfChildren(Node* node);
-    bool isRoot();
-    bool isLeaf();
+    void CreateTree();
     void Relationship(int x, int y);
 };
 
-void Tree::insertChild(int val, int pos){
-
+void Tree::CreateTree(){
+    printf("Enter the Node")
     
 }
 
+int main(){
 
+    Tree t ;
+    t.CreateTree();
 
+}
