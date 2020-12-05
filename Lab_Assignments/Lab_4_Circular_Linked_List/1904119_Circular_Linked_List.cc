@@ -49,6 +49,7 @@ public:
 
 Circular_LinkedList::Circular_LinkedList(){
     start = NULL;
+    printf("Hello");
     length =0; }
 
 
