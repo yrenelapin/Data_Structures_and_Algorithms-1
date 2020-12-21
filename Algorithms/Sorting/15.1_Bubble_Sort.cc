@@ -32,7 +32,9 @@ void bubbleSort(int *arr, int n ){
             }
         }
 
-        if (flag == false) break;  // This is helpful in best case. That is Array is sorted in beginning itself. In this case O(n) is Time Complexity
+        if (flag == false) break;  
+        // This is helpful in best case. That is Array is sorted in beginning itself. In this case O(n) is Time Complexity.
+        // It also inturn shows the fact that, If there are no swaps in one of the `n` Passes, We can stop !!
     }
 }
 
