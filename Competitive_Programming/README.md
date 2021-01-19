@@ -1,2 +1,2 @@
 # Competitive Programming
-- This Folder contains codes in CPP 
+- This Folder contains CPP Codes  
