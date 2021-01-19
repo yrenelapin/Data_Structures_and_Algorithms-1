@@ -2,13 +2,15 @@
 
 This Repository contains various parts :
 
-**1. C & C++ Programming** : It has basics of C & OOP of C++
+**DSA_Course** : Contains codes related to our Institute Core Course CS220  
 
-**2. Data Structures** : It has Implementation of Various Data Structures like LinkedLists, Stacks,Queues
+  - C & C++ Programming : It has basics of C & OOP of C++
 
-**3. Lab Assignments** : Interesting Assignments assigned as a part of our institute course CS220.
+  - Data Structures : It has Implementation of Various Data Structures like LinkedLists, Stacks,Queues
 
-**4. Competitive Programming** : It has codes related to IB-HUBS Course
+  - Lab Assignments : Interesting Assignments assigned as a part of our institute course CS220.
 
-**5. Misc Scripts** : It has some simple & useful scripts
+**Competitive Programming** : It has codes related to IB-HUBS Competitive Programming Track
+
+**Misc Scripts** : It has some simple & useful C++ scripts
 
