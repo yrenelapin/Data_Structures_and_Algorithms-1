@@ -2,7 +2,7 @@
 
 This Repository contains various parts :
 
-**DSA_Course** : Contains codes related to our Institute Core Course CS220  
+**DSA_Course** : Contains codes related to a course offered in our college IIT Goa named `CS220`  
 
   - C & C++ Programming : It has basics of C & OOP of C++
 
