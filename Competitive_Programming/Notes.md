@@ -205,3 +205,14 @@ Traversing elements of `a` and checking its presence in `b`.
 
 
 Its always advisable to use `typedef long long int ll` or  `typedef unsigned long long int ull`in every question at every point except at `int main()`to avoid Overflow cases !! 
+
+We do the String to Integer and Viceversa Conversions as shown below : 
+- `int String2Integer =  stoi(StringName);` 
+- ` string s = to_string(Number)`;
+
+Sometimes TLE happens when we pass the arguments to functions as VALUES. Passing by Reference (Pointers) reduces the Time Complexity since it avoids Copying the entire data again
+
+
+Counting Sort :
+- We can use Counting Sort with Ordered_Map with any Input.But it will lead to O(nlogn)
+- To use Counting Sort in Linear Time [ O(n+k) ] for Negative Input also, We make the Input numbers `Positive` by adding a `Fixed Number` before sorting & subtracting it after sorting.
