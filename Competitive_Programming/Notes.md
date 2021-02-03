@@ -216,3 +216,18 @@ Sometimes TLE happens when we pass the arguments to functions as VALUES. Passing
 Counting Sort :
 - We can use Counting Sort with Ordered_Map with any Input.But it will lead to O(nlogn)
 - To use Counting Sort in Linear Time [ O(n+k) ] for Negative Input also, We make the Input numbers `Positive` by adding a `Fixed Number` before sorting & subtracting it after sorting.
+
+### We can directly find out the Maximum Element using `max_element` under `algorithm` Header
+`int max = *max_element(array, array + size)`
+
+### To pass the Vector as an array or a Pointer, We can use this :
+```
+vector<int> vec = { 10, 20, 30, 40, 50 };
+int* pos = vec.data();
+```
+
+Generate random numbers between a negative and positive value :
+The algorithm goes like this
+```
+min + rand() % ( max - min + 1 )
+```
