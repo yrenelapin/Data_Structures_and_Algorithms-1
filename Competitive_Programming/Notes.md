@@ -231,3 +231,41 @@ The algorithm goes like this
 ```
 min + rand() % ( max - min + 1 )
 ```
+
+Checking whether a given number is Palindrome or not 
+
+```
+#include <string>
+
+bool pal(int i){
+    string s = to_string(i);
+    return ( s == string(s.rbegin(), s.rend()));
+}
+```
+
+`rbegin()` -> Returns a reverse iterator pointing to the last element in the container.
+`rend()` -> Returns a reverse iterator pointing to the theoretical element preceding the first element in the container
+The range between `vector::rbegin` and `vector::rend` contains all the elements of the vector in REVERSE ORDER.
+
+
+## Rotate the vector using STL
+Types of Rotations :
+
+`void rotate(ForwardIterator first, ForwardIterator middle, ForwardIterator last)`
+
+first, last : Forward Iterators to the initial and final positions of the sequence to be rotated
+
+middle : Forward Iterator pointing to the element within the range [first, last] that is moved to the **first position in the range.**
+
+Left Rotation : To rotate left, we need to add the vector index. For example, you have to rotate vector left 3 times. The 3th index of vector becomes first element. `vec.begin() + 3` will rotate vector 3 times left.
+
+Right Rotation : To rotate right, we need to subtract the vector index. For example, you have to rotate vector right 3 times. The 3th last index of vector becomes first element.`vec.begin()+vec.size()-3` will rotate vector 3 times right.
+
+Example :
+```
+// Rotates/ Shifts the array to the right by `k` positions 
+rotate(b.begin(), b.begin() + b.size()-k, b.end());   
+
+// Rotates/ Shifts the array to the left by `k` positions 
+rotate(b.begin(), b.begin() + k, b.end());   
+```
