@@ -269,3 +269,73 @@ rotate(b.begin(), b.begin() + b.size()-k, b.end());
 // Rotates/ Shifts the array to the left by `k` positions 
 rotate(b.begin(), b.begin() + k, b.end());   
 ```
+
+When the Input is Unknown Number of  Space Separated Integers :-
+```
+vector<int> v;
+int temp;
+while (cin >> temp)
+    { v.push_back(temp);}
+```
+
+
+When using the maps/sets, Better to use the find function present in the corresponding header only
+Ex: 
+```
+
+map <int,int> m;
+
+m.find(data)->second   // This `find` comes from the corresponding `map` header only. This is better to use.
+
+find(m.begin(), m.end(),data) // This `find` comes from the `algorithm` header. Avoid using this.
+```
+
+Also to check presence of element & incrementing ( Keeping track of Frequency ) use the code similar to below one :
+
+```
+    map <int,int> m;
+    if ( m.count(data) == 0 ){
+        m.insert(make_pair(data, 1));
+    }
+    else{
+        // If the element is already present, Increment the count by 1.
+        (m.find(data)->second)++;
+    }
+``` 
+
+Also, To sort the map using its Values, We make use of extra Multimap & insert elements after swapping as shown below :
+```
+
+
+multimap<int, int, greater<int>> final_map;  // It contains descending order of elements based on keys
+
+// Iterating over our initial map m which has pairs of (element, count)
+    for (auto& it : m) { 
+        
+        // We make a map with pairs (count, element). Since it(final_map) is a
+        // Multimap with gerater<int> specified, It sorts the elements based on 
+        // the count in descending order
+
+    final_map.insert({ it.second, it.first }); 
+} 
+    
+```
+
+Its better practise to free up Dynamically alloted memory after every test case, when dealing with Multiple Test Cases.
+
+- In AVL Trees, During Rotation, We shift the SubTrees ! (Not just the Nodes)
+ 
+-  Though both AVL & Red-Black trees are balanced, when there are more insertions and deletions to make the tree balanced, AVL trees should have more rotations, it would be better to use red-black. but if more search is required AVL trees should be used.
+  
+-  We can use `memset` to fill the memory or Initialise a container,
+Ex : 
+```
+    int array[n][n];
+    memset(array, 0, sizeof(int)*n*n);
+```
+
+```
+string str;
+`scanf("%s", &str);` // Note that this wont work. C++ std::string wont work with SCANF.
+cin >> str             // This should be used.
+```
