@@ -339,3 +339,39 @@ string str;
 `scanf("%s", &str);` // Note that this wont work. C++ std::string wont work with SCANF.
 cin >> str             // This should be used.
 ```
+
+- Avoid Using `unsigned` unless required since it may introduce bugs that are hard to debug.
+  
+
+
+- Converting a `bitset` into Integer :
+```
+
+typedef long long int ll;
+bitset<64> a;
+...... 
+int integer = (ll)a.to_ulong() 
+
+```
+
+- Searching a string for a character :
+
+```
+#include <iostream> 
+#include <string> 
+  
+using namespace std; 
+  
+int main() 
+{ 
+    string str = "geeksforgeeks a computer science"; 
+    string str1 = "geeks"; 
+
+    // Find first occurrence of "geeks" 
+    auto itr = str.find(str1); 
+    if (itr != string::npos) 
+        cout << "First occurrence is " << itr << endl; 
+
+// IMPORTANT: If it is not found , `itr == string::npos`
+```
+- 
