@@ -374,4 +374,21 @@ int main()
 
 // IMPORTANT: If it is not found , `itr == string::npos`
 ```
-- 
+- Use vectors for 2D Data Structures too Ex : For a 2D Rectangle of size m*n, instead of using int a[m][n], use :
+
+```
+// Filling the grid with m rows of vectors of size n;
+vector<vector<int>> grid(m, vector<int>(n));
+
+for (int i = 0; i < m; i++)
+{
+    for (int j = 0; j < n; j++)
+        cin >> grid[i][j];
+}
+
+
+// So we can just pass the vector lonely to function & return.
+// We can get dimensions in this way.
+int m =  grid.size();
+int n =  grid[0].size(); 
+```
