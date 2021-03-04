@@ -392,3 +392,79 @@ for (int i = 0; i < m; i++)
 int m =  grid.size();
 int n =  grid[0].size(); 
 ```
+- Sometimes, Storing `strings` as `Vectors of characters` helps a lot to recursively iterate. 
+- Moreover, Sometimes, `Large numbers` are also stored as `Vectors of its each digits`.
+- Use `#include <bits/stdc++.h>` to include all the header files.
+  
+- NOTE :
+    In C++, all variables are declared with type. C++ forces you to specify the type explicitly, but doesn't force you to initialize the variable at all.
+    ```
+    long int a = 2;
+    long int b = 2L;
+    long int c; 
+    ```
+    This code above makes 3 variables of the same type long int.
+
+    ```
+    int a = 2;
+    int b = 2L;
+    int c;
+    ```
+    This code above makes 3 variables of the same type int.
+
+    The idea of type is roughly "the set of all values the variable can take".
+    It doesn't (and cannot) depend on the initial value of the variable - whether it's 2 or 2L or anything else.
+
+    So, if you have two variables of different type but same value
+
+    ```
+    int a = 2L;
+    long int b = 2;
+    ```
+    The difference between them is what they can do further in the code. For example:
+
+    ```
+    a += 2147483647; // most likely, overflow since Its of type `int`
+    b += 2147483647; // probably calculates correctly
+    ```
+
+    The type of the variable won't change from the point it's defined onwards.
+
+    Another example:
+
+    `int x = 2.5;`
+    Here the type of x is int, and it's initialized to 2. Even though the initializer has a different type, C++ regards the declaration type of x "more important".
+
+    BTW C++ has support for "type inference"; you can use it if you want the type of the initializer to be important:
+
+    ```
+    auto a = 2L; // "a" has type "long int"
+    auto b = 2; // "b" has type "int"
+    ``` 
+    ```
+    typedef long long ll;
+    ll K;
+    if ((K %  2L ) == 0L) cout << "Bye" ;
+    ```
+    `L` is a long integer literal.
+    Integer literals have a type of int by default; the L suffix gives it a type of long (Note that if the value cannot be represented by an int, then the literal will have a type of long even without the suffix).
+
+- We can check whether a quantity is `infinity` or not using `isinf()`.
+- We use `(int)` to type cast a ceiled float to get the number in the integer format instead of exponential powers.
+Ex :-
+```
+float Final = 123123123.23123
+cout << (int)ceil(Final);
+```
+- We need to send the same datatypes to min/max algos of STL. In such scenario's, `LL` at the back of integers may help
+- Ex :
+```
+typedef long long int ll;
+ll big = 100012;
+cout << min (big, 12)   // Shows error
+cout << min (big, 12LL) // Works fine
+
+ll small = 12;
+cout << min (small, big) // Anyhow works
+
+```
