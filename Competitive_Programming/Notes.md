@@ -530,3 +530,11 @@ Subset: Same as subsequence except it has empty set i.e.
 - So Its better practise to use `else if` instead of multiple `if`. 
 
 - We can deal with negative modulo with `abs` itself. Else we need to do `((a%k + k)%k)`
+
+- Better to use `sqrt()` for getting square roots instead of `pow(10, 1/2)`.
+- The maximum precision can be set using the below code. 
+      ```
+      cout.precision(17);
+      cout  << fixed ;
+      ```
+-  Maximum float we can use in C++ is `long double`
