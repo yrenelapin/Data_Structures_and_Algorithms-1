@@ -6,36 +6,19 @@ int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll t;
+    int t;
     cin >> t;
     while (t--) {
         string s;
         cin >> s;
-        if (is_sorted(s.begin(), s.end())){
-            cout << "YES\n";
-        }
-        else{
-            ll mid = (s.size()-1)/2;
-            ll lone = 0; 
-            for (int i = 0;  i<= mid ; i++){
-                if (s[i] == '1') lone++;
-            }
-
-            ll rone = 0; 
-            for (int i = mid+1;  i< s.size() ; i++){
-                if (s[i] == '1') rone++;
-            }
-
-            if (rone >= lone ){
-                 cout << "YES\n";
-            }
-            else if ( rone < lone ){
-                 cout << "NO\n";
-            }
         
-        }
-            
-    }
+        int occ_11 = s.find("11");
+        int occ_00 = s.rfind("00");
+        
+        // If both "00" && "11" existed & last occurence of "00" is later than the first occurence of "11".
+        if ( (occ_11 < occ_00)  && (occ_00 != -1) && (occ_11 != -1)){
+            cout << "NO\n";}
+        else { cout << "YES\n";}
 
-    return 0;
+    }
 }
