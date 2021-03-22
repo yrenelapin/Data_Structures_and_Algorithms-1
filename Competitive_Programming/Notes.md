@@ -508,23 +508,19 @@ So, Knowledge of Maths helps a lot!!
 
 - Note the difference between the Subarray, subsequence, subset, substring
 
-  ```
-  Consider an array:
+  Consider an array: {1,2,3,4}
 
- {1,2,3,4}
+    Subarray: contiguous sequence in an array i.e.
+    {1,2},{1,2,3}
 
-Subarray: contiguous sequence in an array i.e.
-{1,2},{1,2,3}
+    Subsequence: Need not to be contiguous, but maintains order i.e.
+    {1,2,4}
 
-Subsequence: Need not to be contiguous, but maintains order i.e.
-{1,2,4}
+    Subset: Same as subsequence except it has empty set i.e.
+    {1,3},{}
 
-Subset: Same as subsequence except it has empty set i.e.
-{1,3},{}
+    A substring is exactly the same thing as a subarray but in the context of strings.
 
-- A substring is exactly the same thing as a subarray but in the context of strings.
-
-```
 
 - Sometimes, Using `else` at the end of multiple `if` statements, leads to unexpected things.
 - So Its better practise to use `else if` instead of multiple `if`. 
@@ -538,3 +534,20 @@ Subset: Same as subsequence except it has empty set i.e.
       cout  << fixed ;
       ```
 -  Maximum float we can use in C++ is `long double`
+-  To find the occurence of a First occurence of a substring in a string from the end (i.e. Last Occurence of a substring in a string), We use `str.rfind("substr")`
+
+- Dont use `typedef long long int ll` unless required. When dealing with the STL Library functions, Storing the results in
+  `ll` format leads to unexpected results. 
+  Ex:
+  ```
+       int occ_11 = s.find("11");    // This Works
+
+       // ll occ_11 = s.find("11");  // This wont work as expected.
+
+       if (occ_11 != -1){
+           cout << "found";
+       }
+  ```
+- `size_t` is an unsigned integer data type which can assign only 0 and greater than 0 integer values. 
+  It measures bytes of any object's size and returned by sizeof operator. const is the syntax representation of `size_t`, but without const you can run the program. `const size_t number;`
+- Dont forget changing the `INT_MAX` to `ULLONG_MAX` when dealing with `unsigned long long` type.
