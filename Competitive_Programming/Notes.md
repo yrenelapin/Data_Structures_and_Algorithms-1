@@ -551,3 +551,45 @@ So, Knowledge of Maths helps a lot!!
 - `size_t` is an unsigned integer data type which can assign only 0 and greater than 0 integer values. 
   It measures bytes of any object's size and returned by sizeof operator. const is the syntax representation of `size_t`, but without const you can run the program. `const size_t number;`
 - Dont forget changing the `INT_MAX` to `ULLONG_MAX` when dealing with `unsigned long long` type.
+- Say we want to take TIME as input. We can read it as STRING entirely using cin  & take required quantities or Using scanf & pattern, take only require quantities.
+        Ex :-
+```
+        // INPUT : 12:30
+
+        // Method-1
+        int h, m, curr_h_int,curr_m_int;
+        scanf("%d%d%d:%d", &h, &m, &curr_h_int, &curr_m_int);
+
+
+        // Method-2
+        int h, m;
+        string s;
+        cin >> h >> m >> s;
+        int curr_h_int = stoi(s.substr(0, 2));
+        int curr_m_int = stoi(s.substr(3, 2));
+```
+- Note that we cant use both methods in a same program at different locations if we used the line 
+        ` ios_base::sync_with_stdio(0); cin.tie(0);`. Since we turned off sync between cin  & scanf.
+- Note that, Character array & string datatype are not exactly SAME.
+- Tokenizing a `string` dataype based on a delimeter :- 
+  ```
+    // Tokenizing a String based on ":"
+
+    #include <bits/stdc++.h>
+    using namespace std;
+    int main(){
+    string input = "abc:def:ghi";
+        stringstream ss(input);
+        string token;
+
+        while(getline(ss, token, ':')) {
+            cout << token << '\n';
+        }
+    }
+  ```
+- Minimum number to be added to x to make it divisible by k.
+```
+int min_number_to_be_added(int x, int k) {
+    return ( k - (x % k) ) % k;}
+```
+
