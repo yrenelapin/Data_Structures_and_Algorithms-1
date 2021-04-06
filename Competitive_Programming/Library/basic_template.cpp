@@ -5,13 +5,19 @@ using namespace std;
 #define deb(x) cout << #x << " = " << x << endl
 #define deb2(x, y) cout << #x << " = " << x << "  ,  " << #y << "=" << y << endl
 typedef long long ll;
+const int mod = 1e9 + 7;
+
+void solve() {
+  int n,k;
+  cin >> n >> k;
+}
 
 int main() {
     fastIO;
-    int t, n, k;
-    cin >> t;
-    while (t--) {
-        cin >> n >> k;
+    int t = 1;
+    cin >> t; // Comment if only 1 testcase.
+    while(t--) {
+      solve();
     }
 
     return 0;

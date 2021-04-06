@@ -612,3 +612,226 @@ int min_number_to_be_added(int x, int k) {
         return ( arr[right_median] - arr[left_median] ) + 1 ;
     }    
     ```
+
+- Don't make the vectors/any sort of containers as Global Variables. If we make it, We need to ensure that they are cleared after each test case. So, Keep them inside the loop of test cases only so that we need not clear them.
+
+- Dont make silly mistakes in Binary search. Depending upon the Problem, The way we update the `low` and `high` limits accordingly with `mid` term in each iteration differs.
+  
+  Ex :-
+  ```
+  // In Binary search :
+
+    int main() {
+    
+    fastIO;
+    ll arr[] =  {1,2,3,4,5,6,7,8,9,10};        
+    ll x = 8;
+    
+    ll low = 0;
+    ll high = sizeof(arr)/sizeof(arr[0]) -1;
+    ll mid ;
+    while (high > low){
+        
+        mid = (high + low)/2;                         // Till this line, Everything will be same for every implementation.
+
+        if ( arr[mid] > x )  {
+            high = mid;                               // Notice this
+        }
+        else if  ( arr[mid] < x ) {
+            low = mid;                               // Notice this
+        }   
+        else{
+            break;
+        }
+    }
+
+    if (arr[mid] == x) {
+        cout << "found";
+    }
+    // deb(arr[mid]); deb2(arr[low], arr[high]);
+    }   
+  ```
+    Now Lets take a problem that involves Binary search :
+    Ex :- https://codeforces.com/contest/1490/problem/E
+    
+    ```
+    bool Can_Win(ll position, vector<ll> &sorted_input){
+        
+        ll curr_tokens = sorted_input[position];
+        for (ll i = 0 ;  i<sorted_input.size() ; i++){
+            
+            if (i == position){
+                continue;
+            }
+    
+            if ( curr_tokens < sorted_input[i]){
+                return false;
+            }
+    
+            curr_tokens += sorted_input[i];
+        }
+    
+        return true;
+    
+    }
+    
+    int main() {
+        
+        fastIO;
+        ll t, n, temp;
+        cin >> t;
+        while (t--) {
+ 
+            vector<ll> input;
+            vector<ll> sorted_input;
+            
+            cin >> n;
+            for (ll  i = 0; i <n; i++){
+                cin >> temp;
+                input.push_back(temp);
+                sorted_input.push_back(temp);
+            }
+    
+            sort(all(sorted_input));
+    
+            ll low = 0;
+            ll high = n-1;
+            ll mid;
+            while (high > low){
+                
+                mid = (high + low)/2;                       // Till this line, Everything will be same for every implementation.
+    
+                if (Can_Win(mid, sorted_input)){
+                    high = mid;                             // Notice this
+                }
+                else{
+                    low = mid+1;                           // Notice this. If we put, `low = mid` It never converges.
+                }
+            }
+            
+            vector<ll> result;
+            for (ll i = 0; i <n ; i++){
+                if (input[i] >= sorted_input[high]){
+                    result.push_back(i+1);
+                }
+            }
+    
+            cout << result.size() << endl;
+            for (ll i = 0; i< result.size() ; i++){
+                cout << result[i] << " ";
+            }
+    
+            cout << endl;
+    
+        }
+    
+        return 0;
+    }
+
+    ```
+## upper_bound & lower_bound
+
+- `upper_bound` :
+
+- Returns an iterator pointing to the first element in the range [first,last) `which compares greater than val.`
+- There are 2 versions. The elements are compared using operator< for the first version, and comp for the second. 
+- **The elements in the range shall already be sorted according to this same criterion (operator< or comp), or at least partitioned with respect to val.**
+- Unlike lower_bound, the value pointed by the iterator returned by this function cannot be equivalent to val, only greater.
+#### Searches for the first value which is greater than val given.  
+
+- In order to find the Maximum element in a sorted vector (or any sorted container) which is less than  or equal to a given Value, `val`
+  We can use `upper_bound`.
+  i.e I want to find a value which is maximum among all the values that are less than or equal to 15 in vector v = {1,13,14,14,15,16,17,18};
+
+```
+  auto itr = upper_bound(v.begin(), v.end(), 15);
+  itr--;
+  int required_number = *itr;
+````
+ 
+
+- `lower_bound` : Returns an iterator pointing to the first element in the range [first,last) which `does not compare less than val.`
+- There are 2 versions. The elements are compared using operator< for the first version, and comp for the second. 
+- **The elements in the range shall already be sorted according to this same criterion (operator< or comp), or at least partitioned with respect to val.**
+- Unlike upper_bound, the value pointed by the iterator returned by this function may also be equivalent to val, and not only greater.
+#### Searches for the first value which is greater than or equal to val given.
+
+```
+
+int main () {
+  int myints[] = {10,20,30,30,20,10,10,20};
+  std::vector<int> v(myints,myints+8);           // 10 20 30 30 20 10 10 20
+
+  std::sort (v.begin(), v.end());                // 10 10 10 20 20 20 30 30
+
+  std::vector<int>::iterator low,up;
+  low=std::lower_bound (v.begin(), v.end(), 20); //          ^
+  up= std::upper_bound (v.begin(), v.end(), 20); //                   ^
+
+  std::cout << "lower_bound at position " << (low- v.begin()) << '\n';
+  std::cout << "upper_bound at position " << (up - v.begin()) << '\n';
+
+  return 0;
+}
+
+Result : 
+lower_bound at position 3
+upper_bound at position 6
+
+```
+
+- For multisets,  `auto itr =  s.upper_bound(val);` is faster than `auto itr =  upper_bound(s.begin(), s.end(), val);`
+
+- In questions, Where we are using DP & we are supposed to make Matrices/Tables, Make them as Global Variables with the Maximum Size required based on the Constarints mentioned in the Problem Statement. Example for Reference [here](https://codeforces.com/contest/1498/submission/111851989
+
+## Removing elements from Vector
+
+```
+vector<int> v = {1,2,3,4,5};
+
+// Removes all the elements of the vector & makes it size 0.
+v.clear();   
+
+
+// To remove the elements of the vector using position, we use erase.
+
+v.erase(itr);                   // Removes the single element at given position, itr.
+v.erase(start_itr, end_itr);    // Removes a range of elements ([start_itr, end_itr))
+
+```
+IMPORTANT : Remove an element from the vector using an element.
+- std::remove : It doesn’t actually delete elements from the container but only shunts non-deleted elements forwards on top of deleted elements.
+- std::remove does not actually erase the element from the container, but it does return the new end iterator which can be passed to container_type::erase to do the REAL  removal of the extra elements that are now at the end of the container.
+
+For this task, we use the [erase-remove](https://en.wikipedia.org/wiki/Erase%E2%80%93remove_idiom) idiom.
+```
+bool IsOdd(int i) { return i & 1; }
+
+void Print(const std::vector<int>& vec) {
+  for (const auto& i : vec) {
+    std::cout << i << ' ';
+  }
+  std::cout << '\n';
+}
+
+int main() {
+    // Initializes a vector that holds numbers from 0-9.
+    std::vector<int> v = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+    Print(v);
+
+    // Removes all elements with the value 5.
+    v.erase(std::remove(v.begin(), v.end(), 5), v.end());
+    Print(v);
+
+    // Removes all odd numbers.
+    v.erase(std::remove_if(v.begin(), v.end(), IsOdd), v.end());
+    Print(v);
+}
+
+/*
+Output:
+0 1 2 3 4 5 6 7 8 9
+0 1 2 3 4 6 7 8 9
+0 2 4 6 8
+*/
+```
