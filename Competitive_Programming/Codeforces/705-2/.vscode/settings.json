@@ -1,0 +1,19 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.autoSave": "afterDelay",
+    "files.associations": {
+        "*.cc": "cpp",
+        "vector": "cpp",
+        "map": "cpp",
+        "iostream": "cpp",
+        "xstring": "cpp",
+        "string": "cpp",
+        "xiosbase": "cpp",
+        "algorithm": "cpp",
+        "xhash": "cpp",
+        "xtree": "cpp",
+        "xutility": "cpp",
+        "istream": "cpp"
+    },
+    "cmake.configureOnOpen": false
+}
