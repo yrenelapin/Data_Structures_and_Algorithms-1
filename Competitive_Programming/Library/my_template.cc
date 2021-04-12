@@ -2,14 +2,14 @@
 using namespace std;
 typedef long long ll;
 typedef long double ld;
-typedef pair<int, int>pi;
-typedef pair<ll, ll>	pl;
-typedef vector<int>		vi;
-typedef vector<ll>		vl;
-typedef vector<pi>		vpi;
-typedef vector<pl>		vpl;
-typedef vector<vi>		vvi;
-typedef vector<vl>		vvl;
+typedef pair<int, int> pi;
+typedef pair<ll, ll> pl;
+typedef vector<int> vi;
+typedef vector<ll>	vl;
+typedef vector<pi>	vpi;
+typedef vector<pl>	vpl;
+typedef vector<vi>	vvi;
+typedef vector<vl>	vvl;
 typedef priority_queue<ll> prq;  // Max priority Queue.
 #define fi first
 #define se second
