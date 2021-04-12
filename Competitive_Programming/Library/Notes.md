@@ -835,3 +835,16 @@ Output:
 0 2 4 6 8
 */
 ```
+- If we need `⌈m/2⌉` i.e Ceil of m/2, Performing `ceil(m/2)` will yield wrong value for odd value of n, since C++ rounds the value inside itself after performing division by 2. So we need to use `ceil(m/2.0)` or **the best option is to use `(m+1/2)` to get the value of Ceil of m/2.**
+
+- Whenever TLE occurs, First think in terms of DP, Think whether same SUB PROBLEM is being repeatedly called or not.
+Then if DP is suitable, First pre calculate using the maximum values provided in the question.
+
+- In Questions, where answer%MOD is asked, **Dont use** `unsigned`.
+Instead, simply use, `#define ll long long` and take Mod at every step in the solution, where the numbers can overflow.
+Whenever there is a chance of overflowing, using the `ll` at every position instead of `int` creates no ERRORS. It helps.
+  
+- In C++
+    - We cant modify the element of a set, We can just remove or insert elements.
+    - We cant modify the existing `key` of a map i.e, we cant change the first element in the pair, We can just remove or insert keys. 
+    - We can modify the `value` of the existing `key`, eg: mymap['key']++;
