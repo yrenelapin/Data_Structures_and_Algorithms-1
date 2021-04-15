@@ -835,7 +835,7 @@ Output:
 0 2 4 6 8
 */
 ```
-- If we need `⌈m/2⌉` i.e Ceil of m/2, Performing `ceil(m/2)` will yield wrong value for odd value of n, since C++ rounds the value inside itself after performing division by 2. So we need to use `ceil(m/2.0)` or **the best option is to use `(m+1/2)` to get the value of Ceil of m/2.**
+- If we need `⌈m/a⌉` i.e Ceil of m/a, Performing `ceil(m/a)` will yield wrong value, since C++ rounds the value inside itself after performing divisio. So we need to use `ceil(m/(float)a)` or **the other option is to use `( ( m + (a-1) ) /a)` to get the value of Ceil of m/a.**
 
 - Whenever TLE occurs, First think in terms of DP, Think whether same SUB PROBLEM is being repeatedly called or not.
 Then if DP is suitable, First pre calculate using the maximum values provided in the question.
@@ -848,3 +848,5 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
     - We cant modify the element of a set, We can just remove or insert elements.
     - We cant modify the existing `key` of a map i.e, we cant change the first element in the pair, We can just remove or insert keys. 
     - We can modify the `value` of the existing `key`, eg: mymap['key']++;
+
+- `Deques` are faster for insertion/deletion of elements at the beginning than `vectors`.

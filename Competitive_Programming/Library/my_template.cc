@@ -31,7 +31,7 @@ template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>; 
 
 inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
-
+const long long INF = 1e18;
 
 void solve() {
   ll n;
@@ -40,14 +40,22 @@ void solve() {
   fr(i,0,n-1) cin >> v[i];
 }
 
-int main() {
+signed main() {
+
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+
     fastIO;
     int t = 1;
-    cin >>  t; // Comment if only 1 testcase.
+
+    cin >>  t;  // Comment this line if only 1 testcase exists.
+
     fr(T,1,t){
+
         //cout << "Case #" << T << ": ";
+
         solve();
-        cout << endl;
+        cout << "\n";
     }
     return 0;
 }
