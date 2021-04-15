@@ -1,0 +1,7 @@
+{
+    "C_Cpp.errorSquiggles": "Disabled",
+    "files.associations": {
+        "*.cc": "cpp",
+        "algorithm": "cpp"
+    }
+}
