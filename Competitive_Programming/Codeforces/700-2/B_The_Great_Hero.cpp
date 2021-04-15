@@ -33,53 +33,35 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 
 
-ll low(ll k){
-  return (k* (k+1))/2;
-}
-
-ll high(ll n, ll k){
-    return (k*(2*n + 1 - k)/2);
-}
-
 void solve() {
-  ll n, l, r, s;
-  cin >> n >> l >> r >> s;
+  ll a, b, n;
+  cin >> a >> b >> n;
+  vl A(n), B(n); 
+  map<ll,ll> count;
+  fr(i,0,n-1) cin >> A[i];
+  fr(i,0,n-1) { cin >> B[i];}
 
-  // k represents the number of elements to be placed carefully so that sum is `s`.
-  ll k = (r-l) + 1;
-
-  vl normal, lr;
-  frr(i, n, 1){
-     
-     // For every number, Inorder to put it in lr, we just check the s & s-i is in correct limits.
-     if (k >0 and high(i,k) >= s and s-i >= low(k-1)){
-        lr.push_back(i);
-        s -= (i);
-        k --;
-     }
-     else{
-       normal.push_back(i);
-     }
+  ll total_damage = 0;
+  fr(i,0,n-1){
+      
+      total_damage += (  ceil( B[i]/(float)a ) * A[i] );
   }
+  
+  // We just need to see if we could find an ordering of
+  // monsters to be killed, or to be precise, just the last monster to be killed
+  // so that, we can say if the hero succeeds or not.
 
-  if (s != 0){
-    cout << -1;
-  }
-  else{
-    int i = 0;
-    int j = 0;
-    fr(index,1,n){
-        if (index < l or index > r){
-          cout << normal[i] << " ";
-          i++;
-        }
-        else{
-          cout << lr[j] << " ";
-          j++;
-        }
-    }
+  // if i+1 montser is the last monster.
+  fr(i,0,n-1){
 
-  }
+      // If health of hero, just before the last attack is atleast 1, he can kill the last monster too 
+      if (  b - (total_damage - A[i] ) > 0){
+          cout << "YES" ; return;
+      }
+  }  
+
+  cout << "NO";
+
 
 }
 
@@ -90,7 +72,7 @@ int main() {
     fr(T,1,t){
         //cout << "Case #" << T << ": ";
         solve();
-        cout << endl;
+        cout << "\n";
     }
     return 0;
 }
