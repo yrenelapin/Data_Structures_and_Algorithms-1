@@ -850,3 +850,5 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
     - We can modify the `value` of the existing `key`, eg: mymap['key']++;
 
 - `Deques` are faster for insertion/deletion of elements at the beginning than `vectors`.
+- Using Builtin functions from GCC also helps in Bit Manipulations. Refer this [link](https://www.geeksforgeeks.org/builtin-functions-gcc-compiler/)
+- When dealing with multiplications/additions of numbers using `ll` be very careful & declare the `type` of the temporary values too. Also when using the `pow` to raise power of numbers. 
