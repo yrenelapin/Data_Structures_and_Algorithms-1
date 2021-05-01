@@ -852,3 +852,9 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
 - `Deques` are faster for insertion/deletion of elements at the beginning than `vectors`.
 - Using Builtin functions from GCC also helps in Bit Manipulations. Refer this [link](https://www.geeksforgeeks.org/builtin-functions-gcc-compiler/)
 - When dealing with multiplications/additions of numbers using `ll` be very careful & declare the `type` of the temporary values too. Also when using the `pow` to raise power of numbers. 
+
+- Use `size()`
+ ```
+  vl a = {1,2,3,4,4};
+  ll n = sizeof(a) / sizeof(a[0])     // This way of computing vector size when dealing with vector of LONG LONG yields incorrect value.
+  ll n = a.size();                     // Works
