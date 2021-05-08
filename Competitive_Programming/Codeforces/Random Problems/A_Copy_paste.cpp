@@ -33,16 +33,24 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
-// Some problem with below code.
-// const int size = 1e5;
-// vl dp1(size, -1);            // 1D
-// vvl dp2(size, vl(size, -1)); // 2D 
-
 void solve() {
-  ll n;
-  cin >> n;
-  vl v(n);
-  fr(i,0,n-1) cin >> v[i];
+  ll n, k, temp;
+  cin >> n >> k;
+  set<int> v;
+  fr(i,0,n-1)  {cin >> temp; v.insert(temp);}
+  
+
+  if (v.size() == 1){
+      cout << (k-*v.begin());
+      return;
+  }
+  v.erase(v.begin());
+  ll res = 0;
+  trav(e,v){
+      res += (k-e);
+  }
+
+  cout << res;
 }
 
 signed main() {
