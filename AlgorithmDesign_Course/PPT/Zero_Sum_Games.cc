@@ -271,29 +271,8 @@ vector<double> commaSeparatedStringToIntVector(const string &s) {
 void Run1()
 {
  vector<vector<double>> A;
- A.push_back(commaSeparatedStringToIntVector(" 1.0 ,  2.0 ,  3.0 , -1.0 ,  1.5"));
- A.push_back(commaSeparatedStringToIntVector("-2.0 , -1.5 , -1.0 ,  1.0 ,  3.0"));
- A.push_back(commaSeparatedStringToIntVector(" 0.0 ,  1.0 ,  0.5 , -2.0 ,  2.5"));
- A.push_back(commaSeparatedStringToIntVector(" 2.0 , -1.0 ,  0.5 , -3.0 , -2.5"));
- A.push_back(commaSeparatedStringToIntVector(" 1.5 ,  2.0 , -1.5 ,  2.0 ,  3.5"));
-
- PrepareRun(A);
-}
-
-void Run2()
-{
- vector<vector<double>> A;
- A.push_back(commaSeparatedStringToIntVector(" 1.0 ,  2.0 "));
- A.push_back(commaSeparatedStringToIntVector(" 2.0 ,  1.0 "));
-
- PrepareRun(A);
-}
-
-void Run3()
-{
- vector<vector<double>> A;
- A.push_back(commaSeparatedStringToIntVector(" 30.0 , -10.0 ,  20.0 "));
- A.push_back(commaSeparatedStringToIntVector(" 10.0 ,  20.0 , -20.0 "));
+ A.push_back(commaSeparatedStringToIntVector(" 3.0 ,  -1.0 "));
+ A.push_back(commaSeparatedStringToIntVector(" -2.0 ,  1.0 "));
 
  PrepareRun(A);
 }
@@ -301,6 +280,4 @@ void Run3()
 int main ()
 {
  Run1();
- Run2();
- Run3();
 }
