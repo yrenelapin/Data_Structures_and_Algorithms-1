@@ -249,10 +249,10 @@ void PrepareRun(vector<vector<double>> A)
   printf("No optimal solution exists\n----------------------\n");
   return;
  }
- printf("Result: Max = %f\n", result[size - 2] - result[size - 1]);
+ printf("Result: Maximum Payoff = %f\n", result[size - 2] - result[size - 1]);
  for(int i = 0; i < result.size() - 2; i++)
  {
-  printf("x%d = %f ; ", i, result[i]);
+  printf("x%d = %f ; ", i+1, result[i]);
  }
  printf("\n----------------------\n");
 }
