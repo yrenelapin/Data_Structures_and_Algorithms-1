@@ -1,11 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef vector<double> vd;
+typedef vector<vector<double>> vvd;
 
-vector<vector<double>> SetSimplex( vector<double> maxFunction, 
-       vector<vector<double>> A, 
-       vector<double> b)
+
+// Implementing the Simplex Algorithm
+vvd SetSimplex( vd maxFunction, 
+       vvd A, 
+       vd b)
 {
- vector<vector<double>> simplex;
+ vvd simplex;
 
 
  int numVariables = maxFunction.size();
@@ -15,7 +19,7 @@ vector<vector<double>> SetSimplex( vector<double> maxFunction,
 
  for(int iRow = 0; iRow < numEquations; iRow++)
  {
-  vector<double> row(numCols, 0);
+  vd row(numCols, 0);
   for(int iCol = 0; iCol < numVariables; iCol++)
   {
    row[iCol] = A[iRow][iCol];
@@ -28,7 +32,7 @@ vector<vector<double>> SetSimplex( vector<double> maxFunction,
  }
 
 
- vector<double> lastRow(numCols, 0);
+ vd lastRow(numCols, 0);
  for(int iVar = 0; iVar < numVariables; iVar++)
  {
   lastRow[iVar] = 0 - maxFunction[iVar];
@@ -40,7 +44,8 @@ vector<vector<double>> SetSimplex( vector<double> maxFunction,
  return simplex;
 }
 
-bool GetPivots(vector<vector<double>> simplex, int & pivotCol, int & pivotRow, bool & noSolution)
+
+bool GetPivots(vvd simplex, int & pivotCol, int & pivotRow, bool & noSolution)
 {
  int numRows = simplex.size();
  int numCols = simplex[0].size();
@@ -93,7 +98,7 @@ bool GetPivots(vector<vector<double>> simplex, int & pivotCol, int & pivotRow, b
 }
 
 
-vector<double> DoSimplex(vector<vector<double>> simplex, double & max)
+vd PerformSimplexAlgo(vvd simplex, double & max)
 {
  int pivotCol, pivotRow;
  int numRows = simplex.size();
@@ -127,14 +132,14 @@ vector<double> DoSimplex(vector<vector<double>> simplex, double & max)
 
  if(noSolution)
  {
-  vector<double> vec;
+  vd vec;
   return vec;
  }
  
- //optimo!!!
+
  max = simplex[numRows-1][numCols-1];
  int numVariables = numCols - numRows - 1;
- vector<double> x(numVariables, 0);
+ vd x(numVariables, 0);
  
  for(int iCol = 0; iCol < numVariables; iCol++)
  {
@@ -166,17 +171,18 @@ vector<double> DoSimplex(vector<vector<double>> simplex, double & max)
 }
 
 
-vector<vector<double>> Transpose(vector<vector<double>> M)
+
+vvd Transpose(vvd M)
 {
  
- vector<vector<double>> T;
+ vvd T;
 
  int mNumRows = M.size();
  int mNumCols = M[0].size();
 
  for(int mCol = 0; mCol < mNumCols; mCol++)
  {
-  vector<double> tRow;
+  vd tRow;
   for(int mRow = 0; mRow < mNumRows; mRow++)
   {
    tRow.push_back(M[mRow][mCol]);
@@ -190,12 +196,11 @@ vector<vector<double>> Transpose(vector<vector<double>> M)
  return M;
 }
 
-vector<vector<double>> SetLinearProgram(vector<vector<double>> A)
-{
- vector<double> maxFunc;
- vector<double> b;
+vvd SetLinearProgram(vvd A){
+ vd maxFunc;
+ vd b;
 
- vector<vector<double>> T = Transpose(A);
+ vvd T = Transpose(A);
 
  for(int iRow = 0; iRow < T.size(); iRow++)
  {
@@ -214,12 +219,12 @@ vector<vector<double>> SetLinearProgram(vector<vector<double>> A)
 
  int rowSize = T[0].size();
 
- vector<double> rowEq1(rowSize, 1.0);
+ vd rowEq1(rowSize, 1.0);
  rowEq1[rowSize - 2] = rowEq1[rowSize - 1] = 0.0;
  T.push_back( rowEq1 );
  b.push_back( 1.0 );
 
- vector<double> rowEq2(rowSize, -1.0);
+ vd rowEq2(rowSize, -1.0);
  rowEq2[rowSize - 2] = rowEq2[rowSize - 1] = 0.0;
  T.push_back( rowEq2 );
  b.push_back( -1.0 );
@@ -238,46 +243,31 @@ vector<vector<double>> SetLinearProgram(vector<vector<double>> A)
 }
 
 
-void PrepareRun(vector<vector<double>> A)
-{
- vector<vector<double>> simplex = SetLinearProgram(A);
- double max;
- vector<double> result = DoSimplex(simplex, max);
- int size = result.size();
- if( !size )
- {
-  printf("No optimal solution exists\n----------------------\n");
-  return;
- }
- printf("Result: Maximum Payoff = %f\n", result[size - 2] - result[size - 1]);
- for(int i = 0; i < result.size() - 2; i++)
- {
-  printf("x%d = %f ; ", i+1, result[i]);
- }
- printf("\n----------------------\n");
-}
+void solve(vvd G){
 
-vector<double> commaSeparatedStringToIntVector(const string &s) {     
-    char delimiter = ',';
-    vector<double> tokens;     
-    string token;     
-    istringstream tokenStream(s);     
-    while (getline(tokenStream, token, delimiter)) {      
-        tokens.push_back(stoi(token));     
-    }     
-    return tokens;  
-}
+    vvd simplex = SetLinearProgram(G);
 
-void Run1()
-{
- vector<vector<double>> A;
- A.push_back(commaSeparatedStringToIntVector(" 3.0 ,  -1.0 "));
- A.push_back(commaSeparatedStringToIntVector(" -2.0 ,  1.0 "));
+    double max;
+    vd result = PerformSimplexAlgo(simplex, max);
 
- PrepareRun(A);
+    int size = result.size();
+    if( !size )
+    {
+      printf("\nNo optimal solution exists\n");
+      return;
+    }
+
+    for(int i = 0; i < result.size() - 2; i++)
+    {
+      printf("\nx%d = %f ", i+1, result[i]);
+    }
+
+     printf("\nThe Maximum Payoff value is %f\n", result[size - 2] - result[size - 1]);
 }
 
 int main ()
 {
- Run1();
+  vvd G = { {  3.0, -1.0 } ,
+            { -2.0,  1.0 } };
+  solve(G);
 }
