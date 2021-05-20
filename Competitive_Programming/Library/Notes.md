@@ -857,4 +857,6 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
  ```
   vl a = {1,2,3,4,4};
   ll n = sizeof(a) / sizeof(a[0])     // This way of computing vector size when dealing with vector of LONG LONG yields incorrect value.
-  ll n = a.size();                     // Works
+  ll n = a.size();                    // Works
+
+- All Interactive Problems need not use BINARY/TERNARY SEARCH approach. They can be Constructive in nature too. Example [here](https://codeforces.com/contest/1521/problem/C)

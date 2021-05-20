@@ -1,0 +1,1 @@
+-  GCD(i, i+1) = 1 for all i>= 1
