@@ -37,46 +37,64 @@ void solve() {
   ll n;
   cin >> n;
 
-  map< ll, multiset<ll, greater<ll>> > s;  
-  vl u(n), skills(n);
+   unordered_map< ll, multiset<ll, greater<ll>> > s;  
+   vl u(n), skills(n);
 
+    set<ll> uni;
     fr(i,0,n-1){
         cin >> u[i];
+        uni.insert(u[i]);
     }
 
     fr(i,0,n-1){
         cin >> skills[i];
     }
+ 
+    unordered_map <ll, vector<ll> > sums_uni;
+    trav(each, uni){
+        sums_uni[ each ].pb(0);
+    }
 
-  fr(i,1,n){
-      s[ u[i-1]].insert( skills[i-1] );
-  }
+    fr(i,1,n){
 
-  fr(k,1,n){
+        s[ u[i-1]].insert( skills[i-1] );
+    }
+  
+    trav(uni, s){
 
-      ll sum = 0;
+            trav(each, uni.se){
+
+            ll siz = sums_uni[ uni.fi ].size() - 1;
+            ll quan = sums_uni[ uni.fi ][siz]  + each;
+
+            sums_uni[ uni.fi ].pb( quan  );
+
+            }
+    }
+
+
+    vl results(n+1, 0);
+    ll sum = 0;
 
      trav(univ, s){
 
-           if (univ.second.size() >= k){
-               ll count = 0;
-               ll temp_sum = 0;
-               trav(each, univ.second){
-                   temp_sum += each;
-                   count++;
-                   if (count == k){
-                        sum += temp_sum;
-                        temp_sum = 0; 
-                        count = 0;
-                   }
-               }
+        fr(k,1, univ.se.size()){
+               
+               // `req` represents the maximum number of students that can form full teams of size k.
+               ll req = univ.second.size()/k;
+               req  = req*k;
+               sum = sums_uni[ univ.fi ][  req  ];
+
+               results[k] += sum;
            }
          
        }
 
-        cout << sum << " ";
+  
 
-  }
+    fr(i, 1, n){
+        cout << results[i] << " ";
+    }
 
 }
 

@@ -860,3 +860,6 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
   ll n = a.size();                    // Works
 
 - All Interactive Problems need not use BINARY/TERNARY SEARCH approach. They can be Constructive in nature too. Example [here](https://codeforces.com/contest/1521/problem/C)
+
+- Sometimes, using Normal arrays is better than using complicated containers like multimap,etc. [Ex](https://codeforces.com/contest/1515/submission/116906408)
+-  

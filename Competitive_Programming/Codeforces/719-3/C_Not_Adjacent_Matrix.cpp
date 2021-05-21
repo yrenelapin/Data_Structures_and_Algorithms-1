@@ -36,8 +36,63 @@ const long long INF = 1e18;
 void solve() {
   ll n;
   cin >> n;
-  vl v(n);
-  fr(i,0,n-1) cin >> v[i];
+
+  if (n == 2){
+    cout << -1 << "\n";
+    return;
+  }
+
+  ll arr[n][n];
+
+
+  vpl evens;
+  fr(i, 0,n-1){
+    fr(j,0,n-1){
+      // even
+      if ( ((i+j) % 2) ==0){
+         evens.pb({i,j});
+   
+      }
+
+    }
+  }
+
+  vpl odds;
+  fr(i, 0,n-1){
+    fr(j,0,n-1){
+      // odd
+      if ( ( (i+j) % 2) != 0){
+         odds.pb({i,j});
+      }
+
+    }
+  }
+
+  sort(all(odds));
+  sort(all(evens));
+  ll curr = 1;
+
+  tra(i,odds){
+    arr[i.fi][i.se] = curr;
+    curr++;
+  }
+
+  tra(i,evens){
+    arr[i.fi][i.se] = curr;
+    curr++;
+  }
+
+  fr(i, 0,n-1){
+    fr(j,0,n-1){
+      cout << arr[i][j] << " ";
+
+    }
+
+    cout << "\n";
+  
+  }
+
+
 }
 
 signed main() {
@@ -55,7 +110,7 @@ signed main() {
         //cout << "Case #" << T << ": ";
 
         solve();
-        cout << "\n";
+        // cout << "\n";
     }
     return 0;
 }   

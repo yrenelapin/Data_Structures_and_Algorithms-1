@@ -36,32 +36,23 @@ const long long INF = 1e18;
 void solve() {
   ll n;
   cin >> n;
-  vl v(n);
-  fr(i,0,n-1) cin >> v[i];
+  vl a(n);
+  
+  // Dividing into groups of equal `element & index` difference.
+  map<ll,ll> m;
+  fr(i,0,n-1) { 
+      cin >> a[i];
+      m[ a[i]-i ]++; 
+  }
+   
+   // In each group, nC2 pairs are possible, where n is size of group.
+   ll c = 0;
+   trav(e,m){
+      ll temp =  e.se;
+      c += (temp* (temp-1))/2;
+   }
 
-  ll count = 0;
-//   fr(i,0,n-2){
-//           if (v[i+1] - v[i] == 1){
-//               count++;
-//           }
-//   }
-
-    fr(i,1,n-1){
-            if (v[i] - v[0] == i){
-                count++;
-            }
-    }
-
-
-    fr(i,0,n-2){
-            if (v[n-1] - v[i] == (n-1-i)){
-                count++;
-            }
-    }
-
-
-
-  cout << count;
+  cout << c;
 }
 
 signed main() {

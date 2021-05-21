@@ -33,11 +33,52 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
+
+bool isgood(vl v){
+
+  ll sum = 0;
+  fr(i,0,v.size()-1){
+    sum += v[i];
+  }
+
+  if (sum % 2 == 1){
+    return 1;
+  }
+
+  // It requires atleast these many bits `MAX_NUM*MAX_ARRAY_SIZE /2 + 1`
+  bitset<100001> b;
+
+  b[0] = 1;
+  // Representing the subsets.
+  fr(i,0,v.size()){
+      b |= (b << v[i] );
+  }
+
+  // We now check if there is a subset whose sum is `sum/2`
+  return not ( b[sum/2] );
+
+}
+
 void solve() {
   ll n;
   cin >> n;
   vl v(n);
-  fr(i,0,n-1) cin >> v[i];
+  int odd = 0; int index = 0;
+  fr(i,0,n-1) { cin >> v[i]; if (v[i] %2 == 1) {odd = 1; index = i+1;} }
+
+  // Check if the array is already good.
+  if (isgood(v)){
+    cout << 0;
+    return;
+  }
+
+  // So, sum is even. Remove an odd element
+  while(odd == 0){
+      fr(i,0,n-1) {  v[i] /= 2; if ( v[i] %2 == 1) {odd = 1; index = i+1; break;} }
+  }
+
+  cout << 1 << "\n" << index; 
+
 }
 
 signed main() {
@@ -48,7 +89,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
