@@ -28,46 +28,70 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
+template <typename T> T mpow(T x, T n) {
+    T res = 1;
+    for(; n; n >>= 1, x *= x)
+        if(n & 1) res *= x;
+    return res;
+}
 
 inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
-const int size = 1e5;
-vl dp1(size, -1);            // 1D
+//------------------------------------------------------------------------------------------------------------------------------------//
 
 
-//  Given a list of weights [w1,w2,...,wn], determine all sums that can be constructed using the weights.
+/*
+Optimal evaluation of associative expression A[0] · A[1] · · · A[n − 1] — e.g., multiplying
+rectangular matrices 
+*/
 
-void solve() {
-    vl weights = {1,3,3,5};
-    ll size = weights.size();
+vvl dp(n, vl(n,-1));
+
+// Recursive Memoisation.
+
+// subproblem i to j-1 multiplications. i.e. Substring[i:j]
+ll optimal(ll i , ll j){
+
+    if ( dp[i][j] != -1){
+        return dp[i][j];
+    }
     
-    ll sum = 0;
-    fr(i,0,size-1){
-        sum += (weights[i]);
+    ll res ;
+    if (j = i+1){
+        res = 0;
     }
+    else{
+        
+        ll miny  = INT_MAX;
 
-    // Possible[x] indicates whether we can construct a subset with sum x.
+        // Guessing the last multiplication.
+        fr(k, i+1, j-1){
 
-    vl possible(sum+1, 0);
-
-    possible[0] = 1;
-    fr(k, 1, size){
-        frr(x,sum, 0){
-            if (possible[x]){
-                possible[x+ weights[k-1]] = 1;
-            }
+            // Notcie that `cost_for_multipication` of two matrices dependson given conditions.
+            miny = min( miny, optimal(i,k) + optimal(k,j) + cost_for_multi( (A[i] · · · A[k − 1]) by (A[k] · · · A[j − 1]) ) );
         }
+
+        res = miny;
+
     }
 
-    fr(x, 0, sum){
-        deb2(x, possible[x]);
-    }
-
-
+    dp[i][j] = res;
+    return res;
 
 }
+
+void solve() {
+    // Take the Input accordingly.    
+
+    // Our actual Problem is as follows :
+    cout << optimal(0, n);
+
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------------------//
 
 signed main() {
 
@@ -77,7 +101,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    // cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

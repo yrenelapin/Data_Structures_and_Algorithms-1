@@ -33,46 +33,66 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
-const int size = 1e5;
-vl dp1(size, -1);            // 1D
+
+//------------------------------------------------------------------------------------------------------------------------------------//
 
 
-//  Given a list of weights [w1,w2,...,wn], determine all sums that can be constructed using the weights.
+/*
+Find a path from the upper-left corner to the lower-right corner of an n × n grid, such that we only move down and right. 
+Each square contains a positive integer, and the path should be constructed so that the sum of  the values along the path is as large as possible.
+*/
+
+
+/*
+1. Subproblem : The maximum sum on a path from the upper-left corner to square (x,y).     // No of subproblems = O(n^2) 
+2. Guess :      
+3,4. Recurrence & Impl is below
+5. Original Problem : The maximum sum on a path from the upper-left corner to square ( n-1, n-1 ). 
+
+Time Complexity= O(n^2)  since time for each subproblem is O(1) only.
+
+Note that this approach works even for m*n grid.
+*/
 
 void solve() {
-    vl weights = {1,3,3,5};
-    ll size = weights.size();
+
+  ll n;
+  cin >> n;
+  vvl grid(n, vl(n)); //n*n
+  vvl dp(n, vl(n, -1)); 
+
+  fr(i,0,n-1) 
+      fr(j,0,n-1) 
+        cin >> grid[i][j];
     
-    ll sum = 0;
-    fr(i,0,size-1){
-        sum += (weights[i]);
-    }
+  fr(i,0,n-1) {
 
-    // possible(x,k) = true if we can construct a sum x using the first k weights,
-    vvl possible(sum+1, vl(size+1, 0));
+      fr(j,0,n-1){
 
-    possible[0][0] = 1;
-    fr(k, 1, size){
-        fr(x,0, sum){
+          dp[i][j] = grid[i][j];
+          
+          // 1st row
+          if (i == 0 and j >= 1){
+              dp[i][j] += dp[i][j-1];
+          }
 
-            // If a weight is less than or equal to a sum we are constructing, then only that weight may be used.
-            if (x - weights[k-1]  >= 0){
-                possible[x][k] |= possible[x-weights[k-1]][k-1];
-            }
+          // 1st column
+          if (j == 0 and i >= 1){
+              dp[i][j] += dp[i-1][j];
+          }
 
-            // This can be checked everytime.
-            possible[x][k] |= possible[x][k-1];
+          if (i >= 1 and j >= 1){
+              dp[i][j] += max(dp[i][j-1], dp[i-1][j]);
+          }
 
-        }
-    }
+      } 
+  }
 
-    fr(sums, 0, sum){
-        deb2(sums, possible[sums][4]);
-    }
-
-
+  cout << dp[n-1][n-1];
 
 }
+
+//------------------------------------------------------------------------------------------------------------------------------------//
 
 signed main() {
 
@@ -82,7 +102,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    // cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

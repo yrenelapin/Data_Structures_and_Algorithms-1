@@ -33,23 +33,59 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
+//------------------------------------------------------------------------------------------------------------------------------------//
+
 /*
-We are given the prices of k products over n days, and we want to buy each product exactly once. 
-However, we are allowed to buy at most one product in a day. What is the minimum total price?
+Given a list of weights [w1,w2,...,wn], determine all sums that can be constructed using the weights.
+*/
+
+
+/*
+1. Subproblem :  Check if we can construct a sum x using the first k weights  --> possible(x,k)  // No of subproblems = O(n*Max_Sum) 
+2. Guess :  --
+3,4. Recurrence & Impl is below
+5. Original Problem :  possible(x,n) tells us whether we can construct a sum x using all weights.
+
+Time Complexity = O(n*Max_Sum) -> Psuedo Polynomial
+
+Note that, Max_Sum = Sum of all the given weights.
+
 */
 
 void solve() {
+    vl weights = {1,3,3,5};
+    ll size = weights.size();
+    
+    ll sum = 0;
+    fr(i,0,size-1){
+        sum += (weights[i]);
+    }
 
+    // possible(x,k) = true if we can construct a sum x using the first k weights,
+    vvl possible(sum+1, vl(size+1, 0));
 
-// k = 3 products, n = 8 days.
-vvl product = { {6, 9 ,5, 2, 8, 9, 1, 6 },
-                {8, 2 ,6 ,2, 7, 5, 7 ,2 },
-                {5, 3, 9 ,7, 3, 5, 1, 4 }
-              }
+    // Base Case
+    possible[0][0] = 1;
 
+    // Notice the Topological Sorting order.
+    fr(k, 1, size){
+        fr(x,0, sum){
+            // If a weight is less than or equal to a sum we are constructing, then only that weight may be used.
+            if (x - weights[k-1]  >= 0){
+                
+                // Is is possible to make sum if we include the value at `k-1` ?
+                possible[x][k] |= possible[x-weights[k-1]][k-1];
+            }
 
+            // Is is possible to make sum if we ignore the value at `k-1` ?
+            possible[x][k] |= possible[x][k-1];
 
+        }
+    }
 
+    fr(sums, 0, sum){
+        deb2(sums, possible[sums][4]);
+    }
 
 
 

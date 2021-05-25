@@ -28,53 +28,70 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
+template <typename T> T mpow(T x, T n) {
+    T res = 1;
+    for(; n; n >>= 1, x *= x)
+        if(n & 1) res *= x;
+    return res;
+}
 
 inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
-// Find a path from the upper-left corner to the lower-right corner of an n × n grid, such that we only move down and right.
-// Each square contains a positive integer, and the path should be constructed so that the sum of
-// the values along the path is as large as possible.
-void solve() {
-  ll n;
-  cin >> n;
-  vvl grid(n, vl(n)); //n*n
-  vvl dp(n, vl(n, -1)); 
-
-  fr(i,0,n-1) 
-      fr(j,0,n-1) 
-        cin >> grid[i][j];
-    
-  fr(i,0,n-1) {
-
-      fr(j,0,n-1){
-
-          dp[i][j] = grid[i][j];
-          
-          // 1st row
-          if (i == 0 and j >= 1){
-              dp[i][j] += dp[i][j-1];
-          }
-
-          // 1st column
-          if (j == 0 and i >= 1){
-              dp[i][j] += dp[i-1][j];
-          }
-
-          if (i >= 1 and j >= 1){
-              dp[i][j] += max(dp[i][j-1], dp[i-1][j]);
-          }
+//------------------------------------------------------------------------------------------------------------------------------------//
 
 
+/*
+Calculate the total number of ways to produce a sum S using the coins. 
+For example, if coins = {1,3,4} and S = 5, there are a total of 6 ways
+*/
 
 
-      } 
-  }
+/*
 
-  cout << dp[n-1][n-1];
+1. Subproblem :  No of ways to form sum (x)     // No of subproblems = O(S) 
+2. Guess :       First coin to be included.     // No of guesses = O(k) where k is the number of coins. -> Time for each subproblem.
+3,4. Recurrence & Impl is below
+5. Original Problem :  sum( S )
+
+Time Complexity= O(S*k)
+
+*/
+
+// Assuming that maximium sum input is 100.
+vl dp(101, 0);
+
+
+// Bottom Up 
+ll coin_sum(ll S, vl coins){
+
+    // Base Case. No of coins req to make sum <= 0 is 0.
+    dp[0] = 1;
+
+    // Iterating in Topological sort order.
+    fr(x, 1, S){
+         fr(i, 1, coins.size() ){
+             if (x >= coins[i-1]) { dp[x] += dp[ x - coins[i-1] ]; dp[x] %= mod; }
+         }
+    }
+
+    return dp[S];
 
 }
+
+void solve() {
+    // Take the Input accordingly.    
+    vl coins = {1,3,4};
+    ll S = 5;
+  
+    // Our actual Problem is as follows :
+    cout << coin_sum(S, coins) << endl;
+
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------------------//
 
 signed main() {
 
