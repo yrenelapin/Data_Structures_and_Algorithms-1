@@ -41,14 +41,51 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll N = 0;
-vvl dp(N, vl(N,-1));
-
 void solve() {
-  ll n;
-  cin >> n;
-  vl v(n);
-  fr(i,0,n-1) cin >> v[i];
+  ll n, k; string s;
+  cin >> n >> k >> s;
+  
+  // To divide the string into half. 
+  // If n is even, say 4, m = 2, then we need to use indices from 0,1. i.e. till m-1.
+  // If n is odd,  say 5, m = 3, then we need to use indices from 0,1,2. i.e. till m-1.
+  ll m = (n+1)/2;
+
+  // This contains the count of number of strings that are lexic. smaller than half the input size string.
+  ll res = 0;
+
+  // To store the first half of string.
+  string temp = "";
+  
+  // To calculate the number of strings lexicographically smaller than S′ (half input string),
+  // we just need to convert the K-based number corresponding S′ to base 10. where K denotes the first k alphabets to be used.
+  fr(i, 0, m-1){
+
+      temp += s[i];
+
+      // Getting the k-base Numbering for each character of string. 
+      ll num = s[i] - 'a';
+      
+      // Calcualting power to convert to 10 - base numbering
+      ll p =  pw(k, m-1-i); 
+      
+      // ( num*p ) corresponds to 10 - base numbering.
+      // Notice that for larger numbers, when answer is asked after performing mod, during POWER calc also mod is to be used.
+      res = ( res + (num*p) )% M;
+   }
+
+    // There is a caveat to look for, where if Half String being constructed is equal to S', we need to manually check if it is
+    // lexicographically smaller or not. 
+
+    // Constructing palindrome from 1st half.
+    fr(i,m,n-1){
+        temp.pb(s[n-i-1]);
+    }
+
+    if (temp < s){
+        res = (res + 1)% M;
+    }
+
+    cout << res;
 }
 
 signed main() {
@@ -63,7 +100,7 @@ signed main() {
 
     fr(T,1,t){
 
-        //cout << "Case #" << T << ": ";
+        cout << "Case #" << T << ": ";
 
         solve();
         cout << "\n";

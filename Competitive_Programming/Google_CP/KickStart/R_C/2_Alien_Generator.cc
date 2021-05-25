@@ -27,29 +27,43 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb2(x, y) cout << #x << " = " << x << "  ,  " << #y << "=" << y << endl
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
-template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
-template <typename T> T mpow(T x, T n) {
-    T res = 1;
-    for(; n; n >>= 1, x *= x)
-        if(n & 1) res *= x;
-    return res;
-}
 
-inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
-const int mod = 1e9 + 7;
-const long long INF = 1e18;
+
+ll g;
+bool eqn(ll k){
+
+    ll num =  ( (2*g) - (k*k) - k );
+    ll den = 2*(k+1);
+    ll res = (num/den);
+
+    // We check if num/den is a INTEGER & with in the correct limits.
+    if (den*res == num){
+        return (res >= 1 and res <= g);
+    }
+    else{
+        return false;
+    }
+    
+}
 
 void solve() {
-  ll n;
-  cin >> n;
  
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
-  cout << ans;
+  cin >> g;
+  ll cnt = 0 ;
+
+  ll h = sqrt(2*g);
+  
+  // It can be proved that `k` lies between [0,h].
+  fr(k,0,h){
+      if (eqn(k)){
+          cnt++;
+      }
+  }
+
+  cout << cnt;
+
 }
- 
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);
@@ -62,7 +76,7 @@ signed main() {
 
     fr(T,1,t){
 
-        //cout << "Case #" << T << ": ";
+        cout << "Case #" << T << ": ";
 
         solve();
         cout << "\n";

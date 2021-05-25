@@ -39,17 +39,51 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
-void solve() {
-  ll n;
-  cin >> n;
- 
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
-  cout << ans;
+
+
+void subsets(vl &v, vl &subset_store, vvl &results, ll ind){
+
+    // Storing the subsets 
+    results.pb(subset_store);
+
+    fr(i, ind, v.size()-1){ 
+
+        // Include the current element & proceed.
+        subset_store.pb(v[i]);
+       
+        subsets(v, subset_store, results, i+1);
+
+        // Back track by removing the current element.
+        subset_store.pop_back();
+        
+    }
+
+    return;
+
 }
- 
+
+
+void solve() {
+
+  vl v = {1,2,3};
+  ll n = 3;
+
+  vvl results;
+  vl subset_store;
+  ll ind = 0;
+  subsets(v, subset_store, results, ind);
+
+  fr(i,0,results.size()-1){
+      ll size = ( results[i].size()-1 );
+      fr(j, 0, size){
+          cout << results[i][j] << " ";
+      }
+      cout << endl;
+  }
+
+}
+
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);
@@ -58,7 +92,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

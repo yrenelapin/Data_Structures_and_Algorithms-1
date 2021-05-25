@@ -42,14 +42,64 @@ const long long INF = 1e18;
 void solve() {
   ll n;
   cin >> n;
- 
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
-  cout << ans;
+  vl v(n);
+  vl main;
+  set<ll> pos;
+  fr(i,0,n-1)  { cin >> v[i];
+
+                 if (v[i] == 0){
+                     main.pb(0);
+                 } 
+                 
+                 if (v[i] < 0){
+                     main.pb(v[i]);
+                 }
+                 
+                 if (v[i] > 0 ){
+                     pos.insert(v[i]);
+                 }
+                 
+            }
+            
+    if (pos.size() == 0){
+         cout << main.size(); return;
+    }
+
+    if (main.size() > 1){
+        sort(all(main));
+    
+        ll pos_min = *pos.begin();
+    
+        ll si = main.size()-2;
+        ll flag = 0;
+    
+        fr(i, 0, si){
+            ll res = abs(main[i+1] - main[i]);
+            if (  res < pos_min){
+                flag = 1;
+                break;
+            }
+        }
+
+        if (flag == 0){
+            cout << main.size() + 1;
+        }
+        else{
+             cout << main.size();
+        }
+    
+    }
+    else{
+        if (pos.size() != 0)
+            cout << main.size() + 1 ;
+        
+        else{
+            cout << main.size();
+        }
+    }
+    
 }
- 
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);

@@ -38,82 +38,22 @@ void solve() {
   string s;
   cin >> n >> s;
   ll zero = count(all(s), '0');
-  ll one =  n-zero;
-  if (one == zero){
-      if ( (ll)sqrt(one*one) == one )
-          cout << "DRAW";
-          return;
-  }
-   cout << "BOB";
-
-  }
   
+  if ( zero % 2 ==0){
+        cout << "BOB";
+        return;
+  }
+  else{
 
-//   ll reverse = 0;
-//   ll palin = 1;
-//   ll alice = 0, bob = 0;
+      if (zero == 1){
+          cout << "BOB"; 
+      }
+      else{
+           cout << "ALICE";
+      }
+  }
+}
 
-//   if (n==1 or c== 1){
-//       cout << "BOB";
-//       return;
-//   }
-    
-//   ll cnt_rev = 0;
-//   ll count = 0;
-
-//   while(true){
-
-//     // Alice
-//     if ( !(reverse) && !(palin) ){
-//         alice +=0;
-//         reverse = 1;
-//     }
-//     else{
-//         alice++;
-//         count++;
-//         reverse = 0;
-//         palin ^= 1;
-//     }
-    
-  
-//     if (count == c){
-//         break;
-//     }
-
-
-
-//     // Bob
-//     if ( !(reverse) && !(palin) ){
-//         bob += 0;
-//         reverse = 1;
-//     }
-//     else{
-//         bob++;
-//         count++;
-//         reverse = 0;
-//         palin ^= 1;
-//     }
-    
-//     if (count == c){
-//         break;
-//     }
-
-//   }
- 
-//   deb2(alice,bob);
-//   if (alice > bob){
-//       cout << "BOB";
-//   }
-//   else if (alice < bob){
-//       cout << "ALICE";
-//   }
-//   else{
-//       cout << "DRAW";
-//   }
-
-
- 
-//}
  
 signed main() {
 

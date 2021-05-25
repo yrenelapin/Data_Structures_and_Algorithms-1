@@ -28,28 +28,33 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
-template <typename T> T mpow(T x, T n) {
-    T res = 1;
-    for(; n; n >>= 1, x *= x)
-        if(n & 1) res *= x;
-    return res;
-}
 
 inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
+/*
+We are given the prices of k products over n days, and we want to buy each product exactly once. 
+However, we are allowed to buy at most one product in a day. What is the minimum total price?
+*/
+
 void solve() {
-  ll n;
-  cin >> n;
- 
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
-  cout << ans;
+
+
+// k = 3 products, n = 8 days.
+vvl product = { {6, 9 ,5, 2, 8, 9, 1, 6 },
+                {8, 2 ,6 ,2, 7, 5, 7 ,2 },
+                {5, 3, 9 ,7, 3, 5, 1, 4 }
+              }
+
+
+
+
+
+
+
 }
- 
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);
@@ -58,7 +63,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    // cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

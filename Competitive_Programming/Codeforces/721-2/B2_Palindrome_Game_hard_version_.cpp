@@ -28,28 +28,47 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
-template <typename T> T mpow(T x, T n) {
-    T res = 1;
-    for(; n; n >>= 1, x *= x)
-        if(n & 1) res *= x;
-    return res;
-}
 
 inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
 void solve() {
-  ll n;
-  cin >> n;
- 
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
-  cout << ans;
+  ll n; string s;
+  cin >> n >> s;
+  
+  string rev = s;
+  reverse(all(s));
+  if (s == rev){
+        ll zero = count(all(s), '0');
+
+        if ( zero % 2 ==0){
+            cout << "BOB";
+            return;
+        }
+        else{
+
+          if (zero == 1){
+              cout << "BOB"; 
+          }
+          else{
+                cout << "ALICE";
+          }
+        }
+
+  }
+  else{
+    ll zero = count(all(s), '0');
+    if (s.size()%2 ==1 and zero == 2 and s[s.size()/2] == '0' ){
+      cout << "DRAW";
+    }
+    else{
+      cout << "ALICE";
+    }
+  }
+  
 }
- 
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);

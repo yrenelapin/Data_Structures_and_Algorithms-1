@@ -862,4 +862,19 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
 - All Interactive Problems need not use BINARY/TERNARY SEARCH approach. They can be Constructive in nature too. Example [here](https://codeforces.com/contest/1521/problem/C)
 
 - Sometimes, using Normal arrays is better than using complicated containers like multimap,etc. [Ex](https://codeforces.com/contest/1515/submission/116906408)
--  
+-  With the current template, we have a bug here :
+```
+  vll results;
+  // `results` store the subsets of a given vector.
+
+
+  fr(i,0,results.size()-1){
+      ll size = ( results[i].size()-1 );  
+      fr(j, 0, size){                                     // This works. but  `fr(j, 0,  results[i].size()-1 ){  }` wont work.
+          cout << results[i][j] << " ";                   // becoz, the template just expects direct value. It cant do the computation (+,-..) there. 
+      }
+      cout << endl;
+  }
+
+
+```

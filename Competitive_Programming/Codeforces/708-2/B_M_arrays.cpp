@@ -40,16 +40,51 @@ const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
 void solve() {
-  ll n;
-  cin >> n;
+  ll n, m;
+  cin >> n >> m;
+
+  map<ll,ll> freq;
+  vl a(n);
+
+  fr(i,0,n-1) { cin >> a[i]; freq[(a[i]%m)]++; } 
+  
+
+  ll ans = 0;
+  tra(each, freq){
+
+      // Grouping all zeroes as a single array.
+      if (each.fi == 0){
+          ans++;
+      }
+      
+      // Grouping all elements with `mod` value as m/2 into a single array
+      else if (2*each.fi == m){
+          ans++;
+      }
+      
+      // Else, we will check if  `m-curr` is found.
+      // Since we are checking  `2*each.fi < m`, only one among x, m-x can enter this below loop.
+      // Thus avoiding re including the already placed elements.
+      else if ( ( 2*each.fi < m) or ( freq.find(m - each.fi) == freq.end()) ) {
+
+                // Taking the frequencies.
+                ll x = each.se;
+                ll y =  freq[ (m - each.fi) ];
+            
+                ans +=  ( 1 + max(0LL, abs(x - y) - 1LL) );
+
+            }
+  }
+  
  
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
+
   cout << ans;
+    
+
+
+
 }
- 
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);

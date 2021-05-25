@@ -33,119 +33,63 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
+// Sorting based on the lengths
+bool comp(pl i, pl j){
+  return (i.fi < j.fi);
+}
+
 void solve() {
   ll n, m;
   cin >> n >> m;
-  vvl v;
-  ll temp;
-  
-  multimap<ll,ll> min_ind;
+  vvl v(n, vl(m,0));
 
+  vector<pl> to_sort;
   fr(i,0,n-1) { 
-      vl vect;
-      ll miny = LLONG_MAX;
       fr(j,0,m-1) { 
-        cin >> temp; 
-        vect.pb(temp);
-        miny = min(miny, temp);
-      }
-
+       cin >> v[i][j];
+       // Storing the Length & checkpoint.
+       to_sort.pb( { v[i][j], i } );
+    }
+  }
   
-    min_ind.insert({miny, i});
- 
-      v.pb(vect);
-  }
+   sort(all(to_sort), comp);
 
-  if (n == m ){
+    ll k = 0;
+    vvl result(n, vl(m,0));
 
-        fr(i,0,n-1) { 
+    // Taking the first m values.
+    fr( i, 0, m-1){
+        
+        // Go to the row indicated by the pair in the sorted vector & 
+        // `k` takes care of putting `m` minimum values in `m` different columns.
+        result[ to_sort[i].se ][k++] = to_sort[i].fi;
+    } 
+    
 
-            sort(allr(v[i])); 
+    // Putting remaining values.
+    for( ll i = m; i<n*m; i++){
 
-            ll miny = v[i][m-1];
+       
+        for(ll j = 0; j<m; j++){
 
-            // Placing the miny at the ith pos.
-            swap( v[i][i], v[i][m-1] );
+             // If it is not yet filled.
+            if( result[to_sort[i].se][j] == 0) {
 
-            // Printing
-            fr(j,0,m-1) {
-                cout << v[i][j] << " ";
-
-            }
-            if (i != n-1) cout << "\n";
-
-        }
-  }
-
-  // more points than players
-   if (n > m ){ 
-
-       auto itr = min_ind.begin();
-       ll count = 0;
-
-        fr(i,0,n-1) { 
-
-            if (count < m){
-                ll point_no = itr->second;
-                if (point_no == i){
-
-                    sort(allr(v[i])); 
-
-                    ll miny = v[i][m-1];
-
-                    swap(v[i][count],v[i][m-1] );
-
-                }
-
-                itr++;
-                count++;
+                result[to_sort[i].se][j] = to_sort[i].fi;
+                
+                break;
             }
 
-           // Printing
-            fr(j,0,m-1) {
-                cout << v[i][j] << " ";
-
-            }
-            if (i != n-1) cout << "\n";
-
         }
-  }
-
-  // more players than points.
-   if (n < m ){
-
-        fr(i,0,n-1) { 
-             
-            sort(allr(v[i])); 
-
-            ll miny = v[i][m-1];
-
-            swap(v[i][i],v[i][m-1] );
-
-        }
-
-        ll remaining = m-n;   // remaining < m
+    }
 
 
-
-
-        fr(i,0,n-1) { 
-             
-           // Printing
-            fr(j,0,m-1) {
-                cout << v[i][j] << " ";
-
-            }
-            if (i != n-1) cout << "\n";
-
-        }
-
-
-
-
-
-  }
-
+    // Printing the result
+    fr(i,0, n-1){
+        fr(j,0,m-1){
+            cout << result[i][j] << " "; }
+            cout << endl;
+    }
 
 
 }
@@ -165,7 +109,6 @@ signed main() {
         //cout << "Case #" << T << ": ";
 
         solve();
-        cout << "\n";
     }
     return 0;
 }

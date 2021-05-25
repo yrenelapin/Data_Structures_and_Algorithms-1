@@ -39,17 +39,44 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
-void solve() {
-  ll n;
-  cin >> n;
- 
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
-  cout << ans;
+
+void easy_solve(ll n){
+    
+    if ( n%2  == 0 ){
+        if ( (n/2) % 2 == 0){
+        
+                cout << (n)/4 << " " <<  (n)/4  << " " <<  n - 2*(n/4);
+            
+        }
+        else{
+                cout << 2 << " " <<  (n/2) - 1  << " " <<  (n/2) - 1;
+        
+        }
+    }
+    else{
+         
+        cout << ( (n-1)/2 ) << " " <<  ( (n-1)/2 ) << " " <<  1;
+            
+    }
+
 }
- 
+
+void solve() {
+    ll n, k;
+    cin >> n >> k;
+
+    fr(i,1,k-3){
+        cout << 1 << " ";
+    }
+
+    // The n value for 3 values case.
+    easy_solve(n- (k-3));
+
+   
+    
+
+}
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);

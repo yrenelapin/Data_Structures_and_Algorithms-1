@@ -42,14 +42,58 @@ const long long INF = 1e18;
 void solve() {
   ll n;
   cin >> n;
- 
-  ll res = log2(n);
-  ll ans = mpow(2LL, res);
-  ans--;
- 
-  cout << ans;
+  set<ll> v;
+  map<ll,ll> freq;
+  ll temp;
+  fr(i,0,n-1) { cin >> temp; v.insert(temp); freq[temp]++;}
+
+  trav(each, v){
+      cout << each << " ";
+  }
+  
+
+  while (1){
+    
+    bool flag = 0;
+
+    tra(each, freq){
+
+        if (each.se > 1){
+               flag = 1;
+                cout << each.fi << " ";
+                each.se -= 1;   
+        }
+        
+    }
+
+    if (flag == 0){
+        break;
+    }
+
+  }
+
+//   sort(all(v));
+
+//   vl rem;
+//   fr(i,0,n-2){
+//       if (v[i] == v[i+1]){
+//           rem.pb(v[i+1]);
+//           v[i+1] = -1;
+//       }
+//   }
+
+//     if (rem.size() != 0){
+//         fr(i, 0, rem.size()-1){
+//             v.pb(rem[i]);
+//         }
+
+//     }
+
+
+//   trav(each, v) { if (each != -1) cout <<  each << " "; }
+
 }
- 
+
 signed main() {
 
     // freopen("input.txt", "r", stdin);

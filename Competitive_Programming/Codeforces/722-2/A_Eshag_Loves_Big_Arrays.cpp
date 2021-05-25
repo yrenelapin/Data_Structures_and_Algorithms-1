@@ -28,33 +28,27 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
+template <typename T> T mpow(T x, T n) {
+    T res = 1;
+    for(; n; n >>= 1, x *= x)
+        if(n & 1) res *= x;
+    return res;
+}
 
 inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
 void solve() {
-  string s;
-  cin >> s;
-
-  string res = "";
-  fr(i,0,s.size()-1){
-    
-     char curr = tolower( s[i] );
-      
-      if ( (curr == 'a') or (curr == 'e') or (curr == 'i') or (curr == 'o') or (curr == 'u') or (curr == 'y') ){
-        //nothing
-      }
-      else{
-          res += curr;
-      }
-  }
-
-  fr(i,0, res.size()-1){
-    cout << ".";
-    cout << res[i];
-  }
-
+  ll n;
+  cin >> n;
+  vl v(n);
+  ll sum = 0; 
+  map<ll, ll> freq;
+  fr(i,0,n-1)  { cin >> v[i]; freq[v[i]]++; }
+  auto itr  = min_element(all(v));
+  // All the elements except the minimum element can be removed.
+  cout << n - freq[*itr];
 
 }
 
@@ -66,7 +60,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
