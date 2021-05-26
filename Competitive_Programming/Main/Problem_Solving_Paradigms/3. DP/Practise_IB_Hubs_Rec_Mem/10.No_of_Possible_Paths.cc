@@ -41,10 +41,33 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+ll count_paths(ll i, ll j, vvl &dp){
+
+    if ( (i < 0) or (j < 0) ){
+        return 0;
+    }
+
+    if (dp[i][j] != -1){
+        return dp[i][j];
+    }
+
+    ll res = 0 ;
+    if ( (i == 0) or (j == 0) ){
+        res = 1;
+    }
+    else{
+        res =  count_paths(i-1,j, dp) + count_paths(i,j-1, dp);
+    }
+
+    dp[i][j] = res;
+    return res;
+
+}
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  ll m,n; cin >> m >> n;
+  vvl dp(m, vl(n,-1));  
+  cout << count_paths(m-1, n-1, dp);
 }
 
 signed main() {
@@ -55,7 +78,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

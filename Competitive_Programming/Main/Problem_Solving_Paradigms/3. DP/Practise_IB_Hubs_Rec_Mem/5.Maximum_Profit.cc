@@ -41,10 +41,38 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+ll max_profit(ll n, vl &v, vl &dp){
+
+    if (dp[n] != -1){
+        return dp[n];
+    }
+
+    ll res;
+    if (n == 0){
+        res = 0;
+    }
+    else{
+        
+        ll maxy  = INT_MIN;
+        fr(i, 1, n){
+            maxy =  max(maxy, v[i-1] + max_profit(n-i, v, dp) );
+        }
+        res = maxy;
+    }
+
+    dp[n] = res;
+    return res;
+}
+
 void solve() {
   ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+
+  vl dp(n+1,-1);
+
+  vl v(n); fr(i,0,n-1) cin >> v[i];
+
+ cout << max_profit(n, v, dp);
+  
 }
 
 signed main() {
@@ -55,7 +83,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

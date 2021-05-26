@@ -41,10 +41,38 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+string a,b,c; 
+
+ll common_subseq(ll i, ll j, ll k,  vector< vector< vector< ll > > > &dp ){
+
+    if (i < 0 or j < 0 or k < 0 ){
+        return 0;
+    }
+
+    if ( dp[i][j][k] != -1 ){
+        return dp[i][j][k];
+    }
+
+    ll res ;
+    if ( a[i] == b[j] and a[i] == c[k] ){
+        res =  1 + common_subseq( i-1, j-1, k-1, dp);
+    }
+    else{ 
+        res = max( common_subseq( i-1, j, k, dp) ,max( common_subseq( i, j-1, k, dp), common_subseq( i, j, k-1, dp)) );
+    }
+
+    dp[i][j][k] = res;
+    return res;
+
+}
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  cin >> a >> b >> c;
+
+  vector< vector< vector< ll > > > dp( a.size(), vvl(b.size(), vl(c.size(), -1)) );
+
+  cout << common_subseq(a.size()-1, b.size()-1, c.size()-1, dp);
+  
 }
 
 signed main() {
@@ -55,7 +83,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

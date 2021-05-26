@@ -41,10 +41,50 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+ll min_cost(ll c1, ll c2, ll c3, ll n, vvl &matrix, vl &dp){
+
+    if (n < 0){
+        return 0;
+    }
+
+    if (dp[n] != -1){
+        return dp[n];
+    }
+
+    ll res1 =  INT_MAX;
+    ll res2 =  INT_MAX;
+    ll res3 =  INT_MAX;
+
+    // Base Case
+    if (c1 == 0 and c2 == 0 and c3 == 0){
+        res1 = 0; res2 = 0 ; res3 = 0;
+    }
+    else{
+        
+        if ( c1 == 1)
+            res1 = matrix[n][0] +  min_cost(0,1,1, n-1, matrix, dp);
+        
+        if ( c2 == 1)
+            res2 = matrix[n][1] +  min_cost(1,0,1, n-1, matrix, dp);
+        
+        if ( c3 == 1)
+            res3 = matrix[n][2] +  min_cost(1,1,0, n-1, matrix, dp); 
+    }
+
+    dp[n] = min( res1, min( res2, res3) );
+
+    return dp[n];
+
+}
+
 void solve() {
   ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  vl dp(n+1, -1);  vvl matrix(n, vl(3,-1));
+  fr(i,0,n-1) 
+    fr(j,0,2)
+        cin >> matrix[i][j];
+   ll c1 = 1, c2 = 1, c3 = 1;
+   cout << min_cost(c1,c2,c3, n-1, matrix, dp);
 }
 
 signed main() {
@@ -55,7 +95,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

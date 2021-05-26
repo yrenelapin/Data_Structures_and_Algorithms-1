@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-typedef long long ll;
+typedef unsigned long long ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef pair<ll, ll> pl;
@@ -41,10 +41,41 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+// Notice that, we have use `unsigned long long` since all values being dealt are POSITIVE only.
+ll catalan(ll n, vl &dp){
+
+  // This validation is not mandatory in this example.
+  if (n < 0){
+    return 1;
+  }
+
+  if (dp[n] != -1){
+    return dp[n];
+  }
+
+  ll res = 0;
+  if (n == 0){
+    res = 1;
+  }
+  else{
+
+    // Look the recurrence relation carefully. 
+    fr(i, 0, n-1){  
+      res += catalan(i, dp)*catalan(n-1-i, dp);
+    }
+
+  }
+
+  dp[n] = res;
+  return res;
+
+}
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  ll n;
+  cin >> n;
+  vl dp(n+1,  -1);
+  cout << catalan(n, dp);
 }
 
 signed main() {
@@ -55,7 +86,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

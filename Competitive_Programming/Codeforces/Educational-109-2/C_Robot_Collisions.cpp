@@ -42,9 +42,27 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  ll n, m ; cin >> n >>  m;
+
+  vl x(n); fr(i,0,n-1) cin >> x[i];
+ 
+  char temp;
+  vl dir(n); fr(i,0,n-1) { cin >> temp;
+                            if (temp == 'L') { dir[i] = 0 ;} 
+                            if (temp == 'R') { dir[i] = 1 ;}   
+                        }
+
+  vvl coord;
+  // For each robot.
+  fr(i, 0, n-1){
+      if ()
+  }
+
+
+
+
+
+  
 }
 
 signed main() {

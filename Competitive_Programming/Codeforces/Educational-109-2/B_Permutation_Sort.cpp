@@ -43,8 +43,29 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 
 void solve() {
   ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+
+  vl v(n); fr(i,0,n-1) cin >> v[i];
+
+  if (is_sorted(all(v))){
+      cout << 0;
+      return;
+  }
+
+  if (is_sorted(allr(v))){
+      cout << 3;
+      return;
+  }
+  
+  if (v[0] == 1 or v[n-1] == n){
+      cout << 1;
+  }
+  else if (v[0] == n and v[n-1] == 1){
+      cout << 3;
+  }
+  else{
+      cout << 2;
+  }
+  
 }
 
 signed main() {

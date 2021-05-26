@@ -41,10 +41,82 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+// Class adapted from GFG.
+class StackWithMax
+{
+    // main stack
+    stack<ll> mainStack;
+  
+    // stack to keep track of max element
+    stack<ll> trackStack;
+  
+public:
+    void push(ll x)
+    {
+        mainStack.push(x);
+        if (mainStack.size() == 1)
+        {
+            trackStack.push(x);
+            return;
+        }
+  
+        if (x > trackStack.top())
+            trackStack.push(x);
+        else
+            trackStack.push(trackStack.top());
+    }
+  
+    ll getMax()
+    {
+        return trackStack.top();
+    }
+  
+    ll pop()
+    {
+        mainStack.pop();
+        trackStack.pop();
+        return 0;
+    }
+
+    ll empty()
+    {
+        return mainStack.empty();
+    }
+
+    ll top()
+    {   ll ele = mainStack.top();
+        return ele;
+    }
+};
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+    
+  ll n, temp; cin >> n;
+  StackWithMax s; 
+  fr(i,0,n-1)  { cin >> temp ; s.push(temp); } 
+
+
+  ll max = n;
+
+  while ( !s.empty() ){
+
+      deque<ll> temp;
+      while (s.top() != s.getMax()){
+          ll t =  s.top(); 
+          temp.push_front(t);
+          s.pop();
+      }
+
+      temp.push_front(s.top()); s.pop();
+
+      trav(e, temp){
+          cout << e << " ";
+      }
+
+
+  }
+
+
 }
 
 signed main() {

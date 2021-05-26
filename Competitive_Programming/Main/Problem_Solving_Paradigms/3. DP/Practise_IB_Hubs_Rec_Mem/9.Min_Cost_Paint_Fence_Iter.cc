@@ -41,10 +41,40 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+/*
+    Sub Problem : Minimum cost to paint the ith column. 
+    -> We start from the last column & paint the previous columns. We are guessing the color of the ith column.
+    -> Note that there is no need to maintain a separate DP table here.
+*/
+
+ll min_cost( vvl &matrix, ll n ){
+
+    frr(i, n-2, 0){
+
+        // painting ith column with color 0 & chosing among the other two colors for (i+1)th column. 
+        matrix[i][0] += min( matrix[i+1][1], matrix[i+1][2] );
+
+        // painting ith column with color 1 & chosing among the other two colors for (i+1)th column. 
+        matrix[i][1] += min( matrix[i+1][0], matrix[i+1][2] );
+
+        // painting ith column with color 2 & chosing among the other two colors for (i+1)th column. 
+        matrix[i][2] += min( matrix[i+1][1], matrix[i+1][0] );
+    }
+        
+    ll res =  min( min (matrix[0][0], matrix[0][1] ), matrix[0][2] ) ;
+
+    return res;
+
+}
+
 void solve() {
   ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  vvl matrix(n, vl(3,0) );
+  fr(i,0,n-1) 
+    fr(j,0,2)
+        cin >> matrix[i][j];
+
+   cout << min_cost(matrix, n);
 }
 
 signed main() {
@@ -55,7 +85,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

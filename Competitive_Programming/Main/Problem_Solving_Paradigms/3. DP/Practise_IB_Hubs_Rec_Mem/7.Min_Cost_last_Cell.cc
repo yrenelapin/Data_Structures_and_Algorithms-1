@@ -41,10 +41,44 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+ll min_cost( ll i, ll j, vvl &grid, vvl &dp){
+
+    if ( i <0  or j <0 ){
+        return INT_MAX;
+    }
+
+    if (dp[i][j] != -1){
+        return dp[i][j];
+    }
+
+    ll res =  grid[i][j];
+    if ( i== 0 and  j == 0){
+        res =  grid[0][0];
+    }
+    else{
+
+        res += min( min_cost(i,j-1, grid, dp), min_cost(i-1,j, grid, dp) );
+    }
+
+    dp[i][j] = res;
+    return res;
+    
+}
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+
+  ll m,n; cin >> m >> n;
+  vvl grid(m, vl(n,-1));
+  vvl dp(m, vl(n,-1));
+
+  fr(i,0,m-1){
+      fr(j,0,n-1){
+          cin >> grid[i][j] ;
+      }
+  }
+
+ cout << min_cost(m-1, n-1, grid, dp);
+  
 }
 
 signed main() {
@@ -55,7 +89,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

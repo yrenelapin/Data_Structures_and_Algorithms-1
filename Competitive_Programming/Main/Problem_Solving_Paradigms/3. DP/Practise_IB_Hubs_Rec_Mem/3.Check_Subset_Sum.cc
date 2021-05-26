@@ -41,10 +41,50 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+// KnapSack
+
+bool isPossible(ll S, ll m, vl &v, vvl &dp){
+
+  if (m < 0 and S != 0){
+    return false;
+  }
+
+  if (dp[S][m] != -1 ){
+    return dp[S][m];
+  }
+
+  ll res = false ;
+  if (S == 0){
+     res = true;
+  }
+  else{
+
+    // We are trying all the possible values of i
+    fr(i, 0, m){
+
+      res |= isPossible(S, i-1, v, dp);
+
+      if (S >= v[i]) res |= isPossible(S-v[i], i-1, v, dp);
+    
+    }
+
+  }
+
+  dp[S][m] = res;
+  return res;
+}
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+
+  ll m,S; cin >> m >> S;
+
+  vvl dp(S+1, vl(m+1,-1));
+
+  vl v(m); fr(i,0,m-1) cin >> v[i];
+
+  // Check if we can make a sum of S using first m elements.
+  isPossible(S, m-1, v, dp) ? cout << "True" : cout << "False";
+  
 }
 
 signed main() {

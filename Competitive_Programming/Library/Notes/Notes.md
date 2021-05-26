@@ -858,11 +858,12 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
   vl a = {1,2,3,4,4};
   ll n = sizeof(a) / sizeof(a[0])     // This way of computing vector size when dealing with vector of LONG LONG yields incorrect value.
   ll n = a.size();                    // Works
-
+```
 - All Interactive Problems need not use BINARY/TERNARY SEARCH approach. They can be Constructive in nature too. Example [here](https://codeforces.com/contest/1521/problem/C)
 
 - Sometimes, using Normal arrays is better than using complicated containers like multimap,etc. [Ex](https://codeforces.com/contest/1515/submission/116906408)
 -  With the current template, we have a bug here :
+
 ```
   vll results;
   // `results` store the subsets of a given vector.
@@ -875,6 +876,24 @@ Whenever there is a chance of overflowing, using the `ll` at every position inst
       }
       cout << endl;
   }
-
-
 ```
+
+DP Notes :
+- In Recursive Memoisation, Usually we will have conditions for validation ( like out of possible Indices) which need not be included in the DP/Lookup table. We just need to return some values like 0/1/INT_MAX/INT_MIN/something depending on the context.
+- So structure/order of Recursive Memoisation looks somewhat like :
+   VALIDATION -> LOOKUP -> BASE CASE -> RECURSIVE STEP -> STORE in LOOKUP & RETURN.
+- In CF Contests, Recursive always works. But sometimes may be difficult to think. Some times on GFG/LEETCODE/Interview Bit, It may yield TLE. So, 1st try for RECURSIVE always, If it fails or gives TLE/Memory exceeded go for ITERATIVE. Its anyhow very easy to convert Recursive to Iterative. Just need to think which subproblem to be solved first. ( TOPOLOGICAL SORTING. )
+
+- If we are sure that, all the quantities are positive & they are very large, we can use , `unsigned long long` instead of `long long`
+- If we declare Vector with Initialisation in Global & take size of vector from INPUT in the Local Function, It gives unexpected errors since `n` gets random value in the beginning & the corresponding sized vector may be created.
+   ```
+   ll n;
+   vl dp(n+1,-1);
+
+
+   void solve(){
+       cin >> n ;;
+       ....
+   }
+    ```
+- Note that `Segmentation fault (core dumped)` error may arise even when u exceeded the Memory provided, i.e. Stack overflow due to many recursive calls. Read more cases [here](https://www.geeksforgeeks.org/core-dump-segmentation-fault-c-cpp/)

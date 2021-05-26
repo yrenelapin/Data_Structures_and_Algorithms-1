@@ -41,10 +41,31 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+
+
+ll fib(ll n, vl &dp){
+    
+  if (dp[n] != -1){
+    return dp[n];
+  }
+  
+  ll res;
+  if (n < 2){
+    res = n;
+  }
+  else{
+    res = fib(n-1, dp)+ fib(n-2, dp);
+  }
+
+  dp[n] = res;
+  return res;
+}
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  ll n;
+  cin >> n;
+  vl dp(n+2,-1);
+  cout << fib(n+1, dp); 
 }
 
 signed main() {
@@ -55,7 +76,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

@@ -41,10 +41,25 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+ll max_sum( vl &v, vl &dp){
+
+    ll si =  v.size() - 1;
+    
+    dp[0] = v[0];
+    dp[1] =  max( v[1] , dp[0] );
+
+    fr(i, 2, si){
+        dp[i] = max( v[i] +  dp[i-2], dp[i-1]);
+    }
+    
+    return dp[si];
+}
+
 void solve() {
   ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  vl dp(n, -1);
+  vl v(n); fr(i,0,n-1) cin >> v[i];
+  cout << max_sum(v, dp);
 }
 
 signed main() {
@@ -55,7 +70,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

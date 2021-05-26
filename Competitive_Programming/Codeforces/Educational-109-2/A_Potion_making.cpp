@@ -41,12 +41,21 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+ 
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
-}
+ 
+    ll k; cin >> k;
 
+        
+    
+    ll f =  k;
+    ll s =  100 - k;
+    ll g = __gcd(f,s);
+
+    cout << (f/g) +(s/g);
+    
+
+}
 signed main() {
 
     // freopen("input.txt", "r", stdin);

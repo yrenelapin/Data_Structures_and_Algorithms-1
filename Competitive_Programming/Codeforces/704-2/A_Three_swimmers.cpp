@@ -42,9 +42,16 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  ll p,a,b,c; cin >> p >> a >> b >> c;
+  
+    ll o = ( p + (a-1) )/a ; ll o1 = o*a;
+    ll s = ( p + (b-1) )/b ;  ll s1 = s*b;
+    ll t = ( p + (c-1) )/c ;  ll t1 = t*c;
+
+    ll miny1 = min(  o1- p, s1 - p);
+    ll res   = min ( miny1, t1 - p);
+
+    cout << res;
 }
 
 signed main() {
