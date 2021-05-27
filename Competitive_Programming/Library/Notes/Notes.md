@@ -897,3 +897,116 @@ DP Notes :
    }
     ```
 - Note that `Segmentation fault (core dumped)` error may arise even when u exceeded the Memory provided, i.e. Stack overflow due to many recursive calls. Read more cases [here](https://www.geeksforgeeks.org/core-dump-segmentation-fault-c-cpp/)
+
+- Keeping track of the Current Max element in STACK : 
+An efficient approach would be to maintain an auxiliary stack while pushing element in the main stack. This auxiliary stack will keep track of the maximum element.
+
+    Steps :
+    1. Create an auxiliary stack, say ‘trackStack’ to keep the track of maximum element
+    2. Push the first element to both mainStack and the trackStack.
+    3. Now from the second element, push the element to the main stack. Compare the element with the top element of the track stack, if the current element is greater than the top of trackStack then push the current element to trackStack otherwise push the top element of trackStack again into it.
+    4. If we pop an element from the main stack, then pop an element from the trackStack as well.
+    5. Now to compute the maximum of the main stack at any point, we can simply print the top element of Track stack.
+
+```
+class StackWithMax
+{
+    // main stack
+    stack<ll> mainStack;
+  
+    // stack to keep track of max element
+    stack<ll> trackStack;
+  
+public:
+    void push(ll x)
+    {
+        mainStack.push(x);
+        if (mainStack.size() == 1)
+        {
+            trackStack.push(x);
+            return;
+        }
+  
+        if (x > trackStack.top())
+            trackStack.push(x);
+        else
+            trackStack.push(trackStack.top());
+    }
+  
+    ll getMax()
+    {
+        return trackStack.top();
+    }
+  
+    ll pop()
+    {
+        mainStack.pop();
+        trackStack.pop();
+        return 0;
+    }
+
+    ll empty()
+    {
+        return mainStack.empty();
+    }
+
+    ll top()
+    {   ll ele = mainStack.top();
+        return ele;
+    }
+};
+
+// Using in Code :
+StackWithMax s;
+s.push(1);
+s.getMax();
+
+Note that only functions defined above can be used with the class. All builtins are not possible (obviously).
+```
+
+Time Complexity : O(1)
+
+Auxiliary Complexity : O(n)
+
+Reference : [Link](https://www.geeksforgeeks.org/tracking-current-maximum-element-in-a-stack/)
+
+- Checking whether a given string of brackets is a regular bracket sequence or not :
+- A regular bracket sequence is a bracket sequence that can be transformed into a correct arithmetic expression by inserting characters "1" and "+" between the original characters of the sequence. For example, bracket sequences "()()" and "(())" are regular (the resulting expressions are: "(1)+(1)" and "((1+1)+1)" whereas ")(", "((()" and ")" are not.
+
+```
+// From GFG
+bool isBalanced(string exp)
+{
+    // Initialising Variables
+    bool flag = true;
+    int count = 0;
+  
+    // Traversing the Expression
+    for (int i = 0; i < exp.size(); i++) {
+  
+        if (exp[i] == '(') {
+            count++;
+        }
+        else {
+            // It is a closing parenthesis
+            count--;
+        }
+        if (count < 0) {
+            // This means there are
+            // more Closing parenthesis
+            // than opening ones
+            flag = false;
+            break;
+        }
+    }
+  
+    // If count is not zero,
+    // It means there are more
+    // opening parenthesis
+    if (count != 0) {
+        flag = false;
+    }
+  
+    return flag;
+}
+```
