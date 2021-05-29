@@ -41,69 +41,40 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-// Space Optimized Edit Distance from GFG.
-ll EditDistDP(string &str1, string &str2)
-{
-    ll len1 = str1.length();
-    ll len2 = str2.length();
- 
-    // Create a DP array to memoize result
-    // of previous computations
-    vvl DP(2, vl (len1+1, 0));
- 
-    // Base condition when second string
-    // is empty then we remove all characters
-    for (ll i = 0; i <= len1; i++)
-        DP[0][i] = i;
- 
-    // Start filling the DP
-    // This loop run for every
-    // character in second string
-    for (ll i = 1; i <= len2; i++) {
-        // This loop compares the char from
-        // second string with first string
-        // characters
-        for (ll j = 0; j <= len1; j++) {
-            // if first string is empty then
-            // we have to perform add character
-            // operation to get second string
-            if (j == 0)
-                DP[i % 2][j] = i;
- 
-            // if character from both string
-            // is same then we do not perform any
-            // operation . here i % 2 is for bound
-            // the row number.
-            else if (str1[j - 1] == str2[i - 1]) {
-                DP[i % 2][j] = DP[(i - 1) % 2][j - 1];
-            }
- 
-            // if character from both string is
-            // not same then we take the minimum
-            // from three specified operation
-            else {
-                DP[i % 2][j] = 1 + min(DP[(i - 1) % 2][j],
-                                       min(DP[i % 2][j - 1],
-                                           DP[(i - 1) % 2][j - 1]));
-            }
-        }
-    }
- 
-    // after complete fill the DP array
-    // if the len2 is even then we end
-    // up in the 0th row else we end up
-    // in the 1th row so we take len2 % 2
-    // to get row
-   return DP[len2 % 2][len1];
-}
-
 
 
 void solve() {
   ll n, m; cin >> n >> m ;
   string s, t; cin >> s >> t;
-  if (s ==  t){ cout << 1; }
-  else { cout << EditDistDP(s, t) + 1 ; }
+   
+  vl left(m);  // It contains the min index possible for each element.
+  vl right(m); // It contains the max index possible for each element.
+    
+  ll i = 0, j = 0;
+  while(i < m){    
+      while( t[i] != s[j]){
+          j++;
+      }
+      left[i] = j;
+      i++; j++;
+  } 
+
+  i = m-1; j = n-1;
+  while(i >= 0){    
+      while( t[i] != s[j]){
+          j--;
+      }
+      right[i] = j;
+      i--; j--;
+  }  
+
+  ll ans = INT_MIN;
+  fr(i, 0, m-2){
+      ans = max(ans, right[i+1] - left[i]);
+  }
+
+ cout << ans;
+
 }
 
 signed main() {

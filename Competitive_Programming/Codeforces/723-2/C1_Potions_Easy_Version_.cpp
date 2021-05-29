@@ -41,52 +41,66 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  
-    ll n; cin >> n;
-    vector<ll> v(4);
-    fr(i, 0, 3){
-        cin >> v[i];
-    } 
+// KnapSack
 
+ll max_potions(vl &v){
 
-    fr(mask, 0,15){
+  ll n = v.size()-1;
 
-            ll rU = v[0];  
-            ll rR = v[1];
-            ll rD = v[2];
-            ll rL = v[3];
+  // Let dp[i][k] be the maximum possible health achievable if we consider only the first i potions, and k is the total number of potions taken.
+  vvl dp(n+1, vl(n+1, 0));
 
-            // This checks if the corner numbered 0 is Painted.
-            if (mask & 1 ){  // 2^0
-                rU -= 1;
-                rL -= 1;}
+  // Iterative
+  dp[0][0] = 0;
 
-            
-            // This checks if the corner numbered 1 is Painted.
-            if(mask & 2){
-                rL -= 1;
-                rD -= 1;}
+  // Considering till first i potions
+  fr(i, 1, n){  
 
-            
-            // This checks if the corner numbered 2 is Painted.
-            if (mask & 4){
-                rD -= 1;
-                rR -= 1;}
-            
-            
-            // This checks if the corner numbered 3 is Painted.
-            if (mask & 8){
-                rR -= 1;
-                rU -= 1;}
-            
-            if ( ( min(rU, min( rR, min(rD, rL)) ) >= 0 ) && ( max(rU, max( rR, max(rD, rL))) <= n - 2 ) ) {
-                cout << "YES";
-                return;
-            }
+    // No of potions taken
+    fr(k, 1, i){
+      
+      if ( dp[i-1][k-1] + v[i] >= 0){ 
+           dp[i][k] = max(  dp[i-1][k-1] + v[i] , dp[i-1][k] );
+
+      }
+      else{
+      // If taking portion at the ith pos is going to make my health < 0, I will skip it.
+        dp[i][k] = dp[i-1][k];
+      }
+
     }
-    cout << "NO";
 
+  }
+
+  // fr(i, 1, n){  
+    fr(k, 1, n){ 
+      deb3(n,k,dp[n][k]);
+    
+  }
+  //}
+      
+  
+  ll ans = 0;
+  // fr(k, 1, n){
+  //     deb2(k, dp[n][k]);
+  //     if ( dp[n][k] != 0){
+  //       ans = k;
+  //     }
+  // }
+
+
+  return ans;
+  
+}
+
+void solve() {
+
+  ll n; cin >> n;
+
+  vl v(n+1); fr(i,1,n) { cin >> v[i]; }
+
+  cout << max_potions(v);
+  
 }
 
 signed main() {
@@ -97,7 +111,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

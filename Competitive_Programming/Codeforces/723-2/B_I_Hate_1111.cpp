@@ -5,7 +5,7 @@ typedef long double ld;
 typedef pair<int, int> pi;
 typedef pair<ll, ll> pl;
 typedef vector<int> vi;
-typedef vector<ll>	vl;
+typedef vector<ll>	vl; 
 typedef vector<pi>	vpi;
 typedef vector<pl>	vpl;
 typedef vector<vi>	vvi;
@@ -42,51 +42,20 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  
-    ll n; cin >> n;
-    vector<ll> v(4);
-    fr(i, 0, 3){
-        cin >> v[i];
-    } 
+  ll x; cin >> x;
 
-
-    fr(mask, 0,15){
-
-            ll rU = v[0];  
-            ll rR = v[1];
-            ll rD = v[2];
-            ll rL = v[3];
-
-            // This checks if the corner numbered 0 is Painted.
-            if (mask & 1 ){  // 2^0
-                rU -= 1;
-                rL -= 1;}
-
-            
-            // This checks if the corner numbered 1 is Painted.
-            if(mask & 2){
-                rL -= 1;
-                rD -= 1;}
-
-            
-            // This checks if the corner numbered 2 is Painted.
-            if (mask & 4){
-                rD -= 1;
-                rR -= 1;}
-            
-            
-            // This checks if the corner numbered 3 is Painted.
-            if (mask & 8){
-                rR -= 1;
-                rU -= 1;}
-            
-            if ( ( min(rU, min( rR, min(rD, rL)) ) >= 0 ) && ( max(rU, max( rR, max(rD, rL))) <= n - 2 ) ) {
-                cout << "YES";
-                return;
-            }
+    fr(d,0,10){
+        ll sub = 111*d;
+        ll temp_x = x;
+        if (temp_x >= sub)
+            temp_x -= sub;
+        if (temp_x % 11 == 0){
+            cout << "YES"; return;
+        }
     }
-    cout << "NO";
 
+    cout << "NO";
+   
 }
 
 signed main() {

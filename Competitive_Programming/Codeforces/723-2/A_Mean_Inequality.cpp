@@ -42,9 +42,18 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  ll n; cin >> n; 
+   vl v(2*n); 
+   ll total = 2*n -1;
+
+  fr(i,0,total) cin >> v[i];
+  sort(all(v));
+
+  fr(i, 0, n-1){
+      cout << v[i] << " " << v[i+n] << " ";
+  }
+
+
 }
 
 signed main() {

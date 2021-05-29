@@ -41,52 +41,45 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
+// KnapSack
+
+ll max_potions(vl &v){
+
+  min_prq<ll> q;
+
+  ll n = v.size()-1;
   
-    ll n; cin >> n;
-    vector<ll> v(4);
-    fr(i, 0, 3){
-        cin >> v[i];
-    } 
+  ll curr_h = 0;
+  fr(i, 0, n){
+      if (curr_h + v[i] >= 0){
+          q.push(v[i]);
+          curr_h += v[i];
+      }
+      else{
+          if (q.size() != 0){
+                ll top = q.top();
+                if (top < v[i]){
+                    q.pop();
+                    q.push(v[i]);
+                    curr_h -= top;
+                    curr_h += v[i];
+                }
+          }
+      }
+  }  
 
+  return  q.size();
+  
+}
 
-    fr(mask, 0,15){
+void solve() {
 
-            ll rU = v[0];  
-            ll rR = v[1];
-            ll rD = v[2];
-            ll rL = v[3];
+  ll n; cin >> n;
 
-            // This checks if the corner numbered 0 is Painted.
-            if (mask & 1 ){  // 2^0
-                rU -= 1;
-                rL -= 1;}
+  vl v(n); fr(i,0,n-1) { cin >> v[i]; }
 
-            
-            // This checks if the corner numbered 1 is Painted.
-            if(mask & 2){
-                rL -= 1;
-                rD -= 1;}
-
-            
-            // This checks if the corner numbered 2 is Painted.
-            if (mask & 4){
-                rD -= 1;
-                rR -= 1;}
-            
-            
-            // This checks if the corner numbered 3 is Painted.
-            if (mask & 8){
-                rR -= 1;
-                rU -= 1;}
-            
-            if ( ( min(rU, min( rR, min(rD, rL)) ) >= 0 ) && ( max(rU, max( rR, max(rD, rL))) <= n - 2 ) ) {
-                cout << "YES";
-                return;
-            }
-    }
-    cout << "NO";
-
+  cout << max_potions(v);
+  
 }
 
 signed main() {
@@ -97,7 +90,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
@@ -108,3 +101,4 @@ signed main() {
     }
     return 0;
 }
+
