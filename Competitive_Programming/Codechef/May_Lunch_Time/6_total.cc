@@ -41,26 +41,60 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+vi primes;   int n; int cc = 0;
+void SieveOfEratosthenes(int num) {
+   bool pno[num+1];
+   memset(pno, true, sizeof(pno));
+   for (int i = 2; (i*i <= num); i++) {
+      if (pno[i] == true) {
+         for (int j = i*2; j<= num; j += i)
+         pno[j] = false;
+      }
+   }
+   for (int i = 2; i <= num; i++)
+   if (pno[i])
+       { if ( 2*i > n) primes.pb(i);
+          else {cc++; } }
+}
+
 void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
+
+  cin >> n; 
+  int pos = upper_bound(all(primes), n) - primes.begin();
+    
+  trav(each, primes){
+    cout << each << " ";
+    if (each == 19){
+      break;
+    }
   }
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
+  deb(pos);
+
+  // ll siz = pos;
+
+  // ll cnt = 0;
+  // frr(i,siz-1, 0){
+  //   if ( (primes[i]*2) <= n ){
+  //     cnt =  i+1;
+  //     break;
+  //   }     
+  // }
+
+  if (cc >= 1)
+    cout << 1 + (pos);
   else{
-      cout << "NO";
+    cout << pos;
   }
+
+  cc = 0;
+
+
 }
 
 signed main() {
+
+    SieveOfEratosthenes(100);
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
@@ -68,10 +102,10 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
-
+    cin >>  t;  // Comment this line if only 1 testcase exists.
+   
     fr(T,1,t){
-
+          
         //cout << "Case #" << T << ": ";
 
         solve();

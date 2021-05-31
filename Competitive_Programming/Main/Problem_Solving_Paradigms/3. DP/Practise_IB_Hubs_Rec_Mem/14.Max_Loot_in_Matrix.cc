@@ -40,24 +40,64 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	}
 	return result;
 }
+ll m,n;
+
+bool is_valid(ll i, ll j){
+
+    return ( ( i >=0  and i < m ) and (j >=0  and j < n ) );
+}
+
+ll max_loot(vvl &grid){
+
+
+    fr(col, 1, n-1){
+
+        fr(row, 0, m-1){
+            
+            ll a = INT_MIN;
+
+            if (is_valid(row-1, col-1)){
+                a = grid[row-1][col-1];
+            }
+
+            ll b = INT_MIN;
+            if (is_valid(row, col-1)){
+                b = grid[row][col-1];
+            }
+
+            ll c = INT_MIN;
+            if (is_valid(row+1, col-1)){
+                c = grid[row+1][col-1];
+            }
+
+            grid[row][col] += max(a,max(b,c));
+
+        }
+
+    }
+
+    ll ans = INT_MIN;
+    fr(i,0,m-1){
+        ans = max(ans,grid[i][n-1]);
+    }
+
+    return ans;
+    
+}
 
 void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
+
+   cin >> m >> n;
+  vvl grid(m, vl(n,-1));
+
+  fr(i,0,m-1){
+      fr(j,0,n-1){
+          cin >> grid[i][j] ;
+      }
   }
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+ cout << max_loot(grid);
+  
 }
 
 signed main() {

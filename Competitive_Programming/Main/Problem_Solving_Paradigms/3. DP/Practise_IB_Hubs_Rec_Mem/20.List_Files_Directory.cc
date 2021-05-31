@@ -41,22 +41,73 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+
+bool match(string s, string p){
+
+    ll s_len = s.size();
+    ll p_len =  p.size();
+
+    vvl dp(p_len +1, vl(s_len+1, 0));  // dp[i][j] indicates if s[i:] and p[i:] matches.
+
+    frr(i, p_len, 0 ){
+
+        frr(j, s_len, 0){
+            
+            // Base case
+            if ( i == p_len and j == s_len){
+                dp[i][j] = 1;
+            }
+
+            // If the current characters match, it depends on the previous state.
+            else if ( p[i] == s[j] ){
+                dp[i][j] = dp[i+1][j+1];
+            }
+
+            // wildcard 
+            else if (p[i] == '*'){
+                
+                // Traverse the entire string & see if there is a match with p[i+1] from s[j] till end,
+                // which means dp[i][j] = 1, since '*' can represent any number of any characters.
+                fr(temp, j, s_len){
+
+                    // Checking if there is a match earlier.
+                    if (dp[i+1][temp]){
+                        dp[i][j] = 1;
+                        break;
+                    }
+                }
+
+            }
+
+            else{
+                dp[i][j] =  0;
+            }
+
+
+        }
+    }
+
+    return dp[0][0];
+
+}
+
 void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
+  string p; cin >> p;
+  ll n; cin >> n;
+  vector<string> v(n+1); 
+  ll flag = 0;
+  fr(i,1, n) { 
+      
+      cin >> v[i]; 
+
+      if (match(v[i], p)){
+          cout << v[i] << " ";
+          flag = 1;
+      }
   }
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
+  if (flag == 0){
+      cout << -1 ;
   }
 }
 

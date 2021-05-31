@@ -41,23 +41,42 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+ll max_value_expr(vl v){
+    
+    ll n = v.size();
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+    vl dp1(n+1,INT_MIN);      vl dp2(n+1,INT_MIN);      vl dp3(n+1,INT_MIN);      vl dp4(n+1,INT_MIN);  
+
+    // store maximum value of A[n] in decreasing order in dp1
+    frr(i, n-1, 0){
+        dp1[i] = max(dp1[i+1], v[i]);
+    }
+
+    // store maximum value of A[n]-A[m] in decreasing order in dp2
+    frr(i, n-2, 0){
+        dp2[i] = max(dp2[i+1], dp1[i+1]-v[i]);
+    }
+
+    // store maximum value of A[n]-A[m]+A[j] in decreasing order in dp3
+   frr(i, n-3, 0){
+        dp3[i] = max(dp3[i+1], dp2[i+1]+v[i]);
+    }
+
+    // store maximum value of A[n]-A[m]+A[j]-A[i] in decreasing order in dp4
+    frr(i, n-4, 0){
+        dp4[i] = max(dp4[i+1], dp3[i+1]-v[i]);
+    }
+
+    return dp4[0];
+
+
+}
+
+void solve() {
+  ll n; cin >> n;
+  vl v(n); 
+  fr(i,0,n-1) cin >> v[i];
+  cout << max_value_expr(v);
 }
 
 signed main() {

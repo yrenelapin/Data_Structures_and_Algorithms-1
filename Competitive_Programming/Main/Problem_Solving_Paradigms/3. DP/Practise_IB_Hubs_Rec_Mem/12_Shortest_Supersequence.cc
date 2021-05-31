@@ -41,23 +41,40 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+string a,b; 
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+ll common_subseq(ll i, ll j, vvl &dp ){
+
+    if (i < 0 or j < 0  ){
+        return 0;
+    }
+
+    if ( dp[i][j] != -1 ){
+        return dp[i][j];
+    }
+
+    ll res ;
+    if ( a[i] == b[j]  ){
+        res =  1 + common_subseq( i-1, j-1, dp);
+    }
+    else{ 
+        res = max( common_subseq( i-1, j, dp) , common_subseq( i, j-1,dp) );
+    }
+
+    dp[i][j] = res;
+    return res;
+
+}
+
+void solve() {
+  cin >> a >> b;
+
+  vvl dp( a.size(), vl(b.size(), -1) );
+
+  ll res =  common_subseq(a.size()-1, b.size()-1, dp);
+
+  cout <<  ( a.size()+ b.size() ) - res ;
+  
 }
 
 signed main() {

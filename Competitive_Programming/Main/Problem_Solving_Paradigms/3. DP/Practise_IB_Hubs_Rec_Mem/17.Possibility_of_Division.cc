@@ -41,23 +41,53 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+bool is_divisible(ll n, ll k, vl &v, vvl &dp){
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+     /*
+    Basically, since we need to cover all the given numbers for sure,
+    We start with the 1st number, Find the remainder upon dividing with
+    k & put 1 in coresponding column.
+    
+    Then from the next number, We have two options,
+    To add with previous number or subtract from previous number.
+    We do the both cases & divide by k & put 1 at coreponding remainders in both cases & 
+    repeat the same for all the numbers.
+    
+    */
+
+    dp[0][v[0]%k] = 1;
+
+    fr(i, 1, n-1){
+
+        fr(j, 0, k-1){
+
+            // If the previous state/suproblem's value is not divisible by j.
+            if (dp[i-1][j] ){
+                
+                /* Note that since we are interested in only reminders, 
+                We are just adding/ subtracting to (j+k) since 
+                the actual number doesnot matter when modulo is done.
+                abs() is taken to keep it in accordance with the indices of our DP*/
+
+                dp[i][  abs ( ( (j +k) + v[i] ) % k ) ] = 1;
+
+                dp[i][  abs ( ( (j +k) - v[i] ) % k ) ] = 1;
+
+            }
+
+        }
+
+    }
+
+    // At the end, We check if the Remainder is `0` when divided by k
+    return dp[n-1][0];
+}
+
+void solve() {
+  ll n, k; cin >> n >> k;
+  vvl dp(n+1, vl(k+1,0));  vl v(n); 
+  fr(i,0,n-1) { cin >> v[i]; v[i] =  abs(v[i]); }
+  is_divisible(n,k, v, dp) ? cout << "True" : cout << "False";
 }
 
 signed main() {
@@ -68,7 +98,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

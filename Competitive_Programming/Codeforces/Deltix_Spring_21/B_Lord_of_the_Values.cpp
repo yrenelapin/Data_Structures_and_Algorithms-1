@@ -42,22 +42,32 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
+  ll n; cin >> n; vl a(n);
+
   fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
+      cin >> a[i];
+  }
+  
+
+  ll h = n/2;
+  cout << h*6 << endl;
+  fr(i ,0,h-1){
+     
+    cout << 2 << " "  << 2*i+1 << " " << 2*i+2 << endl; 
+    cout << 1 << " "  << 2*i+1 << " " << 2*i+2 << endl; 
+    cout << 1 << " "  << 2*i+1 << " " << 2*i+2 << endl; 
+    cout << 2 << " "  <<2*i+1 << " " << 2*i+2  << endl; 
+    cout << 1 << " "  << 2*i+1 << " " << 2*i+2 << endl; 
+    cout << 1 << " "  << 2*i+1 << " " << 2*i+2 << endl; 
   }
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+
+
+
+  
+  
+
+
 }
 
 signed main() {
@@ -68,14 +78,14 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
         //cout << "Case #" << T << ": ";
 
         solve();
-        cout << "\n";
+        //cout << "\n";
     }
     return 0;
 }

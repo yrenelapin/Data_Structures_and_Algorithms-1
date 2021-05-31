@@ -41,23 +41,31 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+ll max_prod(ll n){
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+    vl dp(n+1);
+
+    // rod of length i has a minimum cost of i.
+    fr(i,0,n){
+        dp[i] = i;
+    }
+
+    // We can divide the rod if the size >= 2.
+    fr(s,2,n){
+
+        // divide the rod of length i into two rods of length j and i-j. find the maximum cost recursively.
+        fr(j, 1, s){
+            dp[s] = max(dp[s], j*dp[s-j] );
+        }
+        
+    }
+
+    return dp[n];
+}
+
+void solve() {
+  ll n; cin >> n;
+  cout << max_prod(n);
 }
 
 signed main() {

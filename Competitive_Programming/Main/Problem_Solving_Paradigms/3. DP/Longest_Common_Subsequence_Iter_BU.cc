@@ -41,41 +41,67 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
+/*
+Given two sequences, find the length of longest subsequence present in both of them.
+A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous. 
+For example, “abc”, “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”.
+*/
+string longest_common_subseq(string a, string b, vvl &dp)
+{
+    ll n = a.size(); ll m = b.size();
   
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+    // Fill dp table
+    for (ll i=1; i<=n; i++)
+    {
+        for (ll j=1; j<=m; j++)
+        {
+            // If characters match and indexes are
+            // not same
+            if (a[i-1] == b[j-1])
+                dp[i][j] =  1 + dp[i-1][j-1];         
+                       
+            // If characters do not match
+            else
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
+        }
+    }
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+
+    string res = "";
+    ll i = n, j = m;
+    while (i > 0 && j > 0)
+    {
+        // Same element but diff indices.
+        if (dp[i][j] == dp[i - 1][j - 1] + 1)
+        {
+            res = res + a[i-1];
+            i--;
+            j--;
+        }
+
+        else if (dp[i][j] == dp[i - 1][j])
+            i--;
+        else
+            j--;
+    }
+
+    reverse(res.begin(), res.end());
+
+    if (res.size() == 0)
+        return "";
+    return res;
 }
 
-signed main() {
 
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
 
-    fastIO;
-    int t = 1;
+int main()
+{   string a,b;
+    cin >> a >> b;  ll n = a.size(); ll m = b.size();
+    vvl dp(n+1 , vl(m+1 , 0));
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
-
-    fr(T,1,t){
-
-        //cout << "Case #" << T << ": ";
-
-        solve();
-        cout << "\n";
-    }
+    // If no common subs, it prints -1.
+    cout << longest_common_subseq(a, b, dp);
     return 0;
 }
+
+

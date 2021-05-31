@@ -41,41 +41,72 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+/*
+This problem is just the modification of Longest Common Subsequence problem. 
+The idea is to find the LCS(str, str) where str is the input string with the 
+restriction that when both the characters are same, they shouldn’t be on the same index in the two strings.
+*/
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+int common_subseq(string str, vvl &dp)
+{
+    int n = str.length();
+  
+    // Fill dp table (similar to LCS loops)
+    for (int i=1; i<=n; i++)
+    {
+        for (int j=1; j<=n; j++)
+        {
+            // If characters match and indexes are
+            // not same
+            if (str[i-1] == str[j-1] && i != j)
+                dp[i][j] =  1 + dp[i-1][j-1];         
+                       
+            // If characters do not match
+            else
+                dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
+        }
+    }
+    return dp[n][n];
 }
 
-signed main() {
 
-    // freopen("input.txt", "r", stdin);
-    // freopen("output.txt", "w", stdout);
+string construct_subseq(string str, vvl &dp)
+{
+    string res = "";
+    ll n = str.size();
+    ll i = n, j = n;
+    while (i > 0 && j > 0)
+    {
+        // Same element but diff indices.
+        if (dp[i][j] == dp[i - 1][j - 1] + 1)
+        {
+            res = res + str[i-1];
+            i--;
+            j--;
+        }
 
-    fastIO;
-    int t = 1;
-
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
-
-    fr(T,1,t){
-
-        //cout << "Case #" << T << ": ";
-
-        solve();
-        cout << "\n";
+        else if (dp[i][j] == dp[i - 1][j])
+            i--;
+        else
+            j--;
     }
+
+    reverse(res.begin(), res.end());
+
+    if (res.size() == 0)
+        return "-1";
+    return res;
+}
+
+
+int main()
+{   string str;
+    cin >> str; ll n = str.size();
+    vvl dp(n+1 , vl(n+1 , 0));
+    
+    ll len = common_subseq(str, dp);
+    cout << construct_subseq(str, dp);
     return 0;
 }
+
+

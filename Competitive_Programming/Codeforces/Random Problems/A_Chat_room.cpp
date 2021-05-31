@@ -42,22 +42,29 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+  string s;  cin >> s; ll n = s.size();
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+        
+        ll h = s.find('h');
+        ll e = s.find('e', h+1);  
+        ll l1 = s.find('l', e+1);  
+        ll l2 = s.find('l', l1+1);  
+        ll o = s.find('o', l2+1);  
+        //deb3(h,e,l1);deb2(l2, o);
+        if ( h!= -1 and e != -1 and o != -1 and l1 != -1 and l2 != -1){
+                    vl v = {h,e,l1,l2,o};
+                    if (is_sorted(all(v))){
+                        cout << "YES";
+                    }  else{
+                    cout << "NO";
+                }
+        }
+        else{
+            cout << "NO";
+        }
+
+
+
 }
 
 signed main() {

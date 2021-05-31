@@ -883,6 +883,9 @@ DP Notes :
 - So structure/order of Recursive Memoisation looks somewhat like :
    VALIDATION -> LOOKUP -> BASE CASE -> RECURSIVE STEP -> STORE in LOOKUP & RETURN.
 - In CF Contests, Recursive always works. But sometimes may be difficult to think. Some times on GFG/LEETCODE/Interview Bit, It may yield TLE. So, 1st try for RECURSIVE always, If it fails or gives TLE/Memory exceeded go for ITERATIVE. Its anyhow very easy to convert Recursive to Iterative. Just need to think which subproblem to be solved first. ( TOPOLOGICAL SORTING. )
+- Its always advisable to have the dp table of size `n+1` for `n` input in both approaches of DP 
+- Sometimes, Iterative way is easy to think of & implement than the recursive one. In those cases, implement Iterative one only.
+- Also, In some cases, We may need to use the `map/unordered_map` to act as DP table instead of `vvl`. In those cases, Lookup is like `map_name.count(Name) != 0` instead of `dp[i] != -1`.
 
 - If we are sure that, all the quantities are positive & they are very large, we can use , `unsigned long long` instead of `long long`
 - If we declare Vector with Initialisation in Global & take size of vector from INPUT in the Local Function, It gives unexpected errors since `n` gets random value in the beginning & the corresponding sized vector may be created.

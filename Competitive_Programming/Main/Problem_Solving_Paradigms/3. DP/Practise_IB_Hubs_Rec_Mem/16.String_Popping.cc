@@ -41,23 +41,61 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+/*
+Subproblem: Can we make the given string empty ? Its some substring of given input.
+Orig. Problem : Can we make the original string empty?
+*/
+
+
+ll StringPop(string str, unordered_map<string, bool> &dp ){
+    
+    // Its already empty, so its fine.     // Validation
+    if (str.empty()){
+        return 1;
+    }
+
+    // Lookup
+    if ( dp.count(str) ){
+        return dp[str];
+    }
+
+    ll i = 0; 
+    bool isPossible = false; // Indicates whether we can make the string empty.
+
+    while ( i < str.size() and !isPossible){
+
+        ll j = i;
+
+        // If the repeated consecutive elements are present, move the index j until they are finished.
+        while (j+1 < str.size() and str[j+1] == str[i]){
+            j++;
+        }
+
+
+        // If there are  repeated consecutive elements, We can remove them & Now check whether the remaining
+        // string can be made empty or not recursively.
+        if (i != j){
+            
+            string rem =  str.substr(0,i) + str.substr(j+1);
+            isPossible = StringPop(rem, dp);
+        }
+
+        // Move to the next char.
+        i = j+1;
+
+    }   
+
+    // Store
+    dp[str] = isPossible;
+    return isPossible;
+
+}
+
+void solve() {
+  string a; cin >> a ;
+  unordered_map<string, bool> dp;
+  StringPop(a,dp) ? cout << "True" : cout <<"False" ; 
 }
 
 signed main() {
@@ -68,7 +106,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

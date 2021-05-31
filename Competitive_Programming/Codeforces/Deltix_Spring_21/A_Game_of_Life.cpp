@@ -27,71 +27,81 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb2(x, y) cout << #x << " = " << x << "  ,  " << #y << "=" << y << endl
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
+const int M = 1e9 + 7;
+const ll INF = 1e18;
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
-template <typename T> T mpow(T x, T n) {
-    T res = 1;
-    for(; n; n >>= 1, x *= x)
-        if(n & 1) res *= x;
-    return res;
-}
-
-inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
-const int mod = 1e9 + 7;
-const long long INF = 1e18;
-
-//------------------------------------------------------------------------------------------------------------------------------------//
-
-
-/*
-Optimal evaluation of associative expression A[0] · A[1] · · · A[n − 1] — e.g., multiplying
-rectangular matrices 
-*/
-
-vvl dp(n, vl(n,-1));
-
-// Recursive Memoisation.
-
-// subproblem i to j-1 multiplications. i.e. Substring[i:j]
-ll optimal(ll i , ll j){
-
-    if ( dp[i][j] != -1){
-        return dp[i][j];
-    }
-    
-    ll res ;
-    if (j = i+1){
-        res = 0;
-    }
-    else{
-        
-        ll miny  = INT_MAX;
-
-        // Guessing the last multiplication.
-        fr(k, i+1, j-1){
-
-            // Notcie that `cost_for_multipication` of two matrices dependson given conditions.
-            miny = min( miny, optimal(i,k) + optimal(k,j) + cost_for_multi( (A[i] · · · A[k − 1]) by (A[k] · · · A[j − 1]) ) );
-        }
-
-        res = miny;
-
-    }
-
-    dp[i][j] = res;
-    return res;
-
+template <typename T> T pw(T a,T p=M-2,T MOD=M){
+	int result = 1;
+	while (p > 0) {
+		if (p & 1)
+			result = a * result % MOD;
+		a = a * a % MOD;
+		p >>= 1;
+	}
+	return result;
 }
 
 void solve() {
-    // Take the Input accordingly.    
+  ll n, m; cin >> n >> m;
+  string s; cin >> s;
 
-    // Our actual Problem is as follows :
-    cout << optimal(0, n);
+  fr(j, 1, m){
+
+   string temp = "";
+
+    if (s[0] == '0' and s[1] == '1'){
+            temp += "1";
+    }
+    else{
+         temp += s[0];
+    }
+    
+
+    fr(i, 1, n-2){
+
+
+            if (s[i] == '0'){
+
+                    bool one =  ( (s[i-1] == '1') and (s[i+1] == '0') );
+                    bool two =  ( (s[i-1] == '0') and (s[i+1] == '1') ); 
+
+                    //deb(i); deb3(s[i], s[i-1], s[i+1]);
+
+                    if ( (one == 1) || ( two == 1) ) {
+                        temp += "1";
+                    }
+                    else{
+                        temp += s[i];
+                    }
+
+
+                }
+                else{
+                    temp += s[i];
+                }
+
+    }
+    
+    if (s[n-1] == '0' and s[n-2] == '1'){
+            temp += "1";
+    }
+    else{
+        temp += s[n-1];
+    }
+
+    if (s == temp){
+        break;
+    }
+    else{ s = temp;}
+  //cout << s << endl;
+  }
+
+  cout <<s ;
+
+  
+
 
 }
-
-
-//------------------------------------------------------------------------------------------------------------------------------------//
 
 signed main() {
 

@@ -45,7 +45,7 @@ Given a list of weights [w1,w2,...,wn], determine all sums that can be construct
 1. Subproblem :  Check if we can construct a sum x using the first k weights  --> possible(x,k)  // No of subproblems = O(n*Max_Sum) 
 2. Guess : Value of k.
 3,4. Recurrence & Impl is below
-5. Original Problem :  possible(x) tells us whether we can construct a sum x using all weights.
+5. Original Problem :  possible(x,n) tells us whether we can construct a sum x using all weights.
 
 Time Complexity = O(n*Max_Sum) -> Psuedo Polynomial
 

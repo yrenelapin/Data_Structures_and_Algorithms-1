@@ -41,24 +41,32 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
-
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+int maxSubArraySum(vl a, int size)
+{
+    int max_so_far = INT_MIN, max_ending_here = 0;
+ 
+    for (int i = 0; i < size; i++)
+    {
+        max_ending_here = max_ending_here + a[i];
+        if (max_so_far < max_ending_here)
+            max_so_far = max_ending_here;
+ 
+        if (max_ending_here < 0)
+            max_ending_here = 0;
+    }
+    
+    return max_so_far;
 }
+
+void solve() {
+  ll n, k; cin >> n >> k;
+  vl v(n);
+  fr(i,0,n-1) { cin >> v[i];}
+
+  cout << maxSubArraySum(v, n);
+
+
+} 
 
 signed main() {
 
@@ -68,7 +76,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

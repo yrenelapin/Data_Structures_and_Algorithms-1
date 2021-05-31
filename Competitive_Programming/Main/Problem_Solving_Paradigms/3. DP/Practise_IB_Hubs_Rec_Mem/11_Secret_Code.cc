@@ -41,23 +41,50 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
+string s; 
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+
+
+ll countDecoding(string &s, ll n)
+{    
+    // If 1st element of string is 0, We cant decode it, since the numberings start from 1 till 26.
+	if(s[0]=='0')
+		return 0;
+
+    // A table to store results of subproblems.
+    //Sub Problem : Prefixes dp[i], No of ways to decode till (i-1)th index.
+    vl dp( n+1, 0);
+
+    // Empty string can be decoded in 1 way. (Assumption.)
+	dp[0] = 1;
+
+    // 1st element can be decoded in 1 way.
+	dp[1] = 1;
+    
+    // Filling the table iteratively.
+	for (int i = 2; i <= n; i++)
+	{
+		// If the last digit is not 0,
+		// then it will add to the number of words during the usage of curr digit.
+		if (s[i-1] != '0')
+			dp[i] = dp[i-1];
+
+        ll i_2 = s[i-2] - '0';
+        ll i_1 = s[i-1] - '0';
+        ll num = i_2*10 + i_1;
+
+        // If last two digits form a valid number,  then no of ways to form till (i-1)th index is added (i-3)th index.
+		if ( num <= 26  and num >= 1)
+			dp[i] += dp[i-2];
+	}
+
+	return dp[n];
+}
+
+
+void solve() {
+  cin >> s; ll n = s.size();
+  cout << countDecoding(s, n);
 }
 
 signed main() {
@@ -68,7 +95,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

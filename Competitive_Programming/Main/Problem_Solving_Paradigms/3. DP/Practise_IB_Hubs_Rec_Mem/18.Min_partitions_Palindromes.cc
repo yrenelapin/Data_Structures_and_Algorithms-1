@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+    #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
 typedef long double ld;
@@ -41,24 +41,61 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
-
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
-  }
+bool isPalindrome(string str, ll i, ll j)
+{
+    while(i < j)
+    {
+      if ( str[i] != str[j] )
+        return false; 
+      i++;
+      j--;
+    }
+    return true;
 }
+
+/*
+This problem is a variation of Matrix Chain Multiplication problem. 
+If the string is a palindrome, then we simply return 0. Else, like the Matrix Chain Multiplication problem,
+we try making cuts at all possible places, recursively calculate the cost for each cut and return the minimum value
+*/
+
+ll MinPartPalindrome( ll i, ll j, string str, vvl &dp){
+
+    // If string length is 1, It means its a palindrome already
+    if (i == j){
+        return 0;
+    }
+
+    if (dp[i][j] != -1){
+        return dp[i][j];
+    }
+
+    ll res = INT_MAX;
+    if (isPalindrome(str,i,j)){
+        res = 0;
+    }
+    else{
+
+        // Trying all the possible partitions similar to Matrix Chain Multiplciation
+        fr(k, i, j-1){
+             
+            // Since we make 1 cut here, 1 + rem. two recursive calls. 
+            res = min(res, MinPartPalindrome(i, k, str, dp) + MinPartPalindrome(k+1, j, str, dp) +  1);
+        }
+
+    }
+
+    dp[i][j] = res;
+    return res;
+}
+
+
+void solve() {
+    string str; cin >> str; ll n = str.size();
+    vvl dp(n+1, vl(n+1,-1)); 
+    cout << MinPartPalindrome( 0, n-1, str, dp) << endl;  
+}
+
 
 signed main() {
 

@@ -42,22 +42,61 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
+
+  ll n, m, p; cin >> n >> m >> p;
+  vvl a(n, vl(m,-1));
   
+  map<ll,ll> curr; // (curr, count)
   fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
+    fr(j,0,m-1){
+        cin >> a[i][j]; 
+        if (a[i][j] == 1) curr[j+1]++;
+    }}
+  
+  ll thr = ( n + 1 )/2 ;
+
+  map<ll,ll,greater<ll>> store;    
+
+  trav(each, curr){ 
+
+      if (each.se >= thr){
+
+
+          store[each.se] = each.fi;
+      }
+
   }
 
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
+  if (store.size() == 0){
+      fr(i,0,m-1){
+        cout << 0; 
+      }
   }
   else{
-      cout << "NO";
+      vl ans(m+1, 0);
+
+     auto itr = store.begin();
+     ll f = itr->se;  
+     ans[itr->se] =  1;
+
+     trav(each, store){
+         if (each.se != f){
+
+             if (a[each.fi][each.se]  )
+         }
+     }
+
+      
+
+
+
+
   }
+
+
+
+
+
 }
 
 signed main() {
@@ -68,7 +107,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

@@ -42,21 +42,14 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n; ll a,b,c;
-  ll sum_x = 0, sum_y = 0, sum_z = 0;
-  
-  fr(i,0,n-1){
-      cin >> a >> b >> c;
-      sum_x += a;
-      sum_y += b;
-      sum_z += c;
-  }
-
-  if (sum_x == 0 and sum_y == 0 and sum_z == 0){
-      cout << "YES";
-  }
-  else{
-      cout << "NO";
+  ll n;
+  while(cin >> n){
+      if (n == 42){
+          break;
+      }
+      else{
+          cout << n << endl;
+      }
   }
 }
 

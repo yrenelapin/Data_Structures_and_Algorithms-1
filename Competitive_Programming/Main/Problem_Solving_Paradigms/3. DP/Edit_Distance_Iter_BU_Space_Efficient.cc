@@ -65,8 +65,8 @@ void EditDistDP(string str1, string str2)
 // Driver program
 int main()
 {
-	string str1 = "food";
-	string str2 = "money";
+	string str1, str2;
+	cin >> str1 >> str2;
 	EditDistDP(str1, str2);
 	return 0;
 }
