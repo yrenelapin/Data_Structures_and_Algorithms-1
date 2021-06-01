@@ -41,31 +41,78 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-/*
-Given an array A of N numbers, find the maximum sum of a 
-subsequence with the constraint that no two numbers in the subsequence are adjacent in the array.
-*/
-ll max_sum( ll i, vl &v, vl &dp){
+/* Ref: https://www.geeksforgeeks.org/find-the-longest-path-in-a-matrix-with-given-constraints/   */
 
-    if (i < 0){
+ll n;
+
+/*
+Initially, It seems like there is no optimal substructure, 
+But once we fix a Starting point, We can see that, Optimal Substructure is present.
+
+Subproblem : Given a starting point, What is the longest distance ?
+Guess : The starting point (Hint : Try all! )
+Original Problem : Maximum among lenghts from all starting points.
+*/
+
+ll LongestPath(ll i, ll j, vvl &grid, vvl &dp){
+
+    if ( not( ( i >=0  and i < n ) and (j >=0  and j < n ) ) ){
         return 0;
     }
 
-    if (dp[i] != -1){return dp[i];}
-    ll res;
-    if (i == 0){ res = v[0]; }
-    else{
-        res =  max( v[i] +  max_sum(i-2,v,dp) , max_sum(i-1, v, dp) );
+    if (dp[i][j] != -1){
+      return dp[i][j];
     }
 
-    dp[i] =  res; return res;
+    ll u = INT_MIN, d = INT_MIN, l = INT_MIN, r = INT_MIN;
+
+    // Since all numbers are unique and in range from 1 to n*n,
+    // there is atmost one possible direction from any cell
+    if (  (j < n-1 )   and  ( 1+ grid[i][j] == grid[i][j+1] ) ){
+        r = 1 + LongestPath(i,j+1, grid, dp);
+    }
+
+    if (  (j > 0 )   and  ( 1+ grid[i][j] == grid[i][j-1] ) ){
+        l = 1 + LongestPath(i,j-1, grid, dp);
+    }
+
+      if (  (i < n-1 )   and  ( 1+ grid[i][j] == grid[i+1][j] ) ){
+        d = 1 + LongestPath(i+1,j, grid, dp);
+    }
+
+      if (  (i > 0 )   and  ( 1+ grid[i][j] == grid[i-1][j] ) ){
+        u = 1 + LongestPath(i-1,j, grid, dp);
+    }
+
+    vl temp = {u,d,l,r,1};
+    ll res = *max_element(all(temp));
+    return dp[i][j] = res;
 }
 
 void solve() {
-  ll n; cin >> n;
-  vl dp(n, -1);
-  vl v(n); fr(i,0,n-1) cin >> v[i];
-  cout << max_sum(n-1, v, dp);
+  cin >> n;
+  vvl grid(n, vl(n,-1));
+  vvl dp(n, vl(n,-1));
+
+  fr(i,0,n-1){
+      fr(j,0,n-1){
+          cin >> grid[i][j] ;
+      }
+  }
+
+  ll ans = 1; ll temp;
+
+  // Choosing the starting point
+  fr(i,0,n-1){
+    fr(j,0,n-1){
+      if (dp[i][j] == -1){
+          temp = LongestPath(i,j,grid,dp);
+      }
+      ans = max(ans,temp);
+  }}
+
+  cout << ans;
+
 }
 
 signed main() {

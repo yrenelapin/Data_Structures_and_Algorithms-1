@@ -41,66 +41,31 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-/*
-Given two sequences, find the length of longest subsequence present in both of them.
-A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous. 
-For example, “abc”, “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”.
-*/
-string longest_common_subseq(string a, string b, vvl &dp)
-{
-    ll n = a.size(); ll m = b.size();
-  
-    // Fill dp table
-    for (ll i=1; i<=n; i++)
-    {
-        for (ll j=1; j<=m; j++)
-        {
-            // If characters match
-            if (a[i-1] == b[j-1])
-                dp[i][j] =  1 + dp[i-1][j-1];         
-                       
-            // If characters do not match
-            else
-                dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
-        }
+void solve() {
+  ll n; cin >> n;
+   vl v(n); map<ll,ll> m; ll miny = INT_MAX;
+  fr(i,0,n-1) { cin >> v[i];  m[v[i]]++; miny = min(miny, v[i]); }
+
+  cout << n - m[miny];
+
+ }
+
+signed main() {
+
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
+
+    fastIO;
+    int t = 1;
+
+    cin >>  t;  // Comment this line if only 1 testcase exists.
+
+    fr(T,1,t){
+
+        //cout << "Case #" << T << ": ";
+
+        solve();
+        cout << "\n";
     }
-
-
-    string res = "";
-    ll i = n, j = m;
-    while (i > 0 && j > 0)
-    {
-        // Same element but diff indices.
-        if (dp[i][j] == dp[i - 1][j - 1] + 1)
-        {
-            res = res + a[i-1];
-            i--;
-            j--;
-        }
-
-        else if (dp[i][j] == dp[i - 1][j])
-            i--;
-        else
-            j--;
-    }
-
-    reverse(res.begin(), res.end());
-
-    if (res.size() == 0)
-        return "";
-    return res;
-}
-
-
-
-int main()
-{   string a,b;
-    cin >> a >> b;  ll n = a.size(); ll m = b.size();
-    vvl dp(n+1 , vl(m+1 , 0));
-
-    // If no common subs, it prints -1.
-    cout << longest_common_subseq(a, b, dp);
     return 0;
 }
-
-

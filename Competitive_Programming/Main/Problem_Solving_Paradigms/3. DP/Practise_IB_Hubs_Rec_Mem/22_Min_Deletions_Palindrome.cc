@@ -36,71 +36,70 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 		if (p & 1)
 			result = a * result % MOD;
 		a = a * a % MOD;
-		p >>= 1;
+		p >>= 1;    
 	}
 	return result;
 }
 
-/*
-Given two sequences, find the length of longest subsequence present in both of them.
-A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous. 
-For example, “abc”, “abg”, “bdf”, “aeg”, ‘”acefg”, .. etc are subsequences of “abcdefg”.
-*/
-string longest_common_subseq(string a, string b, vvl &dp)
-{
-    ll n = a.size(); ll m = b.size();
-  
-    // Fill dp table
-    for (ll i=1; i<=n; i++)
-    {
-        for (ll j=1; j<=m; j++)
-        {
-            // If characters match
-            if (a[i-1] == b[j-1])
-                dp[i][j] =  1 + dp[i-1][j-1];         
-                       
-            // If characters do not match
-            else
-                dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
-        }
+ll min_deletions(ll i, ll j, string s, vvl &dp){
+    
+    if (i > j){
+        return 0;
+    }
+    
+    if (dp[i][j] != -1){
+        return dp[i][j];
     }
 
+    ll res;
 
-    string res = "";
-    ll i = n, j = m;
-    while (i > 0 && j > 0)
-    {
-        // Same element but diff indices.
-        if (dp[i][j] == dp[i - 1][j - 1] + 1)
-        {
-            res = res + a[i-1];
-            i--;
-            j--;
+    // Single element
+    if ( i == j ){
+        res = 0;
+    }
+    else if (i+1 == j){
+        if (s[i] == s[j]){
+            res = 0;
         }
-
-        else if (dp[i][j] == dp[i - 1][j])
-            i--;
-        else
-            j--;
+        else{
+            res = 1;
+        }
+    }
+    else if (s[i] == s[j]){
+        res = min_deletions(i+1, j-1, s, dp);
+    }
+    else{
+        res = 1 + min( min_deletions( i, j-1, s, dp) , min_deletions( i+1, j, s, dp) )  ;
     }
 
-    reverse(res.begin(), res.end());
-
-    if (res.size() == 0)
-        return "";
+    dp[i][j] = res;
     return res;
+
 }
 
+void solve() {
+  string s ; cin >> s;
+  ll n = s.size();
+  vvl dp(n+1, vl(n+1,-1));
+  cout << min_deletions(0, n-1, s,dp); 
+}
 
+signed main() {
 
-int main()
-{   string a,b;
-    cin >> a >> b;  ll n = a.size(); ll m = b.size();
-    vvl dp(n+1 , vl(m+1 , 0));
+    // freopen("input.txt", "r", stdin);
+    // freopen("output.txt", "w", stdout);
 
-    // If no common subs, it prints -1.
-    cout << longest_common_subseq(a, b, dp);
+    fastIO;
+    int t = 1;
+
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
+
+    fr(T,1,t){
+
+        //cout << "Case #" << T << ": ";
+
+        solve();
+        cout << "\n";
+    }
     return 0;
 }
-
-

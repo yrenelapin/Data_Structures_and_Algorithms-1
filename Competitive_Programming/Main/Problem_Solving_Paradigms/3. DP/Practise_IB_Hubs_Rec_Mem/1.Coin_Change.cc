@@ -42,6 +42,12 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 /*
+Your friend has given N rupees and told you to get some change for it.
+You have an infinite supply of M different valued coins, write a program
+to find the number of unique coin combinations that sum up to N.
+*/
+
+/*
 Subproblem : No of ways to make a sum x using k coins.
 Guess : - To include / not include the current coin -> Do both & add count.
 
