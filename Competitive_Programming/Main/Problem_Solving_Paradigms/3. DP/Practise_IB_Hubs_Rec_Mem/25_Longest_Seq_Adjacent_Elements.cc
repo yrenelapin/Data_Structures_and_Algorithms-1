@@ -51,7 +51,7 @@ But once we fix a Starting point, We can see that, Optimal Substructure is prese
 
 Subproblem : Given a starting point, What is the longest distance ?
 Guess : The starting point (Hint : Try all! )
-Original Problem : Maximum among lenghts from all starting points.
+Original Problem : Maximum among lengths from all starting points.
 */
 
 ll LongestPath(ll i, ll j, vvl &grid, vvl &dp){

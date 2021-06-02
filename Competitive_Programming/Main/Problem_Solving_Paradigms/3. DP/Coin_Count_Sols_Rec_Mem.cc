@@ -44,7 +44,16 @@ const long long INF = 1e18;
 
 /*
 Calculate the total number of ways to produce a sum S using the coins. 
-For example, if coins = {1,3,4} and S = 5, there are a total of 6 ways
+For example, if coins = {1,3,4} and S = 5, there are a total of 6 ways :
+• 1+1+1+1+1
+• 1+1+3
+• 1+3+1
+• 3+1+1
+• 1+4
+• 4+1
+
+It means, we need *NOT* find the *UNIQUE* coin combinations.
+So we need not track the position of coins being used. Just sum is sufficient. So 1-D DP.
 */
 
 

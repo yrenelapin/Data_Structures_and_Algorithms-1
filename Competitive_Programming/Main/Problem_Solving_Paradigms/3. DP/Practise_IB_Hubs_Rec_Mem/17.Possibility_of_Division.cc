@@ -55,13 +55,17 @@ bool is_divisible(ll n, ll k, vl &v, vvl &dp){
     
     */
 
+   // dp[i][j] = 1 means that we can construct a sum using indices 0,1,2,.. i-1 that has remainder of j when divided by k.
+
     dp[0][v[0]%k] = 1;
 
+    // Iterating over all the positions
     fr(i, 1, n-1){
 
+        // Checking what is the remainder till the prev position (i-1) by trying all possible remainders.
         fr(j, 0, k-1){
 
-            // If the previous state/suproblem's value is not divisible by j.
+            // If the  ( (value of the expression till previous position) % k ) is `j` 
             if (dp[i-1][j] ){
                 
                 /* Note that since we are interested in only reminders, 
@@ -69,9 +73,11 @@ bool is_divisible(ll n, ll k, vl &v, vvl &dp){
                 the actual number doesnot matter when modulo is done.
                 abs() is taken to keep it in accordance with the indices of our DP*/
 
-                dp[i][  abs ( ( (j +k) + v[i] ) % k ) ] = 1;
+                // Putting ones in both the possible remainders pos.
 
-                dp[i][  abs ( ( (j +k) - v[i] ) % k ) ] = 1;
+                dp[i][  abs ( ( (j +k) + v[i] ) % k ) ] = 1;   // We can add
+
+                dp[i][  abs ( ( (j +k) - v[i] ) % k ) ] = 1;   // We can subtract
 
             }
 

@@ -44,7 +44,12 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 /*
 Your friend has given N rupees and told you to get some change for it.
 You have an infinite supply of M different valued coins, write a program
-to find the number of unique coin combinations that sum up to N.
+to find the number of *UNIQUE* coin combinations that sum up to N.
+
+For example, if coins = {1,3,4} and S = 5, there are a total of 3 ways :
+• 1,1,1,1,1
+• 1,1,3
+• 1,4
 */
 
 /*
@@ -79,7 +84,7 @@ ll coin_change(ll n, ll m, vl v, vvl &dp){
                 // 1. We can include the current coin & count no of ways to make a sum of `n-current` using `m` coins.
                   res += coin_change( n-v[m], m , v, dp );
 
-                // 2. We can exclude the current coin & count no of ways to make a sum of  `n` using `m-1` coins.
+                // 2. We can exclude the current coin & count no of ways to make a sum of `n` using `m-1` coins.
                   res += ( coin_change(n, m-1, v, dp) );
 
     }
