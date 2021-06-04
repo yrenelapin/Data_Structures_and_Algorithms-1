@@ -41,34 +41,37 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-int maxSubArraySum(vl a, int size)
+
+// Time complexity : O(n*log(log(n))) 
+vl SieveOfEratosthenes(ll n)
 {
-    int max_so_far = INT_MIN, max_ending_here = 0;
- 
-    for (int i = 0; i < size; i++)
-    {
-        max_ending_here = max_ending_here + a[i];
-        if (max_so_far < max_ending_here)
-            max_so_far = max_ending_here;
- 
-        if (max_ending_here < 0)
-            max_ending_here = 0;
-    }
-    
-    return max_so_far;
+  vl primes(n+1, 1);
+	for (ll p = 2; p * p <= n; p++){
+		if (primes[p] == 1){
+			for (ll i = p * p; i <= n; i += p)
+				primes[i] = 0;
+		}
+	}
+
+  // Now, Those indices with values as 1 are primes.
+  // We are constructing the prefix sum array. So now Primes[i] will contain the number of primes less than i.
+  fr(i, 3, n){
+    primes[i] += primes[i-1];
+  }
+  
+  return primes;
 }
 
+vl res;
+
 void solve() {
-  ll n, k; cin >> n >> k;
-  vl v(n);
-  fr(i,0,n-1) { cin >> v[i];}
-
-  cout << maxSubArraySum(v, n);
-
-
-} 
+  ll n; cin >> n; 
+  cout << ( res[n] - res[n/2] ) + 1;
+}
 
 signed main() {
+
+    res = SieveOfEratosthenes(10000000);
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
@@ -77,9 +80,9 @@ signed main() {
     int t = 1;
 
     cin >>  t;  // Comment this line if only 1 testcase exists.
-
+   
     fr(T,1,t){
-
+          
         //cout << "Case #" << T << ": ";
 
         solve();
