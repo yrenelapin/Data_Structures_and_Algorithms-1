@@ -41,40 +41,65 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+  
+void fill_table( vvl &dp, vl v , ll n, ll k){
+
+  fr(l, 1, n){
+    fr(r, 1, n){
+
+      if ( l == r ){
+        dp[l][r] =  k-1; 
+      }
+
+      else if (l > r){
+        dp[l][r] = 0;
+      }
+
+      else if ( l+1 == r ){
+          ll curr = v[r-1];
+          dp[l][r] = (curr-2) + (k - v[l-1] - 1);   
+      }
+      else{
+
+          ll prev = dp[l][(r-1)];
+
+          ll last_1 = v[r-2];
+          ll last_2 = v[r-3];
+          ll to_remove = (k - last_2 - 1);
+          prev -= (to_remove);
+
+          ll curr = v[r-1];
+          ll cont_last_1 = (last_1 - last_2 -1) + (curr-last_1-1);
+          ll cont_curr = k - last_1 -1;
+
+          dp[l][r] = prev + cont_curr + cont_last_1 ;
+
+
+      }
+
+
+    }
+  }
+
+}
+
 void solve() {
+  ll n, q,k; cin >> n >> q >> k;
 
-  ll n; cin >> n;
+  vl v(n); 
+  fr(i,0,n-1) cin >> v[i];
 
-  if ( n%2 == 1 ){
+  vvl dp(n+1, vl(n+1, 0));
+  
+  fill_table(dp,v, n, k);
 
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
+  fr(j, 1, q){
 
-        }
-    } 
-    
-  }
-  else{
-
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
-            }
-
-        }
-    } 
+      ll left, right;
+      cin >> left >> right;
+      cout << dp[left][right] << endl;
 
   }
-
 }
 
 signed main() {
@@ -85,14 +110,14 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
         //cout << "Case #" << T << ": ";
 
         solve();
-        cout << "\n";
+        //cout << "\n";
     }
     return 0;
 }

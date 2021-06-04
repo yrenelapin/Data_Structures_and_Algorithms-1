@@ -41,40 +41,71 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+ll min_days_rest(ll day, ll prev, vl v, vl &dp){
+
+    if (day > v.size()-1){
+      return 0;
+    }
+
+    if (dp[day] != -1 ){ return dp[day]; }
+
+    ll res;
+
+    ll curr = v[day];
+    bitset<2> a = curr;
+
+    // Both are available
+    if (a[0] == 1 and a[1] ==1 ){
+         
+        ll res2 = INT_MAX, res1= INT_MAX; 
+
+        if (prev !=  0){
+          res1 = min_days_rest(day+1, 0, v, dp); 
+        }
+
+        if (prev !=  1){
+          res2 = min_days_rest(day+1, 1, v, dp); 
+        }
+
+        res =  min(res1, res2);
+    } 
+
+    else if (a[0] == 1 and a[1] == 0){
+
+        if ( prev != 0){
+            res = min_days_rest(day+1, 0, v, dp) ;
+        }
+        else{
+          res =  1 + min_days_rest(day+1, -1, v, dp) ;
+        }
+
+    }
+
+    else if (a[0] == 0 and a[1] == 1){
+      
+      if ( prev != 1){
+            res = min_days_rest(day+1, 1, v, dp) ;
+        }
+      else{
+          res =  1 + min_days_rest(day+1, -1, v, dp) ;
+        }
+
+    }
+
+    else if (a[0] == 0 and a[1] == 0){
+        res = 1 + min_days_rest(day+1, -1, v, dp) ;
+    }
+
+
+  return dp[day] = res;
+
+}
+
 void solve() {
-
   ll n; cin >> n;
-
-  if ( n%2 == 1 ){
-
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
-
-        }
-    } 
-    
-  }
-  else{
-
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
-            }
-
-        }
-    } 
-
-  }
-
+  vl dp(n, -1);  vl v(n); 
+  fr(i,0,n-1) cin >> v[i];
+  cout << min_days_rest(0, -1, v, dp);
 }
 
 signed main() {
@@ -85,7 +116,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

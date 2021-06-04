@@ -41,40 +41,21 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+
 void solve() {
+  ll n, q,k; cin >> n >> q >> k;
 
-  ll n; cin >> n;
+  vl v(n); 
+  fr(i,0,n-1) cin >> v[i];
 
-  if ( n%2 == 1 ){
+  fr(j, 1, q){
 
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
-
-        }
-    } 
-    
-  }
-  else{
-
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
-            }
-
-        }
-    } 
+      ll left, right;
+      cin >> left >> right;
+      
+      cout << ( 2*( (v[right-1] - v[left-1] + 1) - (right - left + 1) ) + ( v[left-1]-1 ) + (k -  v[right-1]) ) <<  endl ;
 
   }
-
 }
 
 signed main() {
@@ -85,14 +66,14 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
         //cout << "Case #" << T << ": ";
 
         solve();
-        cout << "\n";
+        //cout << "\n";
     }
     return 0;
 }

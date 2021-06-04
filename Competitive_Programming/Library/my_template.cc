@@ -43,8 +43,8 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 
 void solve() {
   ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  // vvl dp(n, vl(n,-1));  
+  vl v(n); fr(i,0,n-1) cin >> v[i];
 }
 
 signed main() {

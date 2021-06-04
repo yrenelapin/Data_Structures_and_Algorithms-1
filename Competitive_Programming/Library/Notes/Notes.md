@@ -960,6 +960,8 @@ DP Notes :
 - Also, In some cases, We may need to use the `map/unordered_map` to act as DP table instead of `vvl`. In those cases, Lookup is like `map_name.count(Name) != 0` instead of `dp[i] != -1`.
 - Note that, Sometimes even DP gives TLE, then the solution expected from us is most likely a GREEDY one.
 - Also, It is not that any problem can be solved by DP, But most of the Optimisation Problems/Counting Problems/CheckIfPossible type can be solved. If even thinking for a while, made all kinds of subproblems, but unable to relate them to original subproblem, It means that OPTIMAL SUBSTRUCTURE may be missing for that particular problem though Overlapping subproblems are present. In those cases, since DP is not going to help, Try Greedy/Recursive BackTracking/Divide&Conquer.  
+- Note that DP is mostly helpful in reducing Exponential (say 2^n) Time Complexities to Polynomial (say n^2). But in some cases,
+Even DP gives TLE/ Memory Limit Exceeded. In those cases, Either Memory efficient DP (usually Bottom up with clever space optimisation) may help. Even if that fails/ unable to make it a Space efficient one, Try GREEDY approach. It really solves problems in such scenarios. In some cases, Just Observation of the exact logic & using bruteforce works even better. Example [here.](https://codeforces.com/contest/1485/problem/B)
 
 - If we are sure that, all the quantities are positive & they are very large, we can use , `unsigned long long` instead of `long long`
 - If we declare Vector with Initialisation in Global & take size of vector from INPUT in the Local Function, It gives unexpected errors since `n` gets random value in the beginning & the corresponding sized vector may be created.
@@ -1090,3 +1092,9 @@ bool isBalanced(string exp)
 - Some times, zero indexing simplifes the problem. 
 i.e. treating 1,2,3,4,5.. as 0,1,2,3,4,..
 Ex : [here](https://codeforces.com/contest/1487/submission/118125075)
+
+- Most of the A,B problems sometimes C too in CF Div-2 rounds are just based on the careful observation & simple implementation. So, Just do careful analysis & get the logic from the given test cases, then test them on custom corner cases without hurry, submit!
+
+- Number of inversions in a Palindrome remains the same irrespective of the values they contain. [Usage](https://codeforces.com/contest/1473/problem/C)
+
+- Proper usage of Hash Tables (map) can make O(n^2) solution to O(n) very easily. Mostly traversing of arrays/vectors can be onverted to lookups in Hash Tables based on constraints. [Example](https://codeforces.com/contest/1481/problem/C)  

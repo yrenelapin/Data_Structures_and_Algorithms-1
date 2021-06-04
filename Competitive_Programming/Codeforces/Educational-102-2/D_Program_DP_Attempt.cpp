@@ -41,10 +41,94 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
+void build_table(string s, ll n, ll m, vector<vector< unordered_map<ll,ll> >> &dp){
+
+
+
+  fr(l,1,n){
+    fr(r,1,n){
+
+       if (l > r){
+         // Empty map
+       }
+       else if ( l == r ){  // l-1 or r-1 should be removed.
+            
+            unordered_map<ll,ll> mymap;
+            ll x = 0; mymap[x]++;
+
+            fr(i, 1, l-1){
+
+              if (s[i-1] == '+'){
+                x++; mymap[x]++;
+              }
+              else{
+                  x--; mymap[x]++; 
+              }
+            }
+
+            fr(i, l, n-1){
+              if (s[i] == '+'){
+                x++; mymap[x]++;
+              }
+              else{
+               x--; mymap[x]++; 
+              }
+            }
+
+            dp[l][r] = mymap;
+       }
+       else{  // 2,3
+
+          auto prev =  dp[l][r-1];
+
+          char curr = s[r-1];
+
+          // current char contribution.
+          ll x_c = 0;
+
+          fr(i,0,l-2){
+            if (s[i] == '+') x_c++;
+            else {x_c--;}
+          }
+
+          fr(i,l,r-1){
+            if (s[i] == '+') x_c++;
+            else {x_c--;}
+          }
+
+          if (prev[x_c] > 1){
+            prev[x_c]--;
+          }
+          else if (prev[x_c] == 1){
+                prev.erase(x_c);
+          }
+
+          dp[l][r] = prev;
+
+       }
+
+
+    }
+  }
+
+}
+
 void solve() {
-  ll n; cin >> n;
-  vvl dp(n, vl(n,-1));  vl v(n); 
-  fr(i,0,n-1) cin >> v[i];
+  ll n, m; cin >> n >> m; string s; cin >> s;
+
+  vector<vector< unordered_map<ll,ll> >> dp(n+1, vector<unordered_map<ll,ll>>(n+1));  
+  
+  build_table(s,n,m, dp);
+
+  ll l, r;
+  fr(i,0,m-1) { cin >> l >> r; 
+                cout << dp[l][r].size() << endl;
+                 //cout << l << " " << r << endl;
+                trav(each, dp[l][r]){
+                deb2(each.fi, each.se);
+                }
+              }
+
 }
 
 signed main() {
@@ -62,7 +146,7 @@ signed main() {
         //cout << "Case #" << T << ": ";
 
         solve();
-        cout << "\n";
+        //cout << "\n";
     }
     return 0;
 }

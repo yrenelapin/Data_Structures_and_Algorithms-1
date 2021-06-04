@@ -42,38 +42,71 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-
-  ll n; cin >> n;
-
-  if ( n%2 == 1 ){
-
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
-
-        }
-    } 
+  string s,t; cin >> s >> t;
+  vector<string> s_pos, t_pos; 
+  ll s_len = s.size(); ll t_len = t.size(); ll pro =  s_len*t_len;
     
+    //deb(pro);
+
+  string temp_s = s; 
+  while (temp_s.size() <= pro){
+      s_pos.pb(temp_s);
+      temp_s += s;
+  } 
+
+  string tempt = t; 
+  while (tempt.size() <= pro){
+      t_pos.pb(tempt);
+      tempt += t;
+  } 
+    
+//    trav(s, s_pos){
+//        deb(s);
+//    } 
+
+//    trav(t, t_pos){
+//        deb(t);
+//    } 
+
+  ll ss = s_pos.size()-1; ll flag1 = 0; string ans1 = "?";
+  fr(i, 0, ss){
+      if ( find (all(t_pos), s_pos[i]) != t_pos.end() ){
+          flag1 = 1;
+          ans1 = s_pos[i];
+          break;
+      }
+  }
+
+  ll tt = t_pos.size()-1; ll flag2 = 0; string ans2 = "?";
+  fr(i, 0, tt){
+      if ( find (all(s_pos), t_pos[i]) != s_pos.end() ){
+          flag2 = 1;
+          ans2 = t_pos[i];
+          break;
+      }
+  }
+
+  if (ans1 == "?"  and ans2 != "?"){
+      cout << ans2;
+  }
+  if (ans2 == "?"  and ans1 != "?"){
+      cout << ans1;
+  }
+  else if (ans2 == "?"  and ans1 == "?"){
+      cout << -1;
   }
   else{
-
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
-            }
-
-        }
-    } 
+      if (ans1.size() <= ans2.size()){
+          cout << ans1;
+      }
+      else{
+          cout << ans2;
+      }
 
   }
+
+
+
 
 }
 

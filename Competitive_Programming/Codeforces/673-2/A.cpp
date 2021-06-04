@@ -27,70 +27,43 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb2(x, y) cout << #x << " = " << x << "  ,  " << #y << "=" << y << endl
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
-const int M = 1e9 + 7;
-const ll INF = 1e18;
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
-template <typename T> T pw(T a,T p=M-2,T MOD=M){
-	int result = 1;
-	while (p > 0) {
-		if (p & 1)
-			result = a * result % MOD;
-		a = a * a % MOD;
-		p >>= 1;
-	}
-	return result;
-}
-
+ 
+inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
+const int mod = 1e9 + 7;
+const long long INF = 1e18;
+ 
 void solve() {
+  ll n, k, temp;
+  cin >> n >> k;
+  multiset<int> v; 
+  fr(i,0,n-1)  {cin >> temp; v.insert(temp);  }
+  
+  ll miny =  *v.begin();
+  v.erase(v.begin());
 
-  ll n; cin >> n;
-
-  if ( n%2 == 1 ){
-
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
-
-        }
-    } 
-    
+  ll res = 0;
+  trav(e,v){
+      res += ( (k-e)/miny );
   }
-  else{
-
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
-            }
-
-        }
-    } 
-
-  }
-
+ 
+  cout << res;
 }
-
+ 
 signed main() {
-
+ 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
-
+ 
     fastIO;
     int t = 1;
-
+ 
     cin >>  t;  // Comment this line if only 1 testcase exists.
-
+ 
     fr(T,1,t){
-
+ 
         //cout << "Case #" << T << ": ";
-
+ 
         solve();
         cout << "\n";
     }

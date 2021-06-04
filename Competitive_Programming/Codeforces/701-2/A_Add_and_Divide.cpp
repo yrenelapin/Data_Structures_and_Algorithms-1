@@ -43,37 +43,38 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 
 void solve() {
 
-  ll n; cin >> n;
+    ll a,b ; cin >> a >> b;
 
-  if ( n%2 == 1 ){
+    if (a < b){
+        cout << 1;
+    }
+    else if ( a==b ){
+        cout << 2;
+    }
+    else{  
 
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
+        ll final = INT_MAX;
 
+        for(int i = (b ==1 ? 1 : 0) ; i <= 30; i++){ 
+                
+                ll temp_b = b + i;
+                ll temp_a = a;
+                ll ans = i;
+                
+                // Its advisable to use the direct computation instead of (log(a)/log(b)) because
+                // there may be rounding errors.
+                while(temp_a){
+                    temp_a /= temp_b;
+                    ans++;
+                }
+
+               final = min(final, ans);
         }
-    } 
-    
-  }
-  else{
 
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
-            }
-
-        }
-    } 
-
-  }
+        cout << final;
+      
+    }
+  
 
 }
 

@@ -43,37 +43,88 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 
 void solve() {
 
-  ll n; cin >> n;
+  ll n, m; cin >> n >> m;
+  vl a(n), b(n), c(m); 
+  fr(i,0,n-1) cin >> a[i];
+  fr(i,0,n-1) cin >> b[i];
 
-  if ( n%2 == 1 ){
+  unordered_map<ll,ll> col;
+  fr(i,0,m-1){ cin >> c[i]; col[c[i]]++; }
 
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
+    vl indices;
+    ll x = -1;
 
-        }
-    } 
-    
-  }
-  else{
+    ll flag = 0;
+    fr(i,0,n-1){  
+        if (b[i] == c[m-1]){
+            flag = 1;
+        }  
+    }
 
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
+    if (flag == 0){
+        cout << "NO";   
+        return;
+    }
+
+    // For each fence
+    fr(i,0,n-1){    
+        if (b[i] == c[m-1]){
+            if (b[i] != a[i]){
+                x = i;
             }
-
         }
-    } 
+    }
 
-  }
+    if (x == -1){
+        fr(i,0,n-1){    
+            if (b[i] == c[m-1]){
+                if (b[i] == a[i]){
+                    x = i;
+                }
+            }
+        }
+    }
+
+
+    // fr(j,0,m-1){
+
+    //     ll painted = 0;
+        fr(i,0,n-1){
+            if (b[i] != a[i]){
+                if (col[b[i]] > 0){
+                    indices.pb(i+1);
+                    a[i] = b[i];
+                    col[b[i]]--; 
+                }
+            }
+        }
+
+        //     if (b[i] == c[j] and b[i] != a[i]){
+        //         indices.pb(i+1);
+        //         a[i] = c[j]; painted = 1; break;
+        //     }
+        // }
+
+        // if (painted == 0){
+        //     indices.pb(x+1);
+        //     a[x] = c[j];
+        // }
+    
+    //}
+
+
+
+        fr(i,0,n-1){
+            if (a[i] != b[i]){
+                cout << "NO"; return;
+            }
+        }
+
+        cout << "YES\n";
+        fr(i,0,m-1){
+        cout << indices[i] << " ";
+        }
+
 
 }
 

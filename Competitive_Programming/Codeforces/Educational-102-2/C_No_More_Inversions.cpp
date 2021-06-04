@@ -42,39 +42,15 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-
-  ll n; cin >> n;
-
-  if ( n%2 == 1 ){
-
-    // Just printing -1 +1 -1 ... will do
-     fr(i,1,n){
-        fr(j,i+1,n){
-            if ( (i+j)%2 == 0 )
-                cout << -1 << " " ;
-            else {cout << 1 << " ";}
-
-        }
-    } 
-    
+  ll n, k; cin >> n >> k;
+  vl a; 
+  ll ran = ( (2*k) - n - 1 );	
+  fr(i,1,ran){ a.pb(i);} 
+  ran++;
+  frr(i, k, ran){
+        a.pb(i);
   }
-  else{
-
-    fr(i,1,n){
-        fr(j,i+1,n){
-            if ( j-i < n/2 )
-                { cout << 1 << " " ; }
-            else if ( j-i == n/2 )
-                { cout << 0 << " ";}
-            else {
-                cout << -1 << " ";
-            }
-
-        }
-    } 
-
-  }
-
+  fr(i,0,k-1) { cout << a[i] << " ";}
 }
 
 signed main() {
