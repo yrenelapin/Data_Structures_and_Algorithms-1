@@ -1098,3 +1098,28 @@ Ex : [here](https://codeforces.com/contest/1487/submission/118125075)
 - Number of inversions in a Palindrome remains the same irrespective of the values they contain. [Usage](https://codeforces.com/contest/1473/problem/C)
 
 - Proper usage of Hash Tables (map) can make O(n^2) solution to O(n) very easily. Mostly traversing of arrays/vectors can be onverted to lookups in Hash Tables based on constraints. [Example](https://codeforces.com/contest/1481/problem/C)  
+
+- Its always advisable to use **-INF** ( We already defined INF as `INF = 1e18;` in our template)  to represent very small numbers during computation instead of using INT_MIN. [Example](https://www.codechef.com/viewsolution/47463019)
+
+- To calculate the number of substrings of a given string that satisy a particular property, We can use:
+```
+// Note that number of sustrings that end at index i, is equal to string length (i+1) . (0 based indexing) 
+// Hence total substrings of a given string, is  summation over i from 0 to n-1 ( sustrings that end at index i.)
+```
+Refer this example for more clarity : [here](https://codeforces.com/contest/1535/submission/118571314)
+
+- Note that in some problems, where DP is being used & `long long` is NOT REQUIRED, using the `long long` may lead to RUN TIME ERROR/ MEMORY LIMIT EXCEEDED becoz we allocate a `vector<vector<long long>> dp` which may exceed the given constraints. [Example](https://cses.fi/problemset/task/1636/) So, use `int` in all the DP PROBLEMS unless it is required. Maximum value possible is `2147483647` ~ `1e9`. So If values are larger than `1e9` in DP then only use `ll` else use `int`.
+
+- When taking input in a loop, dont print the answer & return in middle once answer is known. Take all the lements as input for that testcase & then print the answer. Otherwise the onput from current testcase will go to next testcase & will cause WRONG RESULTS. [Ex](https://codeforces.com/contest/1536/submission/118691508)
+
+- In the case of `string` problems, Though the problem looks very complicated in the beginning, If we carefully look at the constraints on the string length, & the charecters being involved in the input string, Even Bruteforce will solvce the problem since we usually have only `26` characters!!
+[Example](https://codeforces.com/contest/1536/problem/B)
+
+- For a string of size n, 
+No of substrings of length 1 is n
+No of substrings of length 2 is n-1
+No of substrings of length 3 is n-2
+So, There are at most n + n−1 + n−2 = 3n−3 possible substrings of length 3 or shorter in the input. 
+
+- Checking if a substring is present in a given string can be done as :
+`orig_str.find(some_string) == string::npos` --> If `True`, It means given substring(some_string) is not present in the original string(orig_str).

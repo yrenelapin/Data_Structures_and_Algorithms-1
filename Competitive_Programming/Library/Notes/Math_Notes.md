@@ -22,3 +22,6 @@ X = 11*( a + c* 111 ) + d*111
 ```
 Now we can bruteforce as follows. For each value of d, subtract d*111 from X & check if the result % 11 == 0.
 
+- Sum-Xor property: `(a+b) = ( a⊕b + 2(a&b) )`. Extended Version with two equations: `(a+b) = ( a|b + a&b AND a⊕b ) = (a|b − a&b).` [Example.](https://codeforces.com/problemset/problem/1325/D)
+
+- The pigeonhole principle states that if `n` items are put into `m` containers, with `n>m`, then at least one container must contain more than one item.
