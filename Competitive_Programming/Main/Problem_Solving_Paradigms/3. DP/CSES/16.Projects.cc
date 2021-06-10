@@ -41,72 +41,51 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
-
-     vvl dp(n, vl(n,-1));
-
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
-}
-
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
+  
+  int n;
+  cin >> n;
 
-  cout << count_paths(grid,n);
+  // Compressing the number of days.
+  map<int,int> compress;
+  vector<int> a(n),b(n),p(n);
+  for (int i = 0; i < n; i++) {
+    cin >> a[i] >> b[i] >> p[i];
+    b[i]++;
+    compress[a[i]]= 1, compress[b[i]] = 1;
+  }
+  
+  // Assigning the numbers to days.
+  int coords = 0;
+  for (auto&v : compress) {
+    v.second = coords++;
+  }
+
+  // Making the projects so that we can access easily.
+  vector<vector<pair<int,int>>> project(coords);
+  for (int i = 0; i < n; i++) {
+    project[ compress[b[i]] ].push_back( { compress[a[i]], p[i] } );
+  }
+
+  vector<long long> dp(coords, 0);
+  // Iterating over all the projects.
+  for (int i = 0; i < coords; i++) {
+
+    // From 2nd project, we have 2 options :
+    
+    if (i > 0) {
+      // 1. On day i, maybe we just did nothing.
+      dp[i] = dp[i-1];
+    }
+    for (auto p : project[i]) {
+
+      // 2. On day i, we just finished some project.
+      dp[i] = max(dp[i], dp[p.first]+p.second);
+    }
 
 
+  }
+  cout << dp[coords-1] ;
 }
 
 signed main() {

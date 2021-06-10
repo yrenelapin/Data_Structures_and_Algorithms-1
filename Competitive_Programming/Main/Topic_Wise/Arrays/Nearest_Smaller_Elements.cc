@@ -33,20 +33,66 @@ inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
 const int mod = 1e9 + 7;
 const long long INF = 1e18;
 
-const int size = 1e5;
-vl dp1(size, -1);            // 1D
-vvl dp2(size, vl(size, -1)); // 2D 
-
 /*
 Consider the problem of finding for each array element the nearest smaller element, i.e.,
 the first smaller element that precedes the element in the array. It is possible that no such element exists, 
 in which case the algorithm should report this.
 */
+
+// O(n)
 void solve() {
-  ll n;
-  cin >> n;
-  vl v(n);
-  fr(i,0,n-1) cin >> v[i];
+
+  vl v = {1, 3, 4, 2, 5, 3, 4, 2};  
+  // vl v = {10,9,8,7,6};  
+  ll n = v.size();
+  vl result(n);
+
+  stack<ll> s;
+  s.push(v[0]); result[0] = -1;
+  
+  deb(result[0]);
+  fr(i,1,n-1){
+
+    ll t = s.top();
+    ll cur = v[i];
+    if (cur > t){
+      s.push(cur);
+      result[i] = t;
+    }
+    else{  
+        // It seems O(n^2) becoz of this while loop here. 
+        // But since each element is added exactly once to the stack and removed at most once from the stack. 
+        // Thus, each element causes O(1) stack operations, and the algorithm works in O(n) time.
+
+        while (!s.empty()){
+            if ( s.top() < cur ){
+              break;
+            }
+            else{
+              s.pop();
+            } 
+        }
+
+
+        if (s.empty()){
+            result[i] = -1;  // -1 indicates that there is no smallest element preceeding it at all.
+        }
+        else{
+          result[i] = s.top();
+        }
+
+        s.push(cur);
+       
+    }
+  
+  }
+
+  fr(i,0,n-1){
+    deb2(i,result[i]);
+  }
+
+
+
 }
 
 signed main() {
@@ -57,7 +103,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

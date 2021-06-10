@@ -41,72 +41,17 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
-
-     vvl dp(n, vl(n,-1));
-
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
-}
-
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
-
-  cout << count_paths(grid,n);
-
-
+  ll n; cin >> n; 
+  ll one = 0, two = 0;
+  vl v(n); fr(i,0,n-1) { cin >> v[i]; if (v[i] == 1) one++; else two++;}
+  //deb2(one,two);
+  if ( (one%2 == 0 and two%2 == 0 ) or ( one > 0  and one%2 == 0 and two%2 == 1) ){
+    cout << "YES";
+  }
+  else{
+    cout << "NO";
+  }
 }
 
 signed main() {
@@ -117,7 +62,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

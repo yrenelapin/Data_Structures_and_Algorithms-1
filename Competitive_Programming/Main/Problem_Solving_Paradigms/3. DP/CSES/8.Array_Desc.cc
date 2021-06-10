@@ -41,72 +41,59 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
+ll poss_arrays(vl &arr, ll n, ll m){
 
-     vvl dp(n, vl(n,-1));
+     vvl dp(n, vl(m+1, 0));  // dp[index][Value]
 
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
+     if (arr[0] == 0){
+        fr(i,0,m){ dp[0][i] = 1;}
      }
+     else{
+         dp[0][arr[0]] = 1;
+         // Rest all are zeroes.
+     }
+      
+      fr(i,1,n-1){
+            
+            if (arr[i] == 0){
+                // try all the possible values for element.
+                fr(j,1,m){
 
-     return dp[n-1][n-1];
+                       for (int k : {j-1,j,j+1}) {
+
+                           // Dont forget to check this condition.
+                            if (k >= 1 && k <= m) {
+                                    
+                                    // Should perform Modulo for every operation.
+                                    (dp[i][j] += dp[i-1][k]) %= M;
+                            }
+                        } 
+
+                    }
+            }
+            else{
+                    for (int k : {arr[i]-1,arr[i],arr[i]+1}) {
+
+                             if (k >= 1 && k <= m) {
+                                    (dp[i][arr[i]] += dp[i-1][k]) %= M;
+                            }
+                        }   
+            }
+      }
+
+    
+    ll ans = 0;
+    fr(i,1,m){
+        ans = ( ans + dp[n-1][i]) %M;
+    }
+
+    return ans;
 }
 
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
-
-  cout << count_paths(grid,n);
-
-
+  ll n, m ; cin >> n >> m;
+  vl v(n); fr(i,0,n-1) cin >> v[i];
+  cout << poss_arrays(v,n,m);
 }
 
 signed main() {

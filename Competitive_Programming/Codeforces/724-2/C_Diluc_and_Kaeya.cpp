@@ -43,8 +43,32 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 
 void solve() {
   ll n; cin >> n;
-  // vvl dp(n, vl(n,-1));  
-  vl v(n); fr(i,0,n-1) cin >> v[i];
+  string s; cin >> s; 
+  map< pl, ll> m;
+  ll d = 0; ll k = 0;
+
+  fr(i,0, n-1){ 
+
+      if (s[i] == 'D'){d++;}
+      else{k++;}
+       
+       pl temp;
+      if (k == 0){
+          temp = {1,0};
+      }
+      if (d == 0){
+        temp = {0,1};
+      }
+
+      if (d != 0 and k!= 0){
+        ll g  = __gcd(d,k);
+        temp = {d/g, k/g};
+      }
+
+      m[temp]++;
+
+      cout << m[temp] << " ";
+  }
 }
 
 signed main() {

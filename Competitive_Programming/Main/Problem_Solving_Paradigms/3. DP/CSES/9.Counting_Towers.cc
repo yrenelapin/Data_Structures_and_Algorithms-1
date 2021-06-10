@@ -41,72 +41,36 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
-
-     vvl dp(n, vl(n,-1));
-
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
-}
-
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
+  ll n = 1e6; 
+  vvl dp(n+2, vl(2,0));
 
-  cout << count_paths(grid,n);
+  // dp[i][j] : Indicates the number of ways to fill  positions from i till n if at the (i-1)th position, we have `j`.
+  // `j` = 1 : If at the (i-1)th position we had a tile of width  2.
+  // `j` = 0 : If at the (i-1)th position we had 2 tiles of width 1.
 
+  dp[n+1][0] = 1;
+  dp[n+1][1] = 1;
 
+  frr(i, n, 2){
+    ll op1 = ( dp[i+1][1] + dp[i+1][0] )% M;
+    ll op2 = ( dp[i+1][0] )% M;
+    ll op3 =  ( 2*dp[i+1][0] )% M;
+    ll op4 = dp[i+1][1];
+
+    dp[i][0] = ( (op1 + op2)%M + op3 )% M;
+
+    dp[i][1] = (op1 + op4)%M;
+
+  }
+  
+
+  // Precomputing & printing.
+  ll t ; cin >> t;
+  while(t--){
+    ll q; cin >> q; // Actually, we need to print no of ways to fill postitions from 2 till q, While at 1, It can be 0/1.
+    cout << ( dp[1e6 - q +2][0] + dp[1e6 - q + 2][1] )%M <<  endl; 
+  }
 }
 
 signed main() {
@@ -128,3 +92,5 @@ signed main() {
     }
     return 0;
 }
+
+// Ref: https://youtu.be/pMEYMYTX-r0

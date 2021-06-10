@@ -41,71 +41,36 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
-
-     vvl dp(n, vl(n,-1));
-
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
-}
-
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
+  ll a,b; cin >> a >> b;
+  vvl dp(a+1, vl(b+1,0));
+ 
+  fr(i,1,a){
+      fr(j,1,b){
+          if (i == j){
+              dp[i][j] = 0;
+          }
+          else{
+              
+              ll ans = INT_MAX;
 
-  cout << count_paths(grid,n);
+              // Making vertical cuts at all the possible positions
+              fr(k,1,i-1){
+                  ans = min(ans, 1+ dp[k][j] + dp[i-k][j] );
+              }
+              
+              // Making horizontal cuts at all the possible positions
+              fr(k,1,j-1){
+                  ans = min(ans, 1+ dp[i][k] + dp[i][j-k] );
+              }
 
+              dp[i][j] = ans;
+          }
+      }
+  }
+
+
+  cout << dp[a][b];
 
 }
 

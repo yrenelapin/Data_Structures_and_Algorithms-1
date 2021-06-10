@@ -27,38 +27,20 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb2(x, y) cout << #x << " = " << x << "  ,  " << #y << "=" << y << endl
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
+const int M = 1e9 + 7;
+const ll INF = 1e18;
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
-template <typename T> T mpow(T x, T n) {
-    T res = 1;
-    for(; n; n >>= 1, x *= x)
-        if(n & 1) res *= x;
-    return res;
+template <typename T> T pw(T a,T p=M-2,T MOD=M){
+	int result = 1;
+	while (p > 0) {
+		if (p & 1)
+			result = a * result % MOD;
+		a = a * a % MOD;
+		p >>= 1;
+	}
+	return result;
 }
 
-inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
-const int mod = 1e9 + 7;
-const long long INF = 1e18;
-
-//------------------------------------------------------------------------------------------------------------------------------------//
-
-
-/*
-Find the longest increasing subsequence in an array of n elements. 
-This is a maximum-length sequence of array elements that goes from left to right,
-and each element in the sequence is larger than the previous element. 
-*/
-
-
-/*
-
-1. Subproblem :  Max Length of Longest incre. Subs till Index i --> PREFIXES          // No of subproblems = O(n) 
-2. Guess :                       --
-3,4. Recurrence & Impl is below
-5. Original Problem :  Max Length of Longest incre. Subs till Index n-1       
-
-Time Complexity= O(n)
-
-*/
 ll getBestCandiate(map<ll,ll> &candidates, ll val){
   // We need to take the greatest value which is less than `val`.
   // So If we take the `lower_bound`, we get the smallest value which is  >= `val`, It we move tothe previous element of this, we get req.
@@ -138,7 +120,6 @@ signed main() {
     }
     return 0;
 }
-
 // Ref: https://youtu.be/66w10xKzbRM
 
 

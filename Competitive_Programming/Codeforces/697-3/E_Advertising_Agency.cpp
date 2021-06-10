@@ -27,7 +27,7 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb2(x, y) cout << #x << " = " << x << "  ,  " << #y << "=" << y << endl
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
-const int M = 1e9 + 7;
+const ll M = 1e9 + 7;
 const ll INF = 1e18;
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
 template <typename T> T pw(T a,T p=M-2,T MOD=M){
@@ -41,72 +41,50 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
-
-     vvl dp(n, vl(n,-1));
-
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
+ll fast_pow(ll a, ll p) {
+  ll res = 1;
+  while (p) {
+    if (p % 2 == 0) {
+      a = a * 1ll * a % M;
+      p /= 2;
+    } else {
+      res = res * 1ll * a % M;
+      p--;
     }
+  }
+  return res;
+}
 
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
+ll fact(ll n) {
+  ll res = 1;
+  for (ll i = 1; i <= n; i++) {
+    res = res * 1ll * i % M;
+  }
+  return res;
+}
 
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
+ll C(ll n, ll k) {
+  return fact(n) * 1ll * fast_pow(fact(k), M - 2) % M * 1ll * fast_pow(fact(n - k), M - 2) % M;
 }
 
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
+  ll n, k; cin >> n >> k;
+  map<ll,ll> freq;
+  vl v(n); fr(i,0,n-1) { cin >> v[i]; freq[v[i]]++; }
+  sort(allr(v));
+  ll choose_till = (k-1);   // This is the minimum subscribers.
+  ll elem  = v[choose_till];
+  
+  ll done = 0;
+  fr(i, 0, choose_till){
+      if (v[i] > elem){
+        done++;
+      }
+  }
 
-  cout << count_paths(grid,n);
-
-
+  ll rem = k - done;
+  ll total_available = freq[elem];
+  cout << C(total_available, rem);
 }
 
 signed main() {
@@ -117,7 +95,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

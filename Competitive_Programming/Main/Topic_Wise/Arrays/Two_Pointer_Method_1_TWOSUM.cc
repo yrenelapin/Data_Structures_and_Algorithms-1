@@ -2,10 +2,11 @@
 using namespace std;
 
 /*
-In a SORTED array, Find a pair of elements such that their sum is equal to x.
-If the array is not sorted, SORT it first & then perform.
+In a array, Find a pair of elements such that their sum is equal to x.
 */
 
+// The running time of the algorithm is O(nlogn), because it first sorts the array
+// in O(nlogn) time, and then both pointers move O(n) steps.
 pair<int,int> two_pointer(vector<int> &v, int x){
 
     int start = 0;
@@ -26,15 +27,21 @@ pair<int,int> two_pointer(vector<int> &v, int x){
         }
 
     }
-    pair<int,int> res(-2,-2); // No pair found
+    pair<int,int> res(-1,-1); // No pair found
     return res;
 
 }
 
 int main(){
     vector<int> v = {10,20,35,50,75,80,85};
+    sort(v.begin(), v.end());
     int x = 70;
     auto res = two_pointer(v,x);
-    // Indices found
-    cout << res.first << " " << res.second << endl;
+
+    if (res.first != -1 and res.second != -1){
+            // Indices found
+            cout << res.first << " " << res.second << " " << i << endl; return 0;
+        }
+
+    cout << "Not Possible";
 }

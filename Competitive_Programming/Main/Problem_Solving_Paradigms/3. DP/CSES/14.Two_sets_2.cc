@@ -41,72 +41,44 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
-
-     vvl dp(n, vl(n,-1));
-
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
-}
-
 void solve() {
+  // Similar to  Knapsack
   ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
+  ll sum = n*(n+1)/2;
+  if (sum %2 != 0){     
+      cout << 0;
+  }
+  else{
+      ll half_sum = n*(n+1)/4;
+      // We need to find no of subsets with sum as `half_sum`
+      
+      // dp[i][x] = number of ways to make sum x using subsets of the numbers 1..i
 
-  cout << count_paths(grid,n);
+      vvl dp(n, vl(half_sum+1, 0));
+      
+      // If there are no elements being used, There is one way of making a sum 0.
+      dp[0][0] =  1;
+  
+      // Iterating over all the Sums
+      fr(x,0, half_sum){
 
+          // Iterating over all numbers except the last number `n` since we need to count pairs. 
+          fr(i,1,n-1){
+              
+              // Include
+              if (x-i >= 0){
+                  dp[i][x] =  ( dp[i][x] +  dp[i-1][x-i] ) % M ;
+              }
 
+              // Exclude
+              dp[i][x] =  ( dp[i][x] + dp[i-1][x] ) % M ;
+          }
+      }
+
+  
+    cout << dp[n-1][half_sum];
+  
+  }
 }
 
 signed main() {

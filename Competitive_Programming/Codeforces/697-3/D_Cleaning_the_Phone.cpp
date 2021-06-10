@@ -41,72 +41,59 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
-
-     vvl dp(n, vl(n,-1));
-
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
-
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
-}
-
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
 
-  cout << count_paths(grid,n);
+  ll n,m ; cin >> n >> m; ll total_mem = 0;
+  vl a(n); fr(i,0,n-1)  { cin >> a[i]; total_mem += a[i]; }
 
+  vl one; vl two;
+  vl b(n); fr(i,0,n-1)  { cin >> b[i]; if (b[i]==1) {one.pb(a[i]); } else {two.pb(a[i]);} }
 
+  if (total_mem < m){
+      cout << -1; return;
+  }
+
+  sort(allr(one));  sort(allr(two)); 
+ 
+  // Building Prefix sum array for `two` array.
+  ll len_two = two.size();
+  vl two_prefix(len_two+1);
+  fr(i,0,len_two-1){
+      two_prefix[i+1] = two[i] + two_prefix[i]; 
+  }
+
+    ll final_ans = INF;
+    ll len_one = one.size();
+    ll mem_freed = 0;
+
+    ll pos = lower_bound(two_prefix.begin(),two_prefix.end(),m)-two_prefix.begin();
+    // Lower bound finds 1st number that satisifes num >= given_number
+
+    // If it is within the range of the given array.
+    if ( pos < len_two+1 ){
+        final_ans = min( pos*2LL, final_ans) ;
+    }
+
+  fr(i,1,len_one){
+
+           mem_freed += one[i-1];
+           ll curr_ans = i;
+           ll left  = m-mem_freed;
+
+           if ( left > 0 ){
+                ll pos = lower_bound(two_prefix.begin(),two_prefix.end(),left)-two_prefix.begin();
+                
+                // If there is no lower bound, It returns iterator to the last element, In that case, It means, We are not able to fulfill
+                // thre required memory, so we continue.
+                if ( pos == len_two+1 ) continue;
+
+                curr_ans += (pos)*2LL;
+            }
+
+         final_ans = min(final_ans, curr_ans);
+          
+  }
+  cout << final_ans;
 }
 
 signed main() {
@@ -117,7 +104,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

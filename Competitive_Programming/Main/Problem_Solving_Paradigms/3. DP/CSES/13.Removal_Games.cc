@@ -41,72 +41,45 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-ll count_paths(vector<vector<char>> &grid, ll n){
+/*
+For every interval (i, j) there is a fixed person who is going to be playing on that interval.
 
-     vvl dp(n, vl(n,-1));
+dp[i][j] stores the difference between the scores of the person who is playing on that interval 
+and then person who plays next if they are only allowed to use that interval. Since the person 
+playing can only take the ends of the intervals, only i and j are available.
 
-     
-     if (grid[0][0] != '*')
-        dp[0][0] =  1;
-     else
-        return 0;
-     
+Call the person taking currently A.
 
-     ll stop1 = -1;
-     fr(i,1,n-1){
-         if (grid[0][i] != '*' )
-            { dp[0][i] = 1; }
-         else
-            { stop1 = i; break;
-            
-            }
-    }
-
-    if (stop1 != -1){
-        fr(i,stop1,n-1){
-            dp[0][i] = 0; 
-        }
-    }
-
-    ll stop2 = -1;
-     fr(i,1,n-1){
-         if (grid[i][0] != '*' )
-            { dp[i][0] = 1; }
-         else
-            { stop2 = i; break;
-            
-            }
-    }
-
-    if (stop2 != -1){
-        fr(i,stop2,n-1){
-            dp[i][0] = 0; 
-        }
-    }
-
-     fr(i,1,n-1){
-         fr(j,1,n-1){
-
-             if (grid[i][j] != '*')
-                dp[i][j] = ( dp[i-1][j] +  dp[i][j-1] )%M;
-             else  
-                dp[i][j] = 0;
-         }
-     }
-
-     return dp[n-1][n-1];
-}
+If he takes i, then the interval becomes (i + 1, j).
+dp[i + 1][j] stores the value of B - A, so you subtract it from a[i] to get A + a[i] - B which is 
+the value for the current segment if A takes i. It is very similar for if A takes j, and you compare them to get dp[i][j].
+dp[i][j] = max(a[i] - dp[i + 1][j], a[j] - dp[i][j - 1])
+*/
 
 void solve() {
-  ll n; cin >> n;
-  vector<vector<char>> grid(n, vector<char>(n)); 
-  fr(i,0,n-1) 
-    fr(j,0,n-1)
-        cin >> grid[i][j];
+ ll n; cin >> n; vl v(n);
+ ll sum = 0;
+ fr(i,0,n-1) { cin >> v[i]; sum += v[i]; }
 
-  cout << count_paths(grid,n);
+  vvl dp(n, vl(n,0)); 
+ 
+  // Left index
+  frr(i,n-1,0){
 
+      // Right Index
+      fr(j,i,n-1){
 
+          if (i == j ){ dp[i][j] = v[i];}
+          else{
+              // Think abt intution behind this recurrence.
+              dp[i][j] = max(v[i] - dp[i+1][j], v[j] - dp[i][j-1] );
+          }
+      }
+  }
+
+  // We can reconstruct the score of player 1 as the mean of, the sum of all input values, and score1−score2.
+  // since sum = score1 + score2;
+  cout << ( sum + dp[0][n-1] )/2;
 }
 
 signed main() {
