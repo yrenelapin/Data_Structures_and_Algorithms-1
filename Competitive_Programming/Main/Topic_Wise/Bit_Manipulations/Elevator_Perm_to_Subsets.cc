@@ -27,59 +27,65 @@ typedef priority_queue<ll> prq;  // Max priority Queue.
 #define deb2(x, y) cout << #x << " = " << x << "  ,  " << #y << "=" << y << endl
 #define deb3(x, y, z) cout << #x << " = " << x << "  ,  " << #y << "=" << y << "  ,  " << #z << "=" << z << endl
 #define fastIO ios_base::sync_with_stdio(0); cin.tie(0);  cout.tie(0);
+const int M = 1e9 + 7;
+const ll INF = 1e18;
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   // Min priority queue
-
-inline ll pmod(ll i, ll n) { return (i % n + n) % n; }
-const int mod = 1e9 + 7;
-const long long INF = 1e18;
-
-/*
-We are given the prices of k products over n days, and we want to buy each product exactly once. 
-However, we are allowed to buy at most one product in a day. What is the minimum total price?
-*/
+template <typename T> T pw(T a,T p=M-2,T MOD=M){
+	int result = 1;
+	while (p > 0) {
+		if (p & 1)
+			result = a * result % MOD;
+		a = a * a % MOD;
+		p >>= 1;
+	}
+	return result;
+}
 
 void solve() {
+    ll n = 5; ll x = 10;
+    vl weights= {2,3,3,5,6};
+    
+    vpl dp(1<<n);
+    // dp[s] contains the pair for the subset `s` of people chosen. 
+    // dp[s].fi -> Minimum rides req. for the subset `s`.
+    // dp[s].se -> Minimum weight of the Lat ride for the subset `s`.
 
-    // k = 3 products, n = 8 days.
-    vvl price = { {6, 9 ,5, 2, 8, 9, 1, 6 },
-                  {8, 2 ,6 ,2, 7, 5, 7 ,2 },
-                  {5, 3, 9 ,7, 3, 5, 1, 4 }
-                };
+    // Empty set
+    dp[0] = {1,0};
 
-    ll n = 8; ll k= 3;
+    fr(s,1, (1<<n)-1){
 
-    // dp[i][j] ->Indicates the minimum price to buy subset i by jth day.
-    vvl dp((1<<k) , vl(n, 0));
+        // initial value: n+1 rides are needed
+        dp[s] = {n+1,0};
 
-    // Base Cases. 
-    // If j = 0, By 1st day, we can just buy one product with the price on that day only.
-    fr(i,0,k-1){
+        // The idea is to go through all people who belong to s and optimally choose the last person p who enters the elevator.
+        fr(p,0,n-1){
 
-        //  `1<<i` Implies ith product is chosen.
-        dp[1 << i][0] = price[i][0];
-    }
-
-
-    fr(d,1,n-1){
-        ll maxy = (1<<k) -1;
-        fr(s, 0, maxy){
-
-            dp[s][d] = dp[s][d-1];
-
-            fr(x, 0,k-1){
-
-                // Check if the element is present in the current subset
-                if ( s &  (1 << x) ){
-                        dp[s][d] = min( dp[s][d],  dp[s^(1 << x)][d-1]  + price[x][d]);
-
+            // If the set contains the person p.
+            if (s & 1 << p){
+                
+                auto option = dp[s^(1<<p)];  // Remove the person from s.
+            
+                if (option.se + weights[p] <= x){
+                    // add p to an existing ride
+                    option.se += weights[p];
                 }
+                else{
+                    // reserve a new ride for p 
+                    option.fi ++;
+                    option.se = weights[p];
+                }
+
+                dp[s] = min(dp[s], option); 
+                // Takes the minimum based on 1st argument followed by 2nd argument.
+
             }
 
-            deb3(s,d,dp[s][d]);
+            
         }
-    }
 
-    cout << dp[(1 << k)-1][n-1];
+    }
+    cout << dp[(1<<n)-1].fi;
 }
 
 signed main() {
@@ -90,7 +96,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    // cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

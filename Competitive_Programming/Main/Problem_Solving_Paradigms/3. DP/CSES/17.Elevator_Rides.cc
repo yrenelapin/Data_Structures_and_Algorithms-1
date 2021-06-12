@@ -42,9 +42,52 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 }
 
 void solve() {
-  ll n; cin >> n;
-  // vvl dp(n, vl(n,-1));  
-  vl v(n); fr(i,0,n-1) cin >> v[i];
+
+    ll n,x; cin >> n >> x ;
+    vl weights(n);
+    fr(i,0,n-1){ cin >> weights[i]; }
+    
+    vpl dp(1<<n);
+    // dp[s] contains the pair for the subset `s` of people chosen. 
+    // dp[s].fi -> Minimum rides req. for the subset `s`.
+    // dp[s].se -> Minimum weight of the Lat ride for the subset `s`.
+
+    // Empty set
+    dp[0] = {1,0};
+
+    fr(s,1, (1<<n)-1){
+
+        // initial value: n+1 rides are needed
+        dp[s] = {n+1,0};
+
+        // The idea is to go through all people who belong to s and optimally choose the last person p who enters the elevator.
+        fr(p,0,n-1){
+
+            // If the set contains the person p.
+            if (s & 1 << p){
+                
+                auto option = dp[s^(1<<p)];  // Remove the person from s.
+            
+                if (option.se + weights[p] <= x){
+                    // add p to an existing ride
+                    option.se += weights[p];
+                }
+                else{
+                    // reserve a new ride for p 
+                    option.fi ++;
+                    option.se = weights[p];
+                }
+
+                dp[s] = min(dp[s], option); 
+                // Takes the minimum based on 1st argument followed by 2nd argument.
+
+            }
+
+            
+        }
+
+    }
+    cout << dp[(1<<n)-1].fi;
 }
 
 signed main() {
@@ -55,7 +98,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
