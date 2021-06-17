@@ -92,7 +92,7 @@ void solve() {
   ll a,b; cin >> a >> b; 
 
   // Standard trick in Digit DP is to split the Interval [a,b] into [0,b] & [0,a-1]. Solve the problem for [0,x] using which we can
-  // solve the other two & then subract the results of [0, b] & [0, a-1] to get results accordingly.
+  // solve the other two & then subtract the results of [0, b] & [0, a-1] to get results accordingly.
   string A = to_string(a-1);
   string B = to_string(b);
   

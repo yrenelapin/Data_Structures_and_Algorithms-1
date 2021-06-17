@@ -41,34 +41,26 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-// Time complexity : O(n*log(log(n))) 
-vl SieveOfEratosthenes(ll n)
-{
-  vl primes(n+1, 1);
-	for (ll p = 2; p * p <= n; p++){
-		if (primes[p] == 1){
-			for (ll i = p * p; i <= n; i += p)
-				primes[i] = 0;
-		}
-	}
-	
-  // Now, Those indices with values as 1 are primes.
-
-  // We are constructing the prefix sum array. So now Primes[i] will contain the number of primes less than i.
-  // If above Prefix Sum array is not needed & just Primes are needed, Comment below 2 lines.
-  fr(i, 3, n){
-    primes[i] += primes[i-1];
-  }
-  
-  return primes;
-}
-
 void solve() {
-    ll n = 30;
-	auto result = SieveOfEratosthenes(n);
+  ll  x1,y1,x2,y2; cin >> x1 >> y1 >> x2 >> y2;
 
-	// the above code with 58,59 lines included gives the below output:
-	// result -> No of primes less than Input (n).
+  if ( (x1 !=  x2 ) and  (y1 != y2) ) {
+      cout << "sad";
+  } 
+  if ( (x1 ==  x2 ) and  (y1 > y2) ) {
+      cout << "down";
+  } 
+    if ( (x1 ==  x2 ) and  (y1 < y2) ) {
+      cout << "up";
+  } 
+    if ( (x1 >  x2 ) and  (y1 == y2) ) {
+      cout << "left";
+  } 
+    if ( (x1 < x2 ) and  (y1 == y2) ) {
+      cout << "right";
+  } 
+
+
 }
 
 signed main() {
@@ -79,7 +71,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    //cin >>  t;  // Comment this line if only 1 testcase exists.
+    cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 
@@ -90,6 +82,3 @@ signed main() {
     }
     return 0;
 }
-
-
-// Ref : https://www.geeksforgeeks.org/sieve-of-eratosthenes/

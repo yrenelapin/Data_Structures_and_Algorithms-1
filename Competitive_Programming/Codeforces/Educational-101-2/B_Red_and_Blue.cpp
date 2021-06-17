@@ -83,69 +83,63 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
-vi allp;
-
-int get_exp_cnt(int x){
-   
-  int temp_x = x;
-  int ans = 0;
-
-  // Now for a given x, To find the sum of exponents count in its prime factors,
-  // We start iterating over the numbers till sqrt(x) and if it is a Prime & if it divides the current number,
-  // We calculate the exponent.
-  for (int i = 2; i*i <= x; i++){
-    if (allp[i] == 0){
-        while ( temp_x % i == 0 ){
-          ans++;
-          temp_x /= i;
-        }
-    }
-  }
-
-  // If the number is still > 1, We can add one more value to the count. To understand this take an example & workout.
-  if (temp_x > 1){
-    ans++;
-  }
-
-  return ans;
-}
-
-
+// Greedy Solution.
 void solve() {
-  int a,b,k; cin >> a >> b >> k;
-
-  // n = sum of exponents of prime divisors of a + sum of exponents of prime divisors of b.
-  int n = get_exp_cnt(a) + get_exp_cnt(b);
-
-  int m;
-  if (a == b){
-    m = 0;
+ 
+  int n,m; cin >> n;
+  vi r(n); fr(i,0,n-1) { cin >> r[i]; }
+  cin >> m;
+  vi b(m); fr(i,0,m-1) { cin >> b[i]; }
+ 
+  // Prefix sums of r;
+  vi p(n+1, 0);
+  fr(i,1,n){
+      p[i] =  ( p[i-1] + r[i-1] );
   }
-  else if (gcd(a,b) == a or gcd(a,b) == b){
-    m = 1;
-  }
-  else{
-    m = 2;
-  }
-
-  if (k == 1 and m == 1  and k <= n and m <= k){
-    cout << "YES";
-  } 
-  else if (k <= n and m <= k and k != 1){
-    cout << "YES";
-  }
-  else{
-    cout << "NO";
+ 
+  // Prefix sums of b;
+  vi q(m+1, 0);
+  fr(i,1,m){
+      q[i] =  ( q[i-1] + b[i-1] );
   }
 
-
+  cout << max( 0LL, *max_element(all(p)) ) + max( 0LL, *max_element(all(q)) );
+ 
 }
+
+// DP solution.
+// void solve() {
+
+//   int n,m; cin >> n;
+//   vi r(n); fr(i,0,n-1) { cin >> r[i]; }
+//   cin >> m;
+//   vi b(m); fr(i,0,m-1) { cin >> b[i]; }
+  
+//   vvi dp( n+1, vi(m+1, -INF) );
+//   dp[0][0] = 0;
+  
+//   int ans = -INF;
+//   fr(i,0,n){
+//       fr(j,0,m){
+
+//          if (i < n){
+//              dp[i+1][j] = max( dp[i+1][j], dp[i][j] + r[i] );
+//          }
+
+//          if (j < m){
+//              dp[i][j+1] = max( dp[i][j+1], dp[i][j] + b[j] );
+//          }
+         
+//          ans = max(ans, dp[i][j]);
+//       }
+//   }
+ 
+//   // Note that final array is the maximum value among all the values inside dp.
+//   cout << ans ;
+
+// }
 
 signed main() {
-    
-    // Since the Maximum value of a Number in the Input is 1e9, 
-    // We just need to account for sqrt(1e9) becoz, The Prime Factors of a number can be found within sqrt(n) range.
-    allp = sieve_erato(1e5 + 5);
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);

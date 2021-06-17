@@ -83,70 +83,40 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
-vi allp;
-
-int get_exp_cnt(int x){
-   
-  int temp_x = x;
-  int ans = 0;
-
-  // Now for a given x, To find the sum of exponents count in its prime factors,
-  // We start iterating over the numbers till sqrt(x) and if it is a Prime & if it divides the current number,
-  // We calculate the exponent.
-  for (int i = 2; i*i <= x; i++){
-    if (allp[i] == 0){
-        while ( temp_x % i == 0 ){
-          ans++;
-          temp_x /= i;
-        }
-    }
-  }
-
-  // If the number is still > 1, We can add one more value to the count. To understand this take an example & workout.
-  if (temp_x > 1){
-    ans++;
-  }
-
-  return ans;
-}
-
+vi prime_res ;
 
 void solve() {
-  int a,b,k; cin >> a >> b >> k;
 
-  // n = sum of exponents of prime divisors of a + sum of exponents of prime divisors of b.
-  int n = get_exp_cnt(a) + get_exp_cnt(b);
+  int d; cin >> d;
 
-  int m;
-  if (a == b){
-    m = 0;
-  }
-  else if (gcd(a,b) == a or gcd(a,b) == b){
-    m = 1;
-  }
-  else{
-    m = 2;
+  int curr = 1;
+  int ans = 1;
+  
+  int si = prime_res.size()-1;
+  int cnt = 0;
+
+  fr(i,2,si){
+      
+      if (prime_res[i] == 0){ 
+         if ( i - curr >= d){
+            ans *= i;
+            cnt++;
+            curr = i;
+        }
+      }
+
+      if (cnt == 2){
+          break;
+      }
+
   }
 
-  if (k == 1 and m == 1  and k <= n and m <= k){
-    cout << "YES";
-  } 
-  else if (k <= n and m <= k and k != 1){
-    cout << "YES";
-  }
-  else{
-    cout << "NO";
-  }
-
+  cout << ans;
 
 }
 
 signed main() {
-    
-    // Since the Maximum value of a Number in the Input is 1e9, 
-    // We just need to account for sqrt(1e9) becoz, The Prime Factors of a number can be found within sqrt(n) range.
-    allp = sieve_erato(1e5 + 5);
-
+    prime_res = sieve_erato(1e6+7);
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
 

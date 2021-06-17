@@ -25,7 +25,7 @@ typedef vector<int> vi;
 typedef vector<vi>	vvi;
 typedef priority_queue<int> prq;                          
 const int M = 1e9 + 7;
-const int INF = 1e18;
+// const int INF = 1e18;
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   
 //-----------------------------------------------------------------------------------------------------//
 bool is_prime(int n){ 
@@ -83,69 +83,65 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
-vi allp;
-
-int get_exp_cnt(int x){
-   
-  int temp_x = x;
-  int ans = 0;
-
-  // Now for a given x, To find the sum of exponents count in its prime factors,
-  // We start iterating over the numbers till sqrt(x) and if it is a Prime & if it divides the current number,
-  // We calculate the exponent.
-  for (int i = 2; i*i <= x; i++){
-    if (allp[i] == 0){
-        while ( temp_x % i == 0 ){
-          ans++;
-          temp_x /= i;
-        }
-    }
-  }
-
-  // If the number is still > 1, We can add one more value to the count. To understand this take an example & workout.
-  if (temp_x > 1){
-    ans++;
-  }
-
-  return ans;
-}
-
-
 void solve() {
-  int a,b,k; cin >> a >> b >> k;
+  int n, x; cin >> n >> x;
+  // int dp[n][n]; memset(dp,-1, sizeof(dp));
+  int ans = 0; queue<int> q; int tmp;
+  fr(i,0,n-1) { cin >> tmp; q.push(tmp);  ans += tmp; }
+  
+  bool flag = 0;  int cnt = 0;
+  while( (!q.empty()) and (q.front()%x == 0) ){
+      cnt++;
+      if (cnt <= n){
+            int curr = q.front();
+            q.pop();
+            ans += curr;
+                 
+            q.push(curr/x);
+            
+            // curr /= x;
 
-  // n = sum of exponents of prime divisors of a + sum of exponents of prime divisors of b.
-  int n = get_exp_cnt(a) + get_exp_cnt(b);
+            // //if (flag == 0){ // once we inserted a non divisible value, we need not move forward.
+            //     if (curr%x == 0){
+            //         //fr(i,1,x){
+            //             q.push(curr);
+            //         //}
+            //     }
+            //     else{
+            //         q.push(curr);
+            //         //flag = 1;
+            //     }
+            // //}
 
-  int m;
-  if (a == b){
-    m = 0;
-  }
-  else if (gcd(a,b) == a or gcd(a,b) == b){
-    m = 1;
-  }
-  else{
-    m = 2;
+      }
+      else{
+            int curr = q.front();
+            q.pop();
+            int tmp = curr*x;
+            ans += tmp;
+            
+            q.push(curr/x);
+            // curr /= x;
+
+            // //if (flag == 0){ // once we inserted a non divisible value, we need not move forward.
+            //     if (curr%x == 0){
+            //         //fr(i,1,x){
+            //             q.push(curr);
+            //         //}
+            //     }
+            //     else{
+            //         q.push(curr);
+            //         //flag = 1;
+            //     }
+            // //}
+      } 
+  
   }
 
-  if (k == 1 and m == 1  and k <= n and m <= k){
-    cout << "YES";
-  } 
-  else if (k <= n and m <= k and k != 1){
-    cout << "YES";
-  }
-  else{
-    cout << "NO";
-  }
-
-
+  cout << ans;
 }
 
 signed main() {
-    
-    // Since the Maximum value of a Number in the Input is 1e9, 
-    // We just need to account for sqrt(1e9) becoz, The Prime Factors of a number can be found within sqrt(n) range.
-    allp = sieve_erato(1e5 + 5);
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);

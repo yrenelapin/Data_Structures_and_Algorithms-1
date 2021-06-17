@@ -854,7 +854,20 @@ upper_bound at position 6
 
 - For multisets,  `auto itr =  s.upper_bound(val);` is faster than `auto itr =  upper_bound(s.begin(), s.end(), val);`
 
-- In questions, Where we are using DP & we are supposed to make Matrices/Tables, Make them as Global Variables with the Maximum Size required based on the Constarints mentioned in the Problem Statement. Example for Reference [here](https://codeforces.com/contest/1498/submission/111851989
+- In questions, Where we are using DP & we are supposed to make Matrices/Tables, Make them as Global Variables with the Maximum Size required based on the Constraints mentioned in the Problem Statement. Example for Reference [here](https://codeforces.com/contest/1498/submission/111851989
+-
+    ```
+    #define lbd(a,x) lower_bound(all((a)),(x)) - (a).begin()
+    #define ubd(a,x) upper_bound(all((a)),(x)) - (a).begin()
+    ```
+    When using the above Macros. If result returned is equal to `a.size()`; It means, corresponding bound doesnot exist for `x`. 
+    ```
+    vi check = {1,2,3};
+    int a = lbd(check,4);
+    int b =  ubd(check,4);
+
+    // Here a == 3 & b==3 which means `4` doesnot have either upper_bound or lower_bound in the given vector (check). 
+    ```
 
 ## Removing elements from Vector
 
@@ -1123,3 +1136,22 @@ So, There are at most n + n−1 + n−2 = 3n−3 possible substrings of length 3
 
 - Checking if a substring is present in a given string can be done as :
 `orig_str.find(some_string) == string::npos` --> If `True`, It means given substring(some_string) is not present in the original string(orig_str).
+
+- Habituate to use Arrays for DP instead of Vectors since if more states are there, Making a Vector of vectors & initialisation is difficult and not easy to read.
+Ex: `ll dp[A][B][C][D]; memset(dp,-1,sizeof(dp));` vs `vvvvl(A, vvvl(B, vvl(C, vl(D,-1))))`
+
+```
+small = min(x, min(y, min(z, k))); // the old way
+small = min({x, y, z, k});         // This can be done.
+```
+
+```
+pair<int, int> cur = {1, 2};
+auto [x, y] = cur;
+// x is now 1, y is now 2
+// no need of cur.first and cur.second
+
+array<int, 3> arr = {1, 0, -1};
+auto [a, b, c] = arr;
+// a is now 1, b is now 0, c is now -1
+```

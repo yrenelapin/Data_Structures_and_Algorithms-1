@@ -43,8 +43,36 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 
 void solve() {
   ll n; cin >> n;
-  // vvl dp(n, vl(n,-1));  
   vl v(n); fr(i,0,n-1) cin >> v[i];
+  
+//   vvl dp(1e7, vl(1e6,-1));
+  
+  sort(all(v));
+  
+  ll ans = n;
+  map<ll,set<ll>> fre;
+  fr(i,0,n-1){ 
+      
+      fr(j,0,n-1){
+          if ( (v[i] != v[j]) and ( v[j]% v[i] == 0) ){
+
+              fre[v[i]].insert(v[j]);
+          } 
+      }
+  }
+
+  trav(e,fre){
+      ans += e.se.size();
+    //   deb(e.fi);
+    //   trav(ele, e.se){
+    //       deb(ele);
+    //   }
+  }
+ 
+    
+  cout << ans;
+
+
 }
 
 signed main() {

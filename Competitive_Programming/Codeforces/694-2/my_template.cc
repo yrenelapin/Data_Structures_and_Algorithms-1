@@ -83,69 +83,13 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
-vi allp;
-
-int get_exp_cnt(int x){
-   
-  int temp_x = x;
-  int ans = 0;
-
-  // Now for a given x, To find the sum of exponents count in its prime factors,
-  // We start iterating over the numbers till sqrt(x) and if it is a Prime & if it divides the current number,
-  // We calculate the exponent.
-  for (int i = 2; i*i <= x; i++){
-    if (allp[i] == 0){
-        while ( temp_x % i == 0 ){
-          ans++;
-          temp_x /= i;
-        }
-    }
-  }
-
-  // If the number is still > 1, We can add one more value to the count. To understand this take an example & workout.
-  if (temp_x > 1){
-    ans++;
-  }
-
-  return ans;
-}
-
-
 void solve() {
-  int a,b,k; cin >> a >> b >> k;
-
-  // n = sum of exponents of prime divisors of a + sum of exponents of prime divisors of b.
-  int n = get_exp_cnt(a) + get_exp_cnt(b);
-
-  int m;
-  if (a == b){
-    m = 0;
-  }
-  else if (gcd(a,b) == a or gcd(a,b) == b){
-    m = 1;
-  }
-  else{
-    m = 2;
-  }
-
-  if (k == 1 and m == 1  and k <= n and m <= k){
-    cout << "YES";
-  } 
-  else if (k <= n and m <= k and k != 1){
-    cout << "YES";
-  }
-  else{
-    cout << "NO";
-  }
-
-
+  int n; cin >> n;
+  // int dp[n][n]; memset(dp,-1, sizeof(dp));
+  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
 }
 
 signed main() {
-    
-    // Since the Maximum value of a Number in the Input is 1e9, 
-    // We just need to account for sqrt(1e9) becoz, The Prime Factors of a number can be found within sqrt(n) range.
-    allp = sieve_erato(1e5 + 5);
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);

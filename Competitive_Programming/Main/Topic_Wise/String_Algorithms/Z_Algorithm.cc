@@ -83,69 +83,35 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
-vi allp;
+vector<int> z_algo(string s) {
+    int n = s.size();
+    vector<int> z(n);
+    int x = 0, y = 0;
 
-int get_exp_cnt(int x){
-   
-  int temp_x = x;
-  int ans = 0;
+    for (int i = 1; i < n; i++) {
+        
+        z[i] = max(0LL,min(z[i-x],y-i+1));
 
-  // Now for a given x, To find the sum of exponents count in its prime factors,
-  // We start iterating over the numbers till sqrt(x) and if it is a Prime & if it divides the current number,
-  // We calculate the exponent.
-  for (int i = 2; i*i <= x; i++){
-    if (allp[i] == 0){
-        while ( temp_x % i == 0 ){
-          ans++;
-          temp_x /= i;
+        while (i+z[i] < n && s[z[i]] == s[i+z[i]]) {
+            x = i;
+            y = i+z[i];
+            z[i]++;
         }
     }
-  }
 
-  // If the number is still > 1, We can add one more value to the count. To understand this take an example & workout.
-  if (temp_x > 1){
-    ans++;
-  }
-
-  return ans;
+    return z;
 }
 
 
 void solve() {
-  int a,b,k; cin >> a >> b >> k;
-
-  // n = sum of exponents of prime divisors of a + sum of exponents of prime divisors of b.
-  int n = get_exp_cnt(a) + get_exp_cnt(b);
-
-  int m;
-  if (a == b){
-    m = 0;
-  }
-  else if (gcd(a,b) == a or gcd(a,b) == b){
-    m = 1;
-  }
-  else{
-    m = 2;
-  }
-
-  if (k == 1 and m == 1  and k <= n and m <= k){
-    cout << "YES";
-  } 
-  else if (k <= n and m <= k and k != 1){
-    cout << "YES";
-  }
-  else{
-    cout << "NO";
-  }
-
-
+    string a = "ACBACDACBACBACDA";
+    auto z_str = z_algo(a);
+    trav(e,z_str){
+        cout << e << " ";
+    }
 }
 
 signed main() {
-    
-    // Since the Maximum value of a Number in the Input is 1e9, 
-    // We just need to account for sqrt(1e9) becoz, The Prime Factors of a number can be found within sqrt(n) range.
-    allp = sieve_erato(1e5 + 5);
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
@@ -153,7 +119,7 @@ signed main() {
     fastIO;
     int t = 1;
 
-    cin >>  t;  // Comment this line if only 1 testcase exists.
+    //cin >>  t;  // Comment this line if only 1 testcase exists.
 
     fr(T,1,t){
 

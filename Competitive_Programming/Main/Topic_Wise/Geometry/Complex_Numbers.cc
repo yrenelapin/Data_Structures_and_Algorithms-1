@@ -83,69 +83,40 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
-vi allp;
-
-int get_exp_cnt(int x){
-   
-  int temp_x = x;
-  int ans = 0;
-
-  // Now for a given x, To find the sum of exponents count in its prime factors,
-  // We start iterating over the numbers till sqrt(x) and if it is a Prime & if it divides the current number,
-  // We calculate the exponent.
-  for (int i = 2; i*i <= x; i++){
-    if (allp[i] == 0){
-        while ( temp_x % i == 0 ){
-          ans++;
-          temp_x /= i;
-        }
-    }
-  }
-
-  // If the number is still > 1, We can add one more value to the count. To understand this take an example & workout.
-  if (temp_x > 1){
-    ans++;
-  }
-
-  return ans;
-}
-
+typedef complex<ld> P;
+#define X real()
+#define Y imag()
 
 void solve() {
-  int a,b,k; cin >> a >> b >> k;
 
-  // n = sum of exponents of prime divisors of a + sum of exponents of prime divisors of b.
-  int n = get_exp_cnt(a) + get_exp_cnt(b);
+    // Defines vectors v = (3,1) and u = (2,2), and after that calculates the sum s = v + u.
+    P v = {3,-1};
+    P u = {2,2};
+    P s = v+u;
+    cout << s.X << " " << s.Y << "\n";
 
-  int m;
-  if (a == b){
-    m = 0;
-  }
-  else if (gcd(a,b) == a or gcd(a,b) == b){
-    m = 1;
-  }
-  else{
-    m = 2;
-  }
+    // Distance between the vectors.
+    cout << abs(v-u);
 
-  if (k == 1 and m == 1  and k <= n and m <= k){
-    cout << "YES";
-  } 
-  else if (k <= n and m <= k and k != 1){
-    cout << "YES";
-  }
-  else{
-    cout << "NO";
-  }
+    // Angle of the vector wrt x-axis in radians.
+    P v = {4,2};
+    cout << arg(v) << "\n"; // 0.463648
 
+    // polar(s,a) constructs a vector whose length is s and that points to an angle a.
+    P new_v = polar(1.0, 0.5);
+
+    // Rotating a vector by an angle a by multiplying it by a vector with length 1 and angle a.
+    v *= new_v;
+    cout << arg(v) << "\n"; // 0.963648
+
+    // Cross product of two vectors by using `conj` that negates the y coordinate of the vector passed.
+    P a = {4,2};
+    P b = {1,2};
+    C p = (conj(a)*b).Y; // 6
 
 }
 
 signed main() {
-    
-    // Since the Maximum value of a Number in the Input is 1e9, 
-    // We just need to account for sqrt(1e9) becoz, The Prime Factors of a number can be found within sqrt(n) range.
-    allp = sieve_erato(1e5 + 5);
 
     // freopen("input.txt", "r", stdin);
     // freopen("output.txt", "w", stdout);
