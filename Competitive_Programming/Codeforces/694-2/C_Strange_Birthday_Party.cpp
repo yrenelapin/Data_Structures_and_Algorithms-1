@@ -83,66 +83,29 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
-// Min cost to give presents starting from ith till last friend.
-int min_cost(int i, vi &chosen, vi &dp, vi &k, vi &c, int n, int m){
-
-    if (i == n){
-        return 0;
-    } 
-
-    if (dp[i] != -1){
-        return dp[i];
-    }
-
-    int res;
-    if (i == n-1){  
-        // For Last friend, we can simply choose minimum value among presents left and dollar amount 
-        int tmp = INF;
-        int indx =  k[i];
-        fr(i,0,indx-1){
-            if (chosen[i] == 0){
-                tmp = min(tmp, c[i]);
-            }
-        }
-    
-        tmp = min(tmp, c[k[i]-1]);
-        res = tmp;
-    }
-    else{ // Try all the possibilities.
-
-        int indx =  k[i];
-
-        // // Paying dollars case.
-        // int tmp = c[k[i]-1] + min_cost(i+1, chosen, dp, k, c, n, m); 
-        
-        int tmp = INF;
-        fr(i,0,indx-1){ // Trying all the presents.
-            if (chosen[i] == 0){
-                chosen[i] = 1;
-                tmp = min(tmp, c[i] + min_cost(i+1, chosen, dp, k, c, n, m)     );
-            }
-        }
-
-        res = tmp;
-    }
-    
-    //deb2(i, dp[i]);
-    return dp[i] = res;
-}
-
 void solve() {
   int n, m; cin >> n >> m;
-  // int dp[n][n]; memset(dp,-1, sizeof(dp));
-  vi k(n); fr(i,0,n-1) { cin >> k[i]; }
-  vi c(m); fr(i,0,m-1) { cin >> c[i]; }
-  vi dp(n,-1);
-  vi chosen(m, 0);
+  vi k(n); fr(i,0,n-1) { cin >> k[i]; } min_prq<int> cc;
+  vi c(m); fr(i,0,m-1) { cin >> c[i]; cc.push(c[i]); }
+  sort(allr(k));
+  int ans = 0;
+  fr(i,0,n-1){  
+      
+      int p = INF;
+      if (!cc.empty()){
+          p = cc.top();
+      }
+      
+      if (p < c[k[i]-1]){
+          ans += p;
+          cc.pop();
+      }
+      else{
+          ans += c[k[i]-1];
+      }
 
-  cout << min_cost(0, chosen, dp, k, c, n, m) << endl;
-
-    fr(i,0,n-1){
-      cout << i << " " <<  dp[i] <<  endl;
   }
+  cout << ans;
 }
 
 signed main() {

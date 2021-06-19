@@ -1125,8 +1125,10 @@ Refer this example for more clarity : [here](https://codeforces.com/contest/1535
 
 - When taking input in a loop, dont print the answer & return in middle once answer is known. Take all the lements as input for that testcase & then print the answer. Otherwise the onput from current testcase will go to next testcase & will cause WRONG RESULTS. [Ex](https://codeforces.com/contest/1536/submission/118691508)
 
-- In the case of `string` problems, Though the problem looks very complicated in the beginning, If we carefully look at the constraints on the string length, & the charecters being involved in the input string, Even Bruteforce will solvce the problem since we usually have only `26` characters!!
+- In the case of `string` problems, Though the problem looks very complicated in the beginning, If we carefully look at the constraints on the string length, & the characters being involved in the input string, Even Bruteforce will solve the problem since we usually have only `26` characters!!
 [Example](https://codeforces.com/contest/1536/problem/B)
+
+- Moreover, sometimes, Constraints give a hint on which part of the problem can be calculated using BRUTEFORCE approach. [Example](https://codeforces.com/contest/1474/submission/119965586)
 
 - For a string of size n, 
 No of substrings of length 1 is n
@@ -1155,3 +1157,12 @@ array<int, 3> arr = {1, 0, -1};
 auto [a, b, c] = arr;
 // a is now 1, b is now 0, c is now -1
 ```
+- To find the Maximum Subarray Sum of Length atleast k in O(N) using Prefix Sum array, refer this [example](https://codeforces.com/contest/1486/submission/119761728)
+
+- For some problems which seem very difficult to come up with a EFFICIENT ALGORITHM, By seeing the Constraints of the Problem, Some times
+ we will be able to solve the problem very easily by careful observation that yields a simple algo which makes sure that the maximum constraint problem passes in given Time & Space Complexity. [Example](https://codeforces.com/contest/1469/submission/119768088).
+ So do look at the Constraints of the problem in the beginning itself.
+
+ - Note that, No of times we need to divide a number(a) by a number (b) to make the number a = 1, is `Ceil(logb(a))` i.e, Ceil ( Log(a) to the base b ) .   
+
+ 

@@ -83,56 +83,52 @@ int modpow(int a, int p = M-2, int MOD = M ){
 }
 //-----------------------------------------------------------------------------------------------------//
 
+int n;
+const int N = 300000 + 5;
+vi a(N);
+
+int isValley(int i) {
+    return (i > 0 && i < n - 1 && a[i] < a[i - 1] && a[i] < a[i + 1]);
+}
+
+int isHill(int i) {
+    return (i > 0 && i < n - 1 && a[i] > a[i - 1] && a[i] > a[i + 1]);
+}
+
 void solve() {
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
 
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
-  
-  vi indices; map<int,int> pre;
-  fr(i,1,n-2){
-      if ( ( (v[i] > v[i+1]) and (v[i] > v[i-1]) ) or ( (v[i] < v[i+1]) and (v[i] < v[i-1]) ) ){
-          indices.pb(i);
-          pre[i]++;
-      }
-  }
-   
-  int si = indices.size();
-  if (si < 2LL ){
-      cout << 0;
-  }
-  else if ( si == 2LL ){
-      int diff = abs(indices[0] - indices[1]) ;
-      if ( diff == 1LL ){
-          cout << 0;
-      }else{
-          cout << 1;
-      }
-  }
-  else{ // No fo V/H's >= 3
-      
-     // Check if there is a 3 consecutive elements. 
-    
-     fr(i,0,si-1){
-         int cur = indices[i];
-         if ( (  pre.count(cur+1LL) and  pre.count(cur+2LL) ) or (  pre.count(cur-1LL) and  pre.count(cur-2LL) ) ){
-             cout << si-3LL ; return;
-         }
-     }
+    // This stores the indices where there is a Valley or a Hill.
+    int is[n] = {};
+    int s = 0;
+    for (int i = 1; i < n - 1; i++) {
+        if (isHill(i) || isValley(i))
+            is[i] = 1, s++;
+    }
 
+    int ans = s; // Initialling with the current value of #Hills + #Valleys
 
-     // Check if there is a 2 consecutive elements.
-     fr(i,0,si-1){
-         int cur = indices[i];
-         if (  pre.count(cur+1LL)  or pre.count(cur-1LL) ){
-             cout << si-2LL ; return;
-         }
-     }
+    // Trying & checking the minimum among changing the value at index i.
+    for (int i = 1; i < n - 1; i++) {
+        int temp = a[i];
 
+        // Changing the value to a[i-1] & checking.
+        a[i] = a[i - 1];
 
-     cout << si - 1LL;
+        // current value(s) - ( Check if there is a hill/Valley at the i,i+1,i-1 ealier. ) + ( currently check if there is a Hill/Valley at those 3 )
+        ans = min(ans, s - is[i - 1] - is[i] - is[i + 1] + isHill(i - 1) + isValley(i - 1) + isHill(i) + isValley(i) + isHill(i + 1) + isValley(i + 1));
+        
+        // Changing the value to a[i+1] & checking.
+        a[i] = a[i + 1];
+        ans = min(ans, s - is[i - 1] - is[i] - is[i + 1] + isHill(i - 1) + isValley(i - 1) + isHill(i) + isValley(i) + isHill(i + 1) + isValley(i + 1));
+        
+        // Restoring its value & trying the next value.
+        a[i] = temp;
+    }
 
-  }
-
+    cout << ans ;
 }
 
 signed main() {

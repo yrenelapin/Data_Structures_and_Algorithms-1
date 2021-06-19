@@ -51,7 +51,8 @@ void solve() {
   }
 
   map<vl,ll> fre; 
-
+  
+  // Sorting each column values & storing their frequency in map.
   fr(i,0,n-1){
       vl temp = { grid[0][i], grid[1][i]};
       sort(all(temp));
@@ -61,9 +62,14 @@ void solve() {
     ll final = 1;
     ll left = 0;
     trav(each, fre){
+
+        // If  freq == 2, It means {a,b} & {b,a} are present in two columns. These two can be 
+        // independently flipped.
         if (each.se == 2)
             { final = ( final*2LL )%M; }
         else{
+
+            // All the other guys have inter dependency.
             left++;
         }
     } 

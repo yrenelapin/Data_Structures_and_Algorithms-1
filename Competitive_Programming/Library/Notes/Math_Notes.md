@@ -25,3 +25,33 @@ Now we can bruteforce as follows. For each value of d, subtract d*111 from X & c
 - Sum-Xor property: `(a+b) = ( a⊕b + 2(a&b) )`. Extended Version with two equations: `(a+b) = ( a|b + a&b AND a⊕b ) = (a|b − a&b).` [Example.](https://codeforces.com/problemset/problem/1325/D)
 
 - The pigeonhole principle states that if `n` items are put into `m` containers, with `n>m`, then at least one container must contain more than one item.
+
+GCD Properties :
+- gcd{a,b} = gcd{|a|,b} = gcd{a,|b|} = gcd{|a|,|b|}  So, the result of gcd should always be printed as POSITIVE. 
+- If a > b, GCD(a,b) = GCD(b, a%b)
+- gcd(a,b,c) = gcd(a,gcd(b,c)) = gcd(gcd(a,b),c)                       // Associative
+- gcd(a,b)=gcd(a,b−a) = gcd(a-b,b)                                     // Take abs for difference terms.
+- GCD(x,y) = GCD(x−y,y). The same applies for multiple arguments: GCD(x,y,z,…) = GCD(x−y,y,z,…) . Note that we have to assume that GCD of an empty set is 0, and GCD(x,0)=x for any x, since 0 is the only number divisible by any other number. So start by initialising gcd to 0. [Example](https://codeforces.com/contest/1459/submission/119794117)
+- Then we can extend to multiple arguments by mathematical induction :
+
+    **gcd(a1,a2,⋯,an−2,an−1,an)** 
+
+    =gcd(a1,a2,⋯,an−2,gcd(an−1,an))
+
+    =gcd(a1,a2,⋯,an−2,gcd(an−1,an−an−1))
+
+    =gcd(a1,a2,⋯,an−2,an−1,an−an−1)
+
+    =gcd(a1,a2,⋯,gcd(an−2,an−1),an−an−1)
+
+    =gcd(a1,a2,⋯,gcd(an−2,an−1−an−2),an−an−1)
+
+    =gcd(a1,a2,⋯,an−2,an−1−an−2,an−an−1)
+
+    ⋯
+
+    =gcd(a1,a2−a1,⋯,an−1−an−2,an−an−1)
+
+    We do not need to choose adjacent differences. gcd(a1,a2,⋯,an−2,an−1,an) is also equal to gcd(a1,a2−a1,⋯,an−1−a1,an−a1), which can be proved similarly.
+
+

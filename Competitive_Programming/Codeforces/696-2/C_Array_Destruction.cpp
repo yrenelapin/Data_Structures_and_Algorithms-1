@@ -82,11 +82,65 @@ int modpow(int a, int p = M-2, int MOD = M ){
 	return result;
 }
 //-----------------------------------------------------------------------------------------------------//
+vpi ans;
+int n; 
+
+bool removed_all(multiset<int> &cp, int mx){
+
+    while(!cp.empty()){
+        int sum = mx;
+        // Taking the maximum element in the current set of elements.
+        auto itr = cp.end(); itr--;
+        mx = *itr;
+        cp.erase(cp.find(mx));
+        if (cp.find(sum-mx) == cp.end()){
+            break;
+        }
+        else{
+            cp.erase(cp.find(sum-mx)); 
+            ans.pb({mx, sum-mx});
+        }
+    }
+
+    // If we have performed n operations, It means the array is destructed.
+    if (ans.size() == n/2){
+        cout << "YES\n";
+        auto e = ans.begin();
+        cout << e->fi + e->se << endl;
+        trav(e, ans){
+            cout << e.fi << " " << e.se << endl;
+        }
+
+        return 1;
+    }
+
+
+
+    return 0;
+}
 
 void solve() {
-  int n; cin >> n;
-  // int dp[n][n]; memset(dp,-1, sizeof(dp));
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  cin >> n; n *= 2; 
+  multiset<int> s;
+  vi v(n); fr(i,0,n-1) { cin >> v[i]; s.insert(v[i]); }
+  sort(all(v));
+  
+  ans.clear();
+  // Since `n` is small, we can try all the possibilities of the 2nd element in the first pair.
+  fr(i,0,n-2){
+      ans.pb({v[i], v[n-1] });
+      multiset<int> cp = s;
+      cp.erase(cp.find(v[i]));
+      cp.erase(cp.find(v[n-1]));
+      if (removed_all(cp, v[n-1])){
+          return;
+      }
+
+      ans.clear();
+
+  }
+
+  cout << "NO\n";
 }
 
 signed main() {
@@ -104,7 +158,7 @@ signed main() {
         //cout << "Case #" << T << ": ";
 
         solve();
-        cout << "\n";
+        //cout << "\n";
     }
     return 0;
 }

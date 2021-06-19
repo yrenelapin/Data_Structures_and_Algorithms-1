@@ -86,29 +86,33 @@ int modpow(int a, int p = M-2, int MOD = M ){
 void solve() {
   int n,k; cin >> n >> k;
   vi h(n); fr(i,0,n-1) { cin >> h[i]; }
-  vpi val(n);
-  val[0]   = {h[0], h[0]+k};
-  val[n-1] = {h[n-1], h[n-1]+k};
-  fr(i,1,n-2){
-      val[i] = { h[i],  h[i] + 2*k -1 };
-  }
   
-  fr(i,0,n-2){
-      int curr_start = val[i].fi;
-      int curr_end = val[i].se;
+  // This vector contains the min & max starting position of the section at each position.
+  vpi val(n);
 
-      int next_start = val[i+1].fi;
-      int next_end = val[i+1].se;
+  // Always starts from ground.
+  val[0]   = {h[0], h[0]};
+  
+  fr(i,1,n-1){
 
-      vpi temp = { {curr_start, curr_end} , {next_start, next_end} };
-      sort(all(temp));
+      // Calucalting the min & max values of current section based on previous section values &
+      // given conditions.
+
+      // Minimum value of starting point of current section.
+      val[i].fi  = max( val[i-1].fi + 1-k, h[i] );
       
-      auto small = temp[0];
-      auto large =  temp[1];
-      int small_max = temp[0].se;
-      int large_min =  temp[1].fi;
-      if ( abs ( small_max  - large_min ) < 1 ) 
+      // Maximum value of starting point of current section.
+      val[i].se =  min( val[i-1].se + k - 1, h[i] + k-1 );
+
+      // If range is invalid. (min > max)
+      if ( val[i].fi > val[i].se ) 
           { cout << "NO"; return; }
+  }
+
+  // Last section should always start from ground.
+  // So check if its within in the range. 
+  if (h[n-1] < val[n-1].fi){
+      cout << "NO"; return;
   }
 
   cout << "YES";

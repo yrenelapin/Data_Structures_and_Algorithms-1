@@ -46,37 +46,20 @@ template <typename T> ostream& operator<< (ostream& os, priority_queue<T> p)
 { os << "[ "; while(!p.empty()){ os << p.top() << " ,"; p.pop(); } os << " ]\n"; return os; }
 //-------------------------------------------------------- Basic Number Theory --------------------------------------------------
 namespace number_theory{
-    bool is_prime(int n)  {  if (n < 2) return false; for(int i = 2; i*i <= n; i++){ if (n % i == 0) return false; } return true; }    
-    vi prime_factors(int n) { vi res; for(int i = 2; i*i <= n; i++){ while (n % i == 0){ res.pb(i); n /= i; } } if (n > 1) res.pb(n); return res;}
     int gcd(int a, int b)   { int c;  while (b){c = b; b = a % b; a = c;} return a; }
     int lcm(int a, int b)   { return (a*(b/gcd(a,b)));}
     int modpow(int a, int p = M-2, int MOD = M )   { int result = 1; while (p > 0) { if (p & 1) { result = a * result % MOD; } a = a * a % MOD; p >>= 1; } return result; }
-    int modinv(int n, int p) { return modpow(n, p - 2, p);}
-    int ncr (int n,int k)    { int ans = 1; if (k>n-k) {k=n-k;} fr(i,1,k) {ans*=(n-i+1),ans/=i; } return ans; }
-    vi sieve_erato(int n)    { vi sieve(n+1); fr(i,2,n){ if (sieve[i]) continue; for(int j = 2*i; j <= n; j+=i ){ sieve[j] = i;}} return sieve;}
-    int ncrModPFermat(int n,int r, int p)    { if (n < r ){ return 0;} if (r == 0){ return 1; } int fac[n + 1]; fac[0] = 1; fr(i,1, n) { fac[i] = (fac[i - 1] * i) % p; } return (fac[n] * modinv(fac[r], p) % p * modinv(fac[n - r], p) % p) % p;}
+    int ncr (int n,int k)    { int ans = 1; if (k>n-k) {k=n-k;} fr(i,1,k) {ans*=(n-i+1); ans/=i; } return ans; }
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 
 
 void solve() {
-  int n, m; cin >> n >> m;
-
-  vi a(n); fr(i,0,n-1) { cin >> a[i]; }
-  vi b(m); fr(i,0,m-1) { cin >> b[i]; }
-
-    int gc = 0;
-
-    fr(i,1,n-1){
-            gc = gcd(gc, abs(a[i]-a[0]) );
-    }
-
-    fr(j,0,m-1){
-        cout << gcd(gc, a[0] + b[j] ) << " ";
-    }
-  
+  int n, m, i, j; cin >> n >> m >> i >> j;
+  cout << 1 << " " << 1 << " " << n << " " << m;
 }
+
 
 signed main() {
     // freopen("input.txt", "r", stdin);
@@ -84,7 +67,7 @@ signed main() {
 
     fastIO;
     int t = 1;
-    //cin >>  t; 
+    cin >>  t; 
     fr(T,1,t){
         //cout << "Case #" << T << ": ";
         solve();

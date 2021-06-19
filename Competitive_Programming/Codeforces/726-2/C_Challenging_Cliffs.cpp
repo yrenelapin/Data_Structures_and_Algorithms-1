@@ -24,7 +24,7 @@ typedef priority_queue<int> prq;
 const int M = 1e9 + 7;
 const int INF = 1e18;
 //-------------------------------------------------------- DebugHelp--------------------------------------------------
-vector<string> vec_splitter(string s) {s += ','; vector<string> res; while(!s.empty()) { res.push_back(s.substr(0, s.find(','))); s = s.substr(s.find(',') + 1);} return res;}
+vector<string> vec_splitter(string s) {s += ','; vector<string> p; while(!s.empty()) { p.push_back(s.substr(0, s.find(','))); s = s.substr(s.find(',') + 1);} return p;}
 void debug_out( vector<string> __attribute__ ((unused)) args, __attribute__ ((unused)) int idx,  __attribute__ ((unused)) int LINE_NUM) { cout << endl; } 
 template <typename Head, typename... Tail> void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) { if(idx > 0) cout << ", "; else cout << "Line(" << LINE_NUM << ") ";stringstream ss; ss << H;cout << args[idx] << " = " << ss.str();debug_out(args, idx + 1, LINE_NUM, T...); }
 #define dbg(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
@@ -46,36 +46,49 @@ template <typename T> ostream& operator<< (ostream& os, priority_queue<T> p)
 { os << "[ "; while(!p.empty()){ os << p.top() << " ,"; p.pop(); } os << " ]\n"; return os; }
 //-------------------------------------------------------- Basic Number Theory --------------------------------------------------
 namespace number_theory{
-    bool is_prime(int n)  {  if (n < 2) return false; for(int i = 2; i*i <= n; i++){ if (n % i == 0) return false; } return true; }    
-    vi prime_factors(int n) { vi res; for(int i = 2; i*i <= n; i++){ while (n % i == 0){ res.pb(i); n /= i; } } if (n > 1) res.pb(n); return res;}
     int gcd(int a, int b)   { int c;  while (b){c = b; b = a % b; a = c;} return a; }
     int lcm(int a, int b)   { return (a*(b/gcd(a,b)));}
-    int modpow(int a, int p = M-2, int MOD = M )   { int result = 1; while (p > 0) { if (p & 1) { result = a * result % MOD; } a = a * a % MOD; p >>= 1; } return result; }
-    int modinv(int n, int p) { return modpow(n, p - 2, p);}
-    int ncr (int n,int k)    { int ans = 1; if (k>n-k) {k=n-k;} fr(i,1,k) {ans*=(n-i+1),ans/=i; } return ans; }
-    vi sieve_erato(int n)    { vi sieve(n+1); fr(i,2,n){ if (sieve[i]) continue; for(int j = 2*i; j <= n; j+=i ){ sieve[j] = i;}} return sieve;}
-    int ncrModPFermat(int n,int r, int p)    { if (n < r ){ return 0;} if (r == 0){ return 1; } int fac[n + 1]; fac[0] = 1; fr(i,1, n) { fac[i] = (fac[i - 1] * i) % p; } return (fac[n] * modinv(fac[r], p) % p * modinv(fac[n - r], p) % p) % p;}
+    int modpow(int a, int p = M-2, int MOD = M )   { int pult = 1; while (p > 0) { if (p & 1) { pult = a * pult % MOD; } a = a * a % MOD; p >>= 1; } return pult; }
+    int ncr (int n,int k)    { int ans = 1; if (k>n-k) {k=n-k;} fr(i,1,k) {ans*=(n-i+1); ans/=i; } return ans; }
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 
+void solve(){
 
-void solve() {
-  int n, m; cin >> n >> m;
+    int n; cin >> n;
+    vi v(n); fr(i,0,n-1) { cin >> v[i]; }
 
-  vi a(n); fr(i,0,n-1) { cin >> a[i]; }
-  vi b(m); fr(i,0,m-1) { cin >> b[i]; }
+    sort(all(v));
 
-    int gc = 0;
+    // Finding the pair with the minimum difference in a sorted array.
+    // Since it is sorted, resultant Pair will be adjacent only.
+    int diff = INF;
+    pair<int,int> p;
 
-    fr(i,1,n-1){
-            gc = gcd(gc, abs(a[i]-a[0]) );
+    fr (i,0,n-2){
+        if (v[i+1] - v[i] < diff){
+            diff = v[i+1] - v[i];
+            p = {i,i+1}; 
+        }
     }
 
-    fr(j,0,m-1){
-        cout << gcd(gc, a[0] + b[j] ) << " ";
+    int start = v[p.fi];
+    int end = v[p.se];
+
+    cout << start << " ";
+    
+    // Printing from end_index + 1 till n-1.
+    fr(i,p.se+1, n-1){
+        cout << v[i] << " ";
     }
-  
+
+    // Printing from 0 till start_index - 1.
+    fr(i,0,p.fi-1){
+        cout << v[i] << " ";
+    }
+
+    cout << end << " ";
 }
 
 signed main() {
@@ -84,7 +97,7 @@ signed main() {
 
     fastIO;
     int t = 1;
-    //cin >>  t; 
+    cin >>  t; 
     fr(T,1,t){
         //cout << "Case #" << T << ": ";
         solve();

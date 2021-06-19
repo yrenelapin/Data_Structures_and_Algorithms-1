@@ -43,30 +43,23 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 
 void solve() {
   ll n; cin >> n;
-  // ll dp[n][n]; memset(dp,-1, sizeof(dp));
-  ll sum = 0;
-  vl v(n); fr(i,0,n-1) { cin >> v[i];  sum += v[i]; }
-  if (n == 1){
-      cout << v[0]; return;
-  }
-  else if ( n == 2){
-      cout << v[0] +  v[1] ; return;
-  }
-  else{
-    
-      ll initial = v[0] + v[n-1];
-      fr(i,1,n-1){
-          initial += abs(v[i]-v[i-1]);
-      }
+  vl a(n+2); fr(i,1,n) { cin >> a[i]; }
 
-      deb(initial);
+  ll ans = 0;
+  fr(i,1,n){
+
+      // We will make the current hist to size of `miny`
+      ll miny = min(a[i], max(a[i-1], a[i+1]));
       
-      sort(all(v));
-      ll temp = (2*v[n-1]);
-      ll diff = abs(temp-initial);
-      
-      cout << temp - diff;
-  }
+      ans += ( a[i] - miny );   // operations req.
+      a[i] = miny;
+
+      ans += (abs(miny-a[i-1])); // contr. of previous element.
+   }
+
+   ans += (a[n]); // Last element contr.
+
+  cout << ans;
 
 }
 

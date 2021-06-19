@@ -85,60 +85,44 @@ int modpow(int a, int p = M-2, int MOD = M ){
 
 void solve() {
   int n, x; cin >> n >> x;
-  // int dp[n][n]; memset(dp,-1, sizeof(dp));
-  int ans = 0; queue<int> q; int tmp;
-  fr(i,0,n-1) { cin >> tmp; q.push(tmp);  ans += tmp; }
-  
-  bool flag = 0;  int cnt = 0;
-  while( (!q.empty()) and (q.front()%x == 0) ){
-      cnt++;
-      if (cnt <= n){
-            int curr = q.front();
-            q.pop();
-            ans += curr;
-                 
-            q.push(curr/x);
-            
-            // curr /= x;
-
-            // //if (flag == 0){ // once we inserted a non divisible value, we need not move forward.
-            //     if (curr%x == 0){
-            //         //fr(i,1,x){
-            //             q.push(curr);
-            //         //}
-            //     }
-            //     else{
-            //         q.push(curr);
-            //         //flag = 1;
-            //     }
-            // //}
-
+  queue<pi> q; int tmp; vi v(n);
+  fr(i,0,n-1) { cin >> tmp; v[i] = tmp; }
+   
+  int c = 1;
+  int prev = v[0];
+  fr(i,1,n-1){
+      if (prev != v[i]){
+          q.push( {prev , c} );
+          c = 1;
       }
       else{
-            int curr = q.front();
-            q.pop();
-            int tmp = curr*x;
-            ans += tmp;
-            
-            q.push(curr/x);
-            // curr /= x;
-
-            // //if (flag == 0){ // once we inserted a non divisible value, we need not move forward.
-            //     if (curr%x == 0){
-            //         //fr(i,1,x){
-            //             q.push(curr);
-            //         //}
-            //     }
-            //     else{
-            //         q.push(curr);
-            //         //flag = 1;
-            //     }
-            // //}
-      } 
-  
+          c++;
+      }
+      prev = v[i];
   }
+  
+   q.push( {prev , c} );
 
-  cout << ans;
+
+  bool flag = 0; 
+  int ans = 0;
+  while( q.front().fi %x == 0 ){
+      auto e = q.front();
+      int tmp = e.fi*e.se;
+      ans += tmp;
+      q.push({q.front().fi/x , x*q.front().se});
+      q.pop();
+  }
+    
+   // Adding the remaining elements to the answer.
+   while(!q.empty()){
+        auto e = q.front();
+        int tmp = e.fi*e.se;
+        ans += tmp;
+        q.pop();
+    }
+
+    cout << ans;
 }
 
 signed main() {

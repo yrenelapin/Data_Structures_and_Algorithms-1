@@ -54,21 +54,22 @@ void solve() {
       fr(i,1,n-1){
           b[i] += b[i-1];
       }
-
+     
+    //   deb(m);
     //   trav(e,b){
-    //       deb(e);
-    //   }
-
-     // Maximum & Minimum Prefix sums (Sub array sums). 
-     int mx = b[k - 1];  // To track the maximum among all the subarrays of size atleast k.
-     int mn = 0;         // This is helpful for calculating above quantity `mx` using prefix sum array, since we may have 
-                         // negative subarray sums too. 
+    //       cout << e << " ";
+    //   }cout << endl;
 
      // Since we replaced the values as -1,+1, the `m` as median is possible if there is a subarray of size atleast k with positive sum.
+     // So, we need ( b[i] - b[j-1] >  0  and  i-j+1 >= k ). So for these indices, lets find the max value of b[i]-b[j-1].
+
+     // Initially, our i = k-1, j is not defined, b[j] is taken 0. This is a subarray starting from beginning & of length k. 
+     int mx = b[k - 1];  
+     int mn = 0;          
+
      fr(i, k, n-1) {
-            //deb2(mn, mx);
-            mn = min(mn, b[i - k]);
-            mx = max(mx, b[i] - mn);
+            mn = min(mn, b[i - k]);   // Tracking the minimum value of b[j-1] for all possible j value.
+            mx = max(mx, b[i] - mn);  // Tracking the max value of b[i]-b[j-1]
      }
     
     // The Maximum subarray sum of length atleast k is > 0, Which means that `m` can be a median, or the actual answer is atleast `m`.
