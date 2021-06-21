@@ -1165,4 +1165,5 @@ auto [a, b, c] = arr;
 
  - Note that, No of times we need to divide a number(a) by a number (b) to make the number a = 1, is `Ceil(logb(a))` i.e, Ceil ( Log(a) to the base b ) .   
 
- 
+- To check for the number of occurences of a substring in a given string, If length of substring is very less, We can assume that it is done O(N) though O(N^2)[Example](https://codeforces.com/contest/1379/submission/120019949). But in general it is done using [KMP Algorithm](https://www.geeksforgeeks.org/frequency-substring-string/) in O(M+N) time.
+
