@@ -2,22 +2,20 @@
 using namespace std;
 
 void inp_adj_list(){
-    // Graph as an Adjacency List with n vertices assuming that all vertex numbers are <= n
+    // Graph as an Adjacency List with n vertices assuming that all vertex numbers are <= n and having `m` edges.
     // For weighted graph, use vector< vector< pair<int,int> > > adj_list(n+1);  and push { destination, weight }
-
-    int n; cin >> n;
+      
+    int n, m; cin >> n >> m;
     int vertex, destination;
     vector< vector<int> > adj_list(n+1);
-    for (int i = 0; i < n; i++){
-        cin >> vertex;
-        while (1){
-            cin >> destination;
-            if (destination == -1)  break;              // -1 representing the end of adjacent vertices to the current vertex. or [ while (cin>> temp) ] may be needed.
+    for (int i = 0; i < m; i++){
+            cin >> vertex >> destination;
             adj_list[vertex].push_back(destination);   
-            // adj_list[destination].push_back(vertex);  // If Graph is UNDIRECTED, use it. Note that, vertices may be repeatedly added into adj list. Mostly in case of DENSE Graph.
-        }
+            //adj_list[destination].push_back(vertex);  // If Graph is UNDIRECTED, use it. 
     }
 
+    // Note: The above one is made assuming standard way of Input as Edges. However, In some problems Input might be given in various ways. Examples in page end.
+   
     // Print
     for (int i = 1; i <= n; i++){
         cout << "Vertex " << i << " -> ";
@@ -65,7 +63,7 @@ void inp_edge_list(){
         int start, end, w = 1;
         cin >> start >> end ;             // cin >> w;
         edge_list.push_back( { start, end } ); 
-        // edge_list.push_back( { end, end } );  // If Graph is UNDIRECTED, use it. 
+        // edge_list.push_back( { end, start } );  // If Graph is UNDIRECTED, use it. 
     }
 
     // Print
@@ -80,3 +78,35 @@ int main(){
     inp_adj_mat();    cout << endl;
     inp_edge_list();  cout << endl;
 }
+
+
+/*
+
+Adjacency List Input Variant 
+---------------------------
+
+int n, source, destination;
+cin >> n;
+
+// Since the vertices values range from 1 to n, we need `n+1` vector size. 
+vector< vector<int> > adj_list(n+1); // Array of Vectors
+
+for (int i = 0; i < n; i++)
+{
+    cin >> source;
+    while (1)
+    {
+        cin >> destination;
+        if (destination == -1)
+            break;
+        adj_list[source].push_back(destination);
+        
+        // Since It is an UNDIRECTED Graph.
+        adj_list[destination].push_back(source);
+    }
+}
+
+// 1. (Above Code) A loop traversing all the vertices & we will stop when some `character` appears.  `character` represents the end of adjacent vertices to the current vertex. In this kind of undirected graphs, There be repeating addition of vertices to the Adjacency list. 
+// 2. In some cases, we may be taking all the vertices that are being present in the input. [ while (cin>> temp) ] may be needed.
+
+*/

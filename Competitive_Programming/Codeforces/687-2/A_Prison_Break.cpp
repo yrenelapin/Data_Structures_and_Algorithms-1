@@ -56,8 +56,12 @@ using namespace number_theory;
 // int dp[n][n]; memset(dp,-1, sizeof(dp));
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int n,m , r, c; cin >> n >> m >> r >> c;
+  int op1 =  abs(r-1) + abs (c-1);
+  int op2 =  abs(r-1) + abs(c-m); 
+  int op3 =  abs(r-n) + abs(c-1); 
+  int op4 =  abs(r-n) + abs(c-m); 
+  cout << max({op1,op2,op3,op4});
 }
 
 signed main() {

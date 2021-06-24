@@ -53,11 +53,42 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
-// int dp[n][n]; memset(dp,-1, sizeof(dp));
+
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int n; cin >> n; vector<string> s(n);
+  fr(i,0,n-1) { cin >> s[i]; }
+  vi ans(10,0);
+  vi max_r(10,-1), max_c(10,-1), min_r(10,n), min_c(10,n);
+  
+  // Finding out the Min & Max - Row & Column position for each number in the Input grid.
+  fr(i,0,n-1){
+      fr(j,0,n-1){
+        int cur =  s[i][j] - '0';
+        max_c[cur] = max(max_c[cur], j);
+        max_r[cur] = max(max_r[cur], i);
+        min_c[cur] = min(min_c[cur], j);
+        min_r[cur] = min(min_r[cur], i);
+      }
+  }
+
+
+  // Now, we iterate over all the positions & for each position we have four possibiliies. 
+  // Take maximum among column positions for the current  element & change the element at the extreme row.  -> Two poss.
+  // Take maximum among row positions for the current element & change the element at the extreme coulmn .  -> Two poss.
+    fr(i,0,n-1){
+        fr(j,0,n-1){
+            int curr =  s[i][j] - '0';
+            ans[curr] = max(  ans[curr],  max(i-min_r[curr], max_r[curr]-i)*max( j, n-j-1 ) );
+            ans[curr] = max(  ans[curr],  max(j-min_c[curr], max_c[curr]-j)*max( i, n-i-1 ) );
+        }
+    }
+
+
+    trav(e,ans){
+        cout << e << " ";
+    }
+
 }
 
 signed main() {

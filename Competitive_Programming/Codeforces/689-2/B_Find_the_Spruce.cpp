@@ -53,11 +53,51 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
-// int dp[n][n]; memset(dp,-1, sizeof(dp));
+
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int n, m; cin >> n >> m;
+  char s[n+1][m+1]; memset(s,-1, sizeof(s));
+
+  fr(i,0,n-1){ 
+    fr(j,0,m-1){
+        cin >> s[i][j]; }
+    }
+
+    vvi dp(n+1, vi(m+1));
+
+    
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            if(s[i][j]=='*')
+                dp[i][j]=1;
+        }
+    }
+
+    int ans=0;
+
+    // Iterating from the Last row to Top row.
+    for(int i=n-1;i>=0;i--){
+
+        // For each row, Iterating over the columns except the 1st & last column
+        // and counting the number of trees possible with the current position as root.
+        for(int j=m-2;j>=1;j--){
+
+            if(dp[i][j]==1){
+
+                // To understand why taking min is sufficient, draw a test case & workout!
+                dp[i][j] = 1 + min({dp[i+1][j-1],dp[i+1][j],dp[i+1][j+1]});
+            }
+        }
+    }
+
+    // Counting all the spruces.
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++)
+            ans += dp[i][j];
+    }
+    cout<<ans;
+
 }
 
 signed main() {

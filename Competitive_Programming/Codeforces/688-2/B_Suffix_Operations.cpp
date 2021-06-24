@@ -57,14 +57,19 @@ using namespace number_theory;
 
 void solve() {
   int n; cin >> n;
-  // int dp[n][n]; memset(dp,-1, sizeof(dp));
-  int sum = 0;
-  vi v(n); fr(i,0,n-1) { cin >> v[i];  sum +=  abs(v[i]); }
+  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
   int diff = 0;
-  fr(i,0,n-2){
-      diff += abs(v[i]-v[i+1]);
+  fr(i,1,n-1){
+      diff += abs(v[i]-v[i-1]);
   }
-  dbg(sum,diff);
+  int op1 = abs(v[1]-v[0]);
+  int op2 = abs(v[n-1]-v[n-2]);
+  int op3 = 0;
+  fr(i, 1, n-2){
+      op3 = max( op3,  abs(v[i]-v[i-1]) + abs(v[i+1]-v[i]) - abs(v[i+1]-v[i-1])  );
+  }
+  int rem = max( {op1, op2, op3});
+  cout << diff - rem;
 }
 
 signed main() {

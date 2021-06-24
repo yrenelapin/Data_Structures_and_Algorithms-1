@@ -53,11 +53,12 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
-// int dp[n][n]; memset(dp,-1, sizeof(dp));
+
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  string s; cin >> s;
+  int n = s.size();
+  cout << n;
 }
 
 signed main() {

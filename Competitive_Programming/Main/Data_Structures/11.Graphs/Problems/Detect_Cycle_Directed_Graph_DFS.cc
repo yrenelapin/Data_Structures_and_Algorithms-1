@@ -41,11 +41,12 @@ string check_cycle(  vector < vector<int> > graph, int len)
     
     // This loop helps incase of Disconnected Graphs.
     for (int i = 1; i < len; i++)
-    {
-        if (check_cycle(i, graph, visited, recursion_stack))
-        {
-            return "Yes";
-        }
+    {   if (!visited[i]){
+            if (check_cycle(i, graph, visited, recursion_stack))
+            {
+                return "Yes";
+            }
+        }   
     }
     return "No";
 }

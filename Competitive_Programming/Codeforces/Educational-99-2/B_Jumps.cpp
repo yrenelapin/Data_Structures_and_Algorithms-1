@@ -53,11 +53,26 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
-// int dp[n][n]; memset(dp,-1, sizeof(dp));
+
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+
+  int x; cin >> x;
+  int tmp =  1+ 8*x;
+  int sr = sqrt(tmp);
+  if (sr * sr == tmp){
+      cout << (sr-1)/2;
+  }
+  else{
+      int direct1 = (sr)/2 ;
+      int main1 = direct1*(direct1+1)/2;
+
+      int direct2 = (sr)/2 + 1 ;
+      int main2 = direct2*(direct2+1)/2;
+
+      cout << min ( direct1 + abs(main1-x) , direct2 + abs(main2-x) );
+  }
+
 }
 
 signed main() {

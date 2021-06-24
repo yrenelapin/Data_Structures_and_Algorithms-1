@@ -53,11 +53,46 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
-// int dp[n][n]; memset(dp,-1, sizeof(dp));
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  decimal(10);
+  int n, m; 
+  cin >> n >> m;
+  
+  vi a(n); fr(i,0,n-1) { cin >> a[i]; }
+
+  vector<pair<ld,ld>> exp(m);
+  fr(i,0,m-1){
+      cin >> exp[i].fi >> exp[i].se;
+  } 
+
+  int max_uns = -1;
+  fr(i,0,n-1){
+      if (a[i] != i+1){
+          max_uns = i;
+      }
+  }
+  
+  if (max_uns == -1){
+      cout << (ld)1;
+      return;
+  }
+
+  ld ans = -1;
+  fr(i,0,m-1){
+      int r = exp[i].fi; ld p = exp[i].se;
+      if (r-1 >= max_uns){
+          if (ans == -1) ans = (1-p); 
+          else ans *= (1-p);
+      }
+  }
+  if (ans == -1){
+      cout << (ld)0;
+  }
+  else{
+    cout <<  ( 1 - ans );
+  }
+
 }
 
 signed main() {

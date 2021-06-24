@@ -16,7 +16,7 @@ bool isBipartite(vector< vector<int> >adj, int v,
 		// if vertex u is not explored before
 		if (visited[u] == false) {
 
-			// mark present vertic as visited
+			// mark present vertex as visited
 			visited[u] = true;
 
 			// mark its color opposite to its parent
@@ -66,9 +66,6 @@ int main()
 	// marking the source node with a color
 	color[1] = 0;
 
-	// Function to check if the graph
-	// is Bipartite or not.
-
     // Since this is for Connected Graphs, We need not try with all the vertices as Source.
 	if (isBipartite(adj, 1, visited, color)) {
 		cout << "Yes";
@@ -76,6 +73,15 @@ int main()
 	else {
 		cout << "No";
 	}
+
+	// This loop helps incase of Disconnected Graphs.
+    // for (int i = 1; i < len; i++){	
+	// 	if (!visited[i]){
+	// 		if (!isBipartite(adj, i, visited, color)){
+	// 			cout << "No";}
+	// 	}
+	// }
+    // cout << "Yes";
 
 	return 0;
 }

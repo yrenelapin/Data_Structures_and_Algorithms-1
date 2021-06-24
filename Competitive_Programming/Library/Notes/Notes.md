@@ -975,6 +975,9 @@ DP Notes :
 - Also, It is not that any problem can be solved by DP, But most of the Optimisation Problems/Counting Problems/CheckIfPossible type can be solved. If even thinking for a while, made all kinds of subproblems, but unable to relate them to original subproblem, It means that OPTIMAL SUBSTRUCTURE may be missing for that particular problem though Overlapping subproblems are present. In those cases, since DP is not going to help, Try Greedy/Recursive BackTracking/Divide&Conquer.  
 - Note that DP is mostly helpful in reducing Exponential (say 2^n) Time Complexities to Polynomial (say n^2). But in some cases,
 Even DP gives TLE/ Memory Limit Exceeded. In those cases, Either Memory efficient DP (usually Bottom up with clever space optimisation) may help. Even if that fails/ unable to make it a Space efficient one, Try GREEDY approach. It really solves problems in such scenarios. In some cases, Just Observation of the exact logic & using bruteforce works even better. Example [here.](https://codeforces.com/contest/1485/problem/B)
+- In some DP problems, We might encounter most famous recurrences like Fibonacci, Catalan. They are hidden inside the Problem. If we carefully analyse, we can very easily solve them. [Example](https://codeforces.com/contest/1245/submission/120350792). 
+So, be thorough with all the standard/classic DP Problems. All the remaining are just the variants of these!!
+
 
 - If we are sure that, all the quantities are positive & they are very large, we can use , `unsigned long long` instead of `long long`
 - If we declare Vector with Initialisation in Global & take size of vector from INPUT in the Local Function, It gives unexpected errors since `n` gets random value in the beginning & the corresponding sized vector may be created.
@@ -1167,3 +1170,12 @@ auto [a, b, c] = arr;
 
 - To check for the number of occurences of a substring in a given string, If length of substring is very less, We can assume that it is done O(N) though O(N^2)[Example](https://codeforces.com/contest/1379/submission/120019949). But in general it is done using [KMP Algorithm](https://www.geeksforgeeks.org/frequency-substring-string/) in O(M+N) time.
 
+- Declare the DP array, Extra arrays, Graphs, in the global Namespace & clear them for each test case instead of passing them to functions as arguments since it is too ugly while writing RECURSIVE functions.
+
+
+Graphs/Trees Notes:
+- Be careful abt the numbering of the vertcies being used in the problem. Sometimes it may be from [ 1,2,..N ] or [ 0,1,2,,..N-1]
+so, when using pre-written codes, make necessary changes according to the problem.
+
+- Note that Tree is always connected. So  there is no need to perform BFS/DFS more than once to traverse it.
+- Get the intuition ( or Naive Proof ) behind using Two DFS's or Two BFS's for solving a problem.
