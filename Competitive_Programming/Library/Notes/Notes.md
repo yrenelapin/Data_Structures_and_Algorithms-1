@@ -1179,3 +1179,6 @@ so, when using pre-written codes, make necessary changes according to the proble
 
 - Note that Tree is always connected. So  there is no need to perform BFS/DFS more than once to traverse it.
 - Get the intuition ( or Naive Proof ) behind using Two DFS's or Two BFS's for solving a problem.
+
+
+- std::memset, as is the case for any function, can only be called within a function. We can't simply call it in "global scope". [Example](https://stackoverflow.com/questions/40871661/error-expected-constructor-destructor-or-type-conversion-before-token-a)

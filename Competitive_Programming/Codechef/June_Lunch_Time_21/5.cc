@@ -57,8 +57,22 @@ using namespace number_theory;
 
 void solve() {
   // memset(dp,-1, sizeof(dp));
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int n, k; cin >> n >> k;
+  vi v(n); fr(i,1,n-1) { cin >> v[i]; }
+  if (k <= n){
+      cout << 1;
+  }
+  else{
+      if (k%n == 0){
+          int rem = k/n;
+          cout << 1 + 2*(rem-1);
+      }
+      else{
+          int rem = k/n;
+          cout << 1 + 2*rem;
+      }
+  }
+
 }
 
 signed main() {

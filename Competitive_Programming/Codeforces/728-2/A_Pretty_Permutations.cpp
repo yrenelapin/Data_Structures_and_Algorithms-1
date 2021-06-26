@@ -53,12 +53,26 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
-// int dp[n][n]; 
+// int dp[n][n]; memset(dp,-1, sizeof(dp));
 
 void solve() {
-  // memset(dp,-1, sizeof(dp));
   int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  vi a(n); fr(i,0,n-1) { a[i] = i+1; }
+  if (n%2 == 0){
+      for(int i = 0; i < n-1; i+=2 ){
+          swap(a[i], a[i+1]);
+      }
+  }
+  else{
+      swap(a[0],a[1]);
+      for(int i = 1; i < n-1; i+=2 ){
+          swap(a[i], a[i+1]);
+      }
+  }
+
+  trav(e,a){
+      cout << e << " ";
+  }
 }
 
 signed main() {

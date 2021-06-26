@@ -58,7 +58,52 @@ using namespace number_theory;
 void solve() {
   // memset(dp,-1, sizeof(dp));
   int n; cin >> n;
+  vi odd, even;
   vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  
+//   sort(all(v));
+  fr(i,0,n-1) { if (v[i]%2 == 0) even.pb(v[i]); else odd.pb(v[i]); }
+  
+  if (odd.size() == even.size()){
+
+        int s = even.size();
+        fr(i,0,s-1){
+            cout << even[i] << " "  << odd[i] << " ";
+        }
+
+  } 
+  else if (odd.size() > even.size()){
+   
+        int s = even.size();
+
+        fr(i,0,s-1){    // change?
+            cout << odd[i] << " "  << even[i] << " ";
+        }
+
+        fr(i,s,odd.size()-1){
+            cout  << odd[i] << " ";
+        }
+
+  }
+  else{  // More even 
+
+        int s = odd.size();
+
+        fr(i,s,even.size()-1){
+            cout  << even[i] << " ";
+        }
+
+        fr(i,0,s-1){
+            cout << even[i] << " "  << odd[i] << " ";
+        }
+
+  }
+
+
+   
+
+
+  
 }
 
 signed main() {

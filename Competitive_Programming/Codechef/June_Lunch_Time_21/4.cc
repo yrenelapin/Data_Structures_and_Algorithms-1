@@ -57,8 +57,90 @@ using namespace number_theory;
 
 void solve() {
   // memset(dp,-1, sizeof(dp));
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int n, m, k; cin >> n >> m >> k;
+  vvi grid(n, vi(m,-1));  // -1 for empty
+  int cnt = 0;
+  int x, y;
+
+  int win_dec = 0;
+
+  vector<string> res;
+
+  fr(i,0,n-1){
+      fr(j,0,m-1){
+
+          cin >> x >> y;
+          x--, y--;
+   
+
+          if (cnt % 2 == 0){  // Alice Turn -> puts 0.
+              grid[x][y] = 0;
+          }
+          else{
+              grid[x][y] = 1;
+          }
+          cnt++;
+
+       
+          if (win_dec == 0){
+
+
+                // Check if anyone wins!
+                fr(r,0,n-k){
+
+                    fr(c,0,m-k){
+                        // Starting point.
+                        
+
+                        int alice = 1 ;
+                        fr(k1,r, r+ k-1){
+                            fr(k2,c, c + k-1){
+                                if (grid[k1][k2] != 0){
+                                    alice = 0;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (alice == 1){
+                            res.pb("Alice"); //return;
+                            win_dec = 1;
+                        }
+                        
+                        int bob = 1 ;
+                        fr(k1,r, r+ k-1){
+                            fr(k2,c, c + k-1){
+                                if (grid[k1][k2] != 1){
+                                    bob = 0;
+                                    break;
+                                }
+                            }
+                        }
+
+                        if (bob == 1){
+                            res.pb("Bob"); //return;
+                            win_dec = 1;
+                        }
+
+
+                    }
+                }
+
+          }
+       
+
+      }
+  }
+
+
+  if (res.size() != 0){
+      cout << res[0];
+  }
+  else{
+    cout << "Draw";
+  }
+    
+
 }
 
 signed main() {

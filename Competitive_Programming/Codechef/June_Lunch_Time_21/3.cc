@@ -57,8 +57,17 @@ using namespace number_theory;
 
 void solve() {
   // memset(dp,-1, sizeof(dp));
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int a,b; cin >> a >> b;
+  int ce = ceil(log2(b));
+  int fl = floor(log2(b));
+
+  if ( ( ce == fl ) ){
+      cout << "Yes";
+  }
+  else{
+      cout << "No";
+  }
+
 }
 
 signed main() {

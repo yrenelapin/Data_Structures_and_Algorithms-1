@@ -53,12 +53,23 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
-// int dp[n][n]; 
+// int dp[n][n]; memset(dp,-1, sizeof(dp));
 
 void solve() {
-  // memset(dp,-1, sizeof(dp));
   int n; cin >> n;
   vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  map<int,int> fr;
+  fr(i,0,n-1) { fr[ v[i]/(2n-1) ]++; }
+  int ans = 0;
+  fr(i,0,n-2){
+      fr(j,i+1,n-1){
+          if ( (i + j + 2) == (v[i]*v[j]) ){
+              ans++;
+          }
+      }
+  }
+
+  cout << ans;
 }
 
 signed main() {

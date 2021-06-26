@@ -34,7 +34,7 @@ void DFS(int vertex, vector< vector<int> > adj_list , vector<bool> &visited, lis
 
 
 
-void topological_sort_DFS(   vector< vector<int> > adj_list, vector<bool> &visited){
+void topological_sort_DFS(   vector< vector<int> > &adj_list, vector<bool> &visited){
    
     for (int i = 1; i < visited.size() ; i++){
         if (visited[i] == false){

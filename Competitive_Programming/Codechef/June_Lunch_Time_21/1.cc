@@ -57,8 +57,20 @@ using namespace number_theory;
 
 void solve() {
   // memset(dp,-1, sizeof(dp));
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  string s; cin >> s;
+  if (s[0] == '1'){
+      string res = "";
+      res += s[0];
+      res += '0';
+      fr(i,1,s.size()-1){
+          res += s[i];
+      }
+      cout << res;
+  }
+  else{
+      cout << "1" << s;
+  }
+  
 }
 
 signed main() {
