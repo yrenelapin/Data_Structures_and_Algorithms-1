@@ -93,8 +93,8 @@ ll coin_sum(ll S, vl coins){
 
 void solve() {
     // Take the Input accordingly.    
-    vl coins = {1,3,4};
-    ll S = 10;
+    vl coins = {1,2,3,4,5,6,7,8,9};
+    ll S = 50;
   
     // Our actual Problem is as follows :
     cout << coin_sum(S, coins) << endl;

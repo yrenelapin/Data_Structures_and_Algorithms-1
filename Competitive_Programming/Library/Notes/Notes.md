@@ -1182,3 +1182,14 @@ so, when using pre-written codes, make necessary changes according to the proble
 
 
 - std::memset, as is the case for any function, can only be called within a function. We can't simply call it in "global scope". [Example](https://stackoverflow.com/questions/40871661/error-expected-constructor-destructor-or-type-conversion-before-token-a)
+
+- Standard ways to improve O(N) to O(logN):
+1. Divide by two: 
+    - Binary Search
+    - Divide & Conquer
+2. Powers of two:
+    - Segment Trees
+    - Binary Lifting
+    - Sparse Tables
+
+- Every number can be represented as sum of powers of two (Use Binary Representation)
