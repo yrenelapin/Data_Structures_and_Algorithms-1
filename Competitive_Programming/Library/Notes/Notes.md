@@ -1129,7 +1129,8 @@ Refer this example for more clarity : [here](https://codeforces.com/contest/1535
 - When taking input in a loop, dont print the answer & return in middle once answer is known. Take all the lements as input for that testcase & then print the answer. Otherwise the onput from current testcase will go to next testcase & will cause WRONG RESULTS. [Ex](https://codeforces.com/contest/1536/submission/118691508)
 
 - In the case of `string` problems, Though the problem looks very complicated in the beginning, If we carefully look at the constraints on the string length, & the characters being involved in the input string, Even Bruteforce will solve the problem since we usually have only `26` characters!!
-[Example](https://codeforces.com/contest/1536/problem/B)
+[Example1](https://codeforces.com/contest/1536/problem/B)
+[Example2](https://codeforces.com/contest/1451/submission/120954157)
 
 - Moreover, sometimes, Constraints give a hint on which part of the problem can be calculated using BRUTEFORCE approach. [Example](https://codeforces.com/contest/1474/submission/119965586)
 
@@ -1193,3 +1194,5 @@ so, when using pre-written codes, make necessary changes according to the proble
     - Sparse Tables
 
 - Every number can be represented as sum of powers of two (Use Binary Representation)
+
+- Sometimes O(n^2) solutions can be converted into O(nlogn) solution if we use the method followed in Sieve of Eratosthenes, given that all the elements are distinct & range of elements is not so large( <= 2*1e5 ). The idea is to iterate of the multiples of a particular number within the given range. [Example](https://codeforces.com/contest/1541/submission/120944671)

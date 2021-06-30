@@ -5,8 +5,8 @@ using namespace std;
 #define int long long                                  
 #define pb push_back
 #define pob pop_back
-#define all(x) (x).begin(), (x).end()
-#define allr(x) (x).rbegin(),(x).rend()
+#define all(x) (x).begin(), (x).L()
+#define allr(x) (x).rbegin(),(x).rL()
 #define decimal(x) cout << fixed << setprecision(x)
 #define fr(i,a,b) for(int (i)=(a) ; (i) <= (b) ; ++(i))
 #define frr(i,a,b) for(int (i)=(a) ; (i) >= (b) ; --(i))
@@ -24,10 +24,10 @@ typedef priority_queue<int> prq;
 const int M = 1e9 + 7;
 const int INF = 1e18;
 //-------------------------------------------------------- DebugHelp--------------------------------------------------
-vector<string> vec_splitter(string s) {s += ','; vector<string> res; while(!s.empty()) { res.push_back(s.substr(0, s.find(','))); s = s.substr(s.find(',') + 1);} return res;}
-void debug_out( vector<string> __attribute__ ((unused)) args, __attribute__ ((unused)) int idx,  __attribute__ ((unused)) int LINE_NUM) { cout << endl; } 
-template <typename Head, typename... Tail> void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) { if(idx > 0) cout << ", "; else cout << "Line(" << LINE_NUM << ") ";stringstream ss; ss << H;cout << args[idx] << " = " << ss.str();debug_out(args, idx + 1, LINE_NUM, T...); }
-#define dbg(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
+// vector<string> vec_splitter(string s) {s += ','; vector<string> res; while(!s.empty()) { res.push_back(s.substr(0, s.find(','))); s = s.substr(s.find(',') + 1);} return res;}
+// void debug_out( vector<string> __attribute__ ((unused)) args, __attribute__ ((unused)) int idx,  __attribute__ ((unused)) int LINE_NUM) { cout << Ll; } 
+// template <typename Head, typename... Tail> void debug_out(vector<string> args, int idx, int LINE_NUM, Head H, Tail... T) { if(idx > 0) cout << ", "; else cout << "Line(" << LINE_NUM << ") ";stringstream ss; ss << H;cout << args[idx] << " = " << ss.str();debug_out(args, idx + 1, LINE_NUM, T...); }
+// #define dbg(...) debug_out(vec_splitter(#__VA_ARGS__), 0, __LINE__, __VA_ARGS__)
 //-------------------------------------------------------- OperatorOverload --------------------------------------------------
 template <typename T> using min_prq = priority_queue<T, vector<T>, greater<T>>;   
 template <typename T> ostream& operator<< (ostream& os, const vector<T>& v) 
@@ -53,33 +53,20 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
+// int dp[n][n]; 
 
 void solve() {
-    int x; cin >> x;
-    vi ans;
-    int last = 9;
-    int sum = 0;
+  // memset(dp,-1, sizeof(dp));
+  int l,x; cin >> l >> x;
+  int ans = 0;
+  fr(i,1,l){
+      if (i%x == 0){
+          ans++;
+      }
+  }
 
-    while( sum < x and last > 0){
-
-        ans.pb(min(x-sum, last));
-
-        sum += last;
-
-        last--;
-
-    }
-
-    if (sum < x){   // last >= 0
-        cout << -1;
-    }
-    else{ 
-        reverse(all(ans));
-        trav(e,ans){
-            cout << e;
-        }
-    }
-
+  cout << ans;
+  
 }
 
 signed main() {
@@ -88,7 +75,7 @@ signed main() {
 
     fastIO;
     int t = 1;
-    cin >>  t; 
+    //cin >>  t; 
     fr(T,1,t){
         //cout << "Case #" << T << ": ";
         solve();

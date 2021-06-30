@@ -66,87 +66,28 @@ void solve() {
   
   map<char,int> fa, fb; 
   fr(i,0,n-1) { fa[a[i]]++; fb[b[i]]++; }
-  
-  vector<char> v;
-  trav(e, fa){
-      v.pb(e.fi);
-  }
 
-  tra(e, fb){
+  for(char c = 'a'; c <= 'z'; c++ ){
 
-
-      // Already element with req freq is present.
-      if (fa[e.fi] >= e.se){
-
-          // All are consumed.
-          if ( fa[e.fi] == e.se){
-                v.erase(remove(all(v), e.fi), v.end()); 
-           }
-
-            fa[e.fi] -= e.se;
-
-      }
-      else{
-            
-            // If some elements with less freq are present.
-            e.se -= fa[e.fi];
-            fa.erase(e.fi);
-            v.erase(remove(all(v), e.fi), v.end());
-
-            //dbg(fa,v);
-
-            // We need `e.se` elements which are having their values < `e.fi`.
-            int need = e.se;
-
-            //dbg(need);
-
-            int pos = ubd(v, e.fi); // >
-
-           
-            if (pos != 0){
-                pos--;
-
-                 //dbg(pos);
-                frr(i,pos, 0){
-
-                    if (v[i] != 'z'){
-                        
-                        if (need <= 0){
-                            break;
-                        }
-                        
-
-                        if ( fa[ v[i] ]% k == 0 ){
-                            need -= k ;
-                            fa[ v[i] ] -= k;
-                            
-                            // if ( fa[v[i]] == 0){
-                            //     v.erase(remove(all(v), v[i]), v.end()); 
-                            // }
-                            
-                        }
-
-                    }
-
-                 
-                }
-
-                if (need > 0){
-                    cout << "No";
-                    return;
-                }
-             
-
-            }
-            else{ // All are greater than current element.
-                    cout << "No";
-                    return;
-            }
-
-
+      // If req. values are more than current total values ( which can be used either directly or after converting. )
+      if (fa[c] < fb[c]){   
+          cout << "No"; return;
       }
 
+      // Cant use `k` sized window to convert into next element.
+      if ( ( fa[c] - fb[c] ) % k  != 0){
+          cout << "No"; return;
+      }
+
+      // Converted the req amount for current character.
+      fa[c] -= fb[c];
+
+      // Remaining characters are added to next character & can be used when req.
+      // i.e. Remaining elements are incremented by 1 & corresp freq is updated.
+      fa[c+1] += fa[c];
+
   }
+
 
   cout << "Yes";
 

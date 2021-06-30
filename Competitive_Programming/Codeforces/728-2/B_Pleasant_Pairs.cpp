@@ -56,17 +56,31 @@ using namespace number_theory;
 // int dp[n][n]; memset(dp,-1, sizeof(dp));
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
-  map<int,int> fr;
-  fr(i,0,n-1) { fr[ v[i]/(2n-1) ]++; }
+  
+  int n; cin >> n; map<int,int> store;
+
+  vi v(n); fr(i,0,n-1) { cin >> v[i];  store[v[i]] = i+1; }
+  
   int ans = 0;
-  fr(i,0,n-2){
-      fr(j,i+1,n-1){
-          if ( (i + j + 2) == (v[i]*v[j]) ){
-              ans++;
-          }
-      }
+
+  fr(a_i, 1, 2*n){   // O(n)
+
+      if (store[a_i]){
+            
+            // The Main Idea is to traverse in this way. a[i], 2*a[i], 3*a[i], ...
+            // since we need a[j]*a[i] & all elements are distinct.
+
+            for(int a_i_prod_a_j = a_i; a_i_prod_a_j <= 2*n;  a_i_prod_a_j += a_i){    // O(logn)
+                
+                int a_j = a_i_prod_a_j/a_i;
+
+                if ( store[a_j] ){
+                    if (store[a_i] + store[a_j] == a_i_prod_a_j  and store[a_i] < store[a_j] ){
+                        ans++;
+                    }
+                }
+            }
+      }   
   }
 
   cout << ans;

@@ -56,75 +56,28 @@ using namespace number_theory;
 
 
 void solve() {
+
   int n, x, t; cin >> n >> x >> t;
+  if (x > t){
+      cout << 0;  return;
+  }
+  // Last player never has any dissatisfaction. we need to sum up for 1,..n-1 players.
+
+  int first = t/x;  // For each player at max t/x players can cause dissatisfaction since they start i intervals of x.
   
- 
-  int ans = n*(n-1);
-  ans /= 2;
-   
-  int tmp =  ans;
-  int rm1 =  (n + x)/n;
-  int rm = tmp/ rm1;
-  ans -= (rm); 
-  cout << ans ;
+  // But there may be possibility that `t/x` are present
 
-
- // dbg(n,x,t);
-//   vi start, end;
-//   int s = 0;
-//   int e =  t;
-//   fr(i,0,n-1) { 
-//       start.pb(s);
-//       end.pb(e);
-//       s += x;
-//       e += t;
-//   }
-  
-//   cout << start;
-//   cout << end;
-  
-
-//   int ans = 0;
-//   int end = t;
-//   int stopped_at = n-1; int stop = 0;
-//   fr(i,0,n-1){
-      
-//     //   if (mxy_start < end){
-//     //       stopped_at = i; stop = 1;
-//     //       break;
-//     //   }
-//       ans += ( mxy_start + end -1)/end;
-
-//       end += x; 
-
-//     //   int curr_e = end[i];
-        
-//     //    int pos; 
-//     //    if (curr_e > mxy_start){
-//     //        pos = n;
-//     //    }
-//     //    else{
-//     //          // we need start to <= end
-//     //          pos = ubd(start, curr_e);
-//     //    }
-    
-      
-//     //   //dbg(pos,i);
-
-
-//     //   if (pos == 0){
-//     //       // No value is satisifes
-//     //   }
-//     //   else{
-//     //       ans += (pos - (i+1));
-//     //   }
-
-//   }
-
-// //   if (stop == 1){
-// //       ans += (n-stopped_at);
-// //   }
-
+  // For each player, `t/x` players are possible. 
+  if (first >= n-1){    
+      // ans: n-1 + n-2 + ... + 1
+      cout << ( (n-1)*(n) )/2;
+  }
+  else{
+       // ( 1,.... t/x ) + ( n-1 - t/x )* (t/x)
+       int ans1 = (first)*(first+1)/2;
+       int ans2 = (n-1-first)*first;
+       cout << ans1 + ans2;
+  }
 
 }
 

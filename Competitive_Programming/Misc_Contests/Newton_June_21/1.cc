@@ -49,37 +49,38 @@ namespace number_theory{
     int gcd(int a, int b)   { int c;  while (b){c = b; b = a % b; a = c;} return a; }
     int lcm(int a, int b)   { return (a*(b/gcd(a,b)));}
     int modpow(int a, int p = M-2, int MOD = M )   { int result = 1; while (p > 0) { if (p & 1) { result = a * result % MOD; } a = a * a % MOD; p >>= 1; } return result; }
-    int ncr (int n,int k)    { int ans = 1; if (k>n-k) {k=n-k;} fr(i,1,k) {ans*=(n-i+1); ans/=i; } return ans; }
+    int ncr (int n,int k)    { int p = 1; if (k>n-k) {k=n-k;} fr(i,1,k) {p*=(n-i+1); p/=i; } return p; }
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 
+int p = 0;
+
+int choose(int a, int b){
+
+    if (a <= 0 or b <= 0){
+        return 0;
+    }
+
+    int res;
+    if (a == 1 and b == 1){
+        res = 1;
+    }
+    else{
+        int op1 = ( 1 + choose(a-1,b+1) )%M;
+        int op2 = ( 1 + choose(a+1, b-1) )%M;
+        res = ( op1 + op2 )%M;
+    }
+
+    p = ( p + res )%M;
+    return res;
+}
+
 void solve() {
-    int x; cin >> x;
-    vi ans;
-    int last = 9;
-    int sum = 0;
-
-    while( sum < x and last > 0){
-
-        ans.pb(min(x-sum, last));
-
-        sum += last;
-
-        last--;
-
-    }
-
-    if (sum < x){   // last >= 0
-        cout << -1;
-    }
-    else{ 
-        reverse(all(ans));
-        trav(e,ans){
-            cout << e;
-        }
-    }
-
+ int A,B;
+ cin >> A >> B;
+ int res = A*B;  
+ cout << res % M; 
 }
 
 signed main() {
@@ -88,7 +89,7 @@ signed main() {
 
     fastIO;
     int t = 1;
-    cin >>  t; 
+    //cin >>  t; 
     fr(T,1,t){
         //cout << "Case #" << T << ": ";
         solve();
