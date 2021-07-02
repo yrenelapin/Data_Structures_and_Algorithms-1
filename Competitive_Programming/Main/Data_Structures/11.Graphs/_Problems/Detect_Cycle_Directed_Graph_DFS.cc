@@ -9,7 +9,7 @@ using namespace std;
 
 
 // We use DFS approach.
-bool check_cycle(int vertex,   vector < vector<int> > graph, vector<bool> &visited, vector<bool> &recursion_stack)
+bool DFS(int vertex,   vector < vector<int> > graph, vector<bool> &visited, vector<bool> &recursion_stack)
 {
     visited[vertex] = true;
     recursion_stack[vertex] = true;
@@ -17,7 +17,7 @@ bool check_cycle(int vertex,   vector < vector<int> > graph, vector<bool> &visit
     for (auto i : graph[vertex])
     {   
         // If a node is not visited, We insert it to stack & make a recursive call again.
-        if (!visited[i] && check_cycle(i, graph, visited, recursion_stack))
+        if (!visited[i] && DFS(i, graph, visited, recursion_stack))
         {
             return true;
         }
@@ -42,7 +42,7 @@ string check_cycle(  vector < vector<int> > graph, int len)
     // This loop helps incase of Disconnected Graphs.
     for (int i = 1; i < len; i++)
     {   if (!visited[i]){
-            if (check_cycle(i, graph, visited, recursion_stack))
+            if (DFS(i, graph, visited, recursion_stack))
             {
                 return "Yes";
             }

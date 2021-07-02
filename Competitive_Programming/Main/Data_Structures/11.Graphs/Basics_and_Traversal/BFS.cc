@@ -1,9 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// Iterative -> O(|V| + |E|)
-void BFS(vector<vector<int>> &adj_list, queue<int> &q, vector<bool> &visited, vector<int> &distance ){
+int n = 1e5 + 1;
 
+vector<vector<int>> adj_list(n+1);
+vector<bool> visited(n+1, false);
+vector<int> distance_vec(n+1);
+queue<int> q;
+
+// Iterative -> O(|V| + |E|)
+void BFS(int vertex){
+
+    distance_vec[vertex] = 0;
+    visited[vertex] = true;
+    q.push(vertex);
 
     while(!q.empty()){
         int curr = q.front(); 
@@ -15,7 +25,7 @@ void BFS(vector<vector<int>> &adj_list, queue<int> &q, vector<bool> &visited, ve
         for(auto v: adj_list[curr]){
             if (visited[v]) continue;
             visited[v] = true;
-            distance[v] = distance[curr]+1;
+            distance_vec[v] = distance_vec[curr]+1;
             q.push(v);
         }
 
@@ -23,7 +33,7 @@ void BFS(vector<vector<int>> &adj_list, queue<int> &q, vector<bool> &visited, ve
 
 }
 
-// Recursive -> O(|V| + |E|)
+// Recursive -> O(|V| + |E|) with no distance_vec implementation
 void BFS_rec( vector<vector<int>> adj_list, queue<int> &queue, vector<bool> &visited) {
 
     if (queue.empty())
@@ -62,28 +72,21 @@ int main() {
     }
 
     
-    // Initialisation 
-    vector<bool> visited(n+1, false);
-    vector<int> distance(n+1);
-    queue<int> q;
-    
     // This loop is required since there might be some nodes which are not covered 
     // if we just call BFS once i.e when the Graphs are not CONNECTED.
     for (int i=1; i<=n; i++) {
-        
+
         // We need to ensure that all nodes are visited.
         if (visited[i] == false) {
-            distance[i] = 0;
-            visited[i] = true;
-            q.push(i);
-            BFS(adj_list, q, visited, distance);
+            BFS(i);
         }
+
     }
 
     cout << endl;
-    cout << "Distances: \n";
+    cout << "Distance_vecs: \n";
     for(int i = 1; i <= n; i++ ){
-        cout << i << " -> " << distance[i] << "\n";
+        cout << i << " -> " << distance_vec[i] << "\n";
     }
 
     return 0;
