@@ -53,36 +53,59 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
+// int dp[n][n]; 
 
 void solve() {
-    int x; cin >> x;
+  // memset(dp,-1, sizeof(dp));
+  string s; cin >> s;
+  vector<char> curl, sqr;
+  fr(i,0,s.size()-1) { 
+     if (  s[i] == ')' or s[i] == '(' ){
+         curl.pb(s[i]);
+     }
+     else{
+         sqr.pb(s[i]);
+     }
+  }
+  //dbg(curl,sqr);
+   
+  int ans = 0;
+   if (curl.size() != 0 ){
+            int co = 0;
+            fr(i,0, curl.size()-1){
 
-    if (x > 45){
-        cout << -1;
-    }
-    else{
-        // Answer always exists.
+                if (curl[i] == ')'){
+                    if (co > 0){
+                        co--;
+                        ans++;
+                    }
+                }
+                else{
+                    co++;
+                }
 
-        vi ans;
-        frr(i, 9, 1){
-            if (x <= 9 and x <= i){
-                ans.pb(x);
-                // We found the ans.
-                break;
+            }
+   }
+//   dbg(ans);
+  if (sqr.size() != 0 ){
+      int so = 0;
+        fr(i,0, sqr.size()-1){
+
+            if (sqr[i] == ']'){
+                if (so > 0){
+                    so--;
+                    ans++;
+                }
             }
             else{
-                ans.pb(i);
-                x -= i;
+                so++;
             }
-        }
 
-        reverse(all(ans));
-        trav(e, ans){
-            cout << e;
         }
-        
-    }
+  }
+  
 
+    cout << ans;
 }
 
 signed main() {
@@ -99,5 +122,3 @@ signed main() {
     }
     return 0;
 }
-
-// Ref : https://youtu.be/NIKUeiKXrkM

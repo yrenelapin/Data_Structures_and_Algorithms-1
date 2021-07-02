@@ -53,36 +53,21 @@ namespace number_theory{
 }
 using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
+// int dp[n][n]; 
 
 void solve() {
-    int x; cin >> x;
-
-    if (x > 45){
-        cout << -1;
-    }
-    else{
-        // Answer always exists.
-
-        vi ans;
-        frr(i, 9, 1){
-            if (x <= 9 and x <= i){
-                ans.pb(x);
-                // We found the ans.
-                break;
-            }
-            else{
-                ans.pb(i);
-                x -= i;
-            }
-        }
-
-        reverse(all(ans));
-        trav(e, ans){
-            cout << e;
-        }
-        
-    }
-
+  // memset(dp,-1, sizeof(dp));
+  int x,y; cin >> x >> y;
+  if (abs(x-y) <= 1){
+      cout << x+y;
+  }
+  else{
+      int tmp = max(x,y);
+      tmp *= 2;
+      tmp--;
+      cout << tmp;
+  }
+  
 }
 
 signed main() {
@@ -99,5 +84,3 @@ signed main() {
     }
     return 0;
 }
-
-// Ref : https://youtu.be/NIKUeiKXrkM

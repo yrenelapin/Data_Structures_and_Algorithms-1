@@ -55,33 +55,41 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 
 void solve() {
-    int x; cin >> x;
+  int n; cin >> n;
+  vi v(n); fr(i,0,n-1) { cin >> v[i];  }
+  
+  sort(all(v));
 
-    if (x > 45){
-        cout << -1;
-    }
-    else{
-        // Answer always exists.
+  if (n == 2){
+      cout << 0;
+  }
+  else{
+     
+      int ans = INF;
+      
+      fr(i,0,n-1){  // For each element
+           
+          int last;
 
-        vi ans;
-        frr(i, 9, 1){
-            if (x <= 9 and x <= i){
-                ans.pb(x);
-                // We found the ans.
-                break;
-            }
-            else{
-                ans.pb(i);
-                x -= i;
-            }
-        }
+          if (i != n-1)
+            last = v[n-1];  // Take the maximum element
+          else{
+             last =  v[n-2];
+          }
+          
+          int diff = 0;
+          fr(j,0,n-1){
+              if (i != j){
+                   diff += (last - v[j]);
+              }
+          } 
+          
+          ans = min(ans, abs(diff - v[i]));
+      }
+     
+       cout << ans;
 
-        reverse(all(ans));
-        trav(e, ans){
-            cout << e;
-        }
-        
-    }
+  }
 
 }
 
@@ -99,5 +107,3 @@ signed main() {
     }
     return 0;
 }
-
-// Ref : https://youtu.be/NIKUeiKXrkM
