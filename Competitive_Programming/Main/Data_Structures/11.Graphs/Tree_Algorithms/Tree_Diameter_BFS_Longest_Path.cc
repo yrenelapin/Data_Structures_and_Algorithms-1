@@ -4,6 +4,8 @@ using namespace std;
 int n = 100;
 vector< vector<int> > adj_list(n+1);
 
+// Given an undirected tree, we need to find the longest path of this tree where a path is defined as a sequence of nodes.
+
 // Iterative -> O(|V| + |E|)
 pair<int, int> BFS(int start){
 
@@ -69,15 +71,13 @@ void longestPathLength() {
 int main() {
     // Graph as an Adjacency List with n vertices assuming that all vertex numbers are <= n and having `m` edges.
   
-    int m; cin >> n >> m;
-    int vertex, destination;
-
-    for (int i = 0; i < m; i++){
-            cin >> vertex >> destination;
-            adj_list[vertex].push_back(destination);   
-            adj_list[destination].push_back(vertex);  
-    }
-
+    adj_list[1] = {2, 3, 4};
+    adj_list[2] = {1,5, 6};
+    adj_list[4] = {1, 7};
+    adj_list[3] = {1};
+    adj_list[5] = {2};
+    adj_list[6] = {2};
+    adj_list[7] = {4};
     longestPathLength();
 
     /*

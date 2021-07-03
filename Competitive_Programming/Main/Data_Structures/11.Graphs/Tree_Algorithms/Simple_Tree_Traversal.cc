@@ -35,10 +35,19 @@ int main(){
     dfs(start,0, adj_list);
 
     
-    /* Sample Input:
+    /* Sample Input1:
     4 3
     1 2
     1 3
     2 4
+
+    Sample Input2:
+    adj_list[1] = {2, 3, 4};
+    adj_list[2] = {1, 5, 6};
+    adj_list[4] = {1, 7};
+    adj_list[3] = {1};
+    adj_list[5] = {2};
+    adj_list[6] = {2};
+    adj_list[7] = {4};
     */
 }

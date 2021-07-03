@@ -10,13 +10,15 @@ using namespace std;
 
 // We use DFS approach.
 bool DFS(int vertex,   vector < vector<int> > graph, vector<bool> &visited, vector<bool> &recursion_stack)
-{
+{   
+    // Processing then node.
     visited[vertex] = true;
     recursion_stack[vertex] = true;
     
+    // For all the children of the vertex.
     for (auto i : graph[vertex])
     {   
-        // If a node is not visited, We insert it to stack & make a recursive call again.
+        // If a node is not visited, We check whether a cycle exists from the current node by doing DFS again. 
         if (!visited[i] && DFS(i, graph, visited, recursion_stack))
         {
             return true;
@@ -27,7 +29,7 @@ bool DFS(int vertex,   vector < vector<int> > graph, vector<bool> &visited, vect
             return true;
     }
     
-    // vertex is removed from stack as in usual DFS.
+    // vertex is removed from stack as in usual DFS since all its children are already visited.
     recursion_stack[vertex] = false;
     
     // If no such cycle is found, return false.

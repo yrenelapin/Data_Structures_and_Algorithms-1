@@ -1178,6 +1178,8 @@ Graphs/Trees Notes:
 - Be careful abt the numbering of the vertcies being used in the problem. Sometimes it may be from [ 1,2,..N ] or [ 0,1,2,,..N-1]
 so, when using pre-written codes, make necessary changes according to the problem.
 
+- In most of the Tree DP, Its just the usual DFS/BFS. We just need to add the Lookup & Base cases in the beginning & inside the loop of children of the current node: when ( e != s )  -> while making recursive call, we do some computation & store inside DP Table. 
+
 - Note that Tree is always connected. So  there is no need to perform BFS/DFS more than once to traverse it.
 - Get the intuition ( or Naive Proof ) behind using Two DFS's or Two BFS's for solving a problem.
 

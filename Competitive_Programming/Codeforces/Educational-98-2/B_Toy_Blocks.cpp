@@ -55,42 +55,13 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 
 void solve() {
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i];  }
-  
-  sort(all(v));
-
-  if (n == 2){
-      cout << 0;
-  }
-  else{
-     
-      int ans = INF;
-      
-      fr(i,0,n-1){  // For each element
-           
-          int last;
-
-          if (i != n-1)
-            last = v[n-1];  // Take the maximum element
-          else{
-             last =  v[n-2];
-          }
-          
-          int diff = 0;
-          fr(j,0,n-1){
-              if (i != j){
-                   diff += (last - v[j]);
-              }
-          } 
-          
-          ans = min(ans, abs(diff - v[i]));
-      }
-     
-       cout << ans;
-
-  }
-
+  int n; cin >> n; int sum = 0;
+  vi v(n); fr(i,0,n-1) { cin >> v[i];  sum += v[i];  }
+  int ma = *max_element(all(v));
+  int fl =  (sum+n-2)/(n-1);
+  int maxy = max(ma, fl);
+  int ans = maxy*(n-1) - sum;
+  cout << ans;
 }
 
 signed main() {

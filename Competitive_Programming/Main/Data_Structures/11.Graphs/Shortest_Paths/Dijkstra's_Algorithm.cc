@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+//  This algorithm requires that there are no negative weight edges in the graph!
 
 // O( |V| + |E|*log(|E|) )
 void Dij_shortest( vector< vector<pair<int, int> > > &adj_list, int n, int start){
@@ -24,13 +25,13 @@ void Dij_shortest( vector< vector<pair<int, int> > > &adj_list, int n, int start
 		if (visited[a]) continue;
 
 		visited[a] = true;
-		for ( auto i: adj_list[a]){
+		for ( auto i: adj_list[a]){     // O(|E|)
 
 			int b = i.first; int w = i.second;
 			if (distance[b].second > distance[a].second + w){
                 distance[b].second = distance[a].second + w ;
                 distance[b].first = a;
-				q.push({-distance[b].second, b});
+				q.push({-distance[b].second, b});  // O(log|E|) since size of `q` is O(|E|).
             }
 		}
 

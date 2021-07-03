@@ -1,6 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+The algorithm can process all kinds of graphs, provided that the graph does not contain a cycle with negative length. 
+If the graph contains a negative cycle, the algorithm can detect this!
+*/
 
 // O(|V|*|E|)
 void BF_shortest( vector< vector<int> > &edge_list, int n, int start){

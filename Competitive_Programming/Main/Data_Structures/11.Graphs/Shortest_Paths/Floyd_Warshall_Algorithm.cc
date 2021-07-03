@@ -11,11 +11,11 @@ void FW_shortest(  vector< vector<int> > &adj_matrix, int n){
             if (i == j){ // Assuming Input graph is Simple (No self loops).
                 distance[i][j] = 0;
             }
-            else if (adj_matrix[i][j] == 0){
-                distance[i][j] = INT_MAX;
+            else if (adj_matrix[i][j]){
+                distance[i][j] = adj_matrix[i][j];
             }
             else{
-                distance[i][j] = adj_matrix[i][j];
+                distance[i][j] = INT_MAX;
             }
         }
     }
@@ -59,7 +59,7 @@ int main(){
 
     FW_shortest(adj_matrix, n); 
 
-    /*Input from CP Book:
+    /*Input:
     5 6
     1 5 1
     1 4 9
