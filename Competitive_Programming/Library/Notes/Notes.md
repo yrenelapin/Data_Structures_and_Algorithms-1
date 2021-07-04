@@ -1198,3 +1198,13 @@ so, when using pre-written codes, make necessary changes according to the proble
 - Every number can be represented as sum of powers of two (Use Binary Representation)
 
 - Sometimes O(n^2) solutions can be converted into O(nlogn) solution if we use the method followed in Sieve of Eratosthenes, given that all the elements are distinct & range of elements is not so large( <= 2*1e5 ). The idea is to iterate of the multiples of a particular number within the given range. [Example](https://codeforces.com/contest/1541/submission/120944671)
+
+- Whenever large numbers are present, to use the digits, DONT CONVERT IT INTO STRING & THEN USE BY INDEX. **Instead, Access the digits by dividing the number by 10 & take reminders and store them in vector as shown below**. Also sometimes using `set` when not needed instead of vector can also lead to TLE. So use them only when required. **Examples:** [1](https://codeforces.com/contest/1465/submission/121335679)  [2](https://codeforces.com/contest/1465/submission/101869576)
+    ```
+    vi dig;
+    int x = n;
+    while(x){
+        dig.pb(x%10);
+        x /= 10;
+    }
+    ```

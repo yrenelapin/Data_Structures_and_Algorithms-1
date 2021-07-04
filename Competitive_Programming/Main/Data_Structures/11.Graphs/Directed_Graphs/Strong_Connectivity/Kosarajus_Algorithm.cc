@@ -6,7 +6,7 @@ vector<vector<int>> adj(n+1), adj_rev(n+1);
 vector<bool> used;
 vector<int> order, component;
 
-//  Function dfs1 fills the list `order` with vertices in increasing order of their exit times (actually, it is making a topological sort).
+//  Function dfs1 fills the list `order` with vertices in increasing order of their exit times (actually, it is making a reverse topological sort).
 void dfs1(int v) {
     used[v] = true;
 
@@ -45,6 +45,7 @@ int main() {
 
     used.assign(n, false);
     reverse(order.begin(), order.end());
+    // Now `order` contains the topological sorting. 
 
     // Condensation Graph Implementation
     vector<int> roots(n+1, 0);
@@ -86,6 +87,7 @@ int main() {
     for(auto i : root_nodes){
         cout << i << "\n";
     }
+    // To get all the components, just perform a DFS starting from each node in the `root_nodes`.
 
 
     /*  Sample Input:

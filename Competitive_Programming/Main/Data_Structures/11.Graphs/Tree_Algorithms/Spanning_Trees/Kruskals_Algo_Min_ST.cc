@@ -57,7 +57,8 @@ int main(){
         int start, end, w = 1;
         cin >> start >> end ; cin >> w;
         edgeList.push_back( { start, end, w } ); 
-        // Note: In Kruskal's algorithm, For Undirected graphs also, we add the edges only once. It fails for directed graphs.
+        // Note: Most of the algos that use the Edge List representation even directed or undirected,
+        // we will treat it like Directed & add the edges to the list only once.
     }
 
     sort(edgeList.begin(), edgeList.end(), comp);

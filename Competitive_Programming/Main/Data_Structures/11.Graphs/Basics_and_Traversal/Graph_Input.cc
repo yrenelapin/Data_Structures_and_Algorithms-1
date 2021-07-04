@@ -58,12 +58,13 @@ void inp_edge_list(){
 
     int no_of_edges;
     cin >> no_of_edges ; 
-    vector< pair<int,int> > edge_list;
+    vector< pair<int,int> > edge_list;  
     while(no_of_edges--){
         int start, end, w = 1;
         cin >> start >> end ;             // cin >> w;
         edge_list.push_back( { start, end } ); 
-        // edge_list.push_back( { end, start } );  // If Graph is UNDIRECTED, use it. 
+        // Note: Most of the Algos that use the Edge List representation even directed or undirected,
+        // we will treat it like Directed & add the edges to the list only once & in one direction.
     }
 
     // Print

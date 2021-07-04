@@ -1,8 +1,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// Currently, The below solution is INCOMPLETE!
+
 // Below is the implementation of the solution of the 2-SAT problem 
 // for the already constructed graph of implication g and the transpose graph g⊺
+
 
 int n;
 vector<vector<int>> g, gt;

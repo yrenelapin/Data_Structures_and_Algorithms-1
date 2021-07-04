@@ -55,13 +55,15 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 
 bool check(int n){
-    string s = to_string(n);
 
-    set<int> dig;
-    fr(i,0,s.size()-1){
-        if (s[i] != '0'){
-            dig.insert(s[i]-'0');
+    vi dig;
+    int x = n;
+    while(x){
+        if( x%10 ){
+            dig.pb(x%10);
         }
+
+        x /= 10;
     }
 
     vi rem;
@@ -77,41 +79,20 @@ bool check(int n){
 
 
 void solve() {
-  string s; cin >> s; int n = stoll(s);
-  set<int> dig;
-  fr(i,0,s.size()-1){
-      if (s[i] != '0'){
-          dig.insert(s[i]-'0');
+  int n; cin >> n; 
+  
+  /*
+  2520 is the smallest number that is divisible by all the number between 1 to 10. since LCM (1,2,3,4,5,6,7,8,9) = 2520. 
+  So, It is obvious that every Multiple OF 2520 is divisible by all digits( 1,2,3,4,5,6,7,8,9 ).
+  Thus we will iterate from n to n + 2520 because there will be one number for sure that will be divisible by all the digit.
+  */
+
+  fr(i,n,n+2520){
+      if (check(i)){
+          cout << i;
+          break;
       }
   }
-
-  vi rem;
-  trav(e,dig){
-      if (n%e){
-          rem.pb(e);
-      }
-  }
-
-  if (rem.size()==0){ cout << n; return;}
-  cout << rem;
-//   int l = n;
-//   int r = ULLONG_MAX;
-//   int ans;
-//   while ( l <= r){
-//       int m = (r-l)/2 + l;
-
-//       if (check(m)){
-//           ans = m;
-//            r = m-1;
-//       }
-//       else{
-//           l = m+1;
-//       }
-//   }
-
-//   cout << ULLONG_MAX - ans;
-
-
 
 }
 

@@ -1,72 +1,110 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-#define V 6		//No of vertices
+//  This algorithm works only for UNDIRECTED GRAPHS!
 
-int selectMinVertex(vector<int>& value, vector<bool>& setMST){
+// O( |V| + |E|*log(|E|) )
+void Prims_Algo( vector< vector<pair<int, int> > > &adj_list, int n, int start){
 
-	int minimum = INT_MAX;
-	int vertex;
-	for(int i=0;i<V;++i)
-	{
-		if(setMST[i]==false && value[i]<minimum)
-		{
-			vertex = i;
-			minimum = value[i];
-		}
+	// All the included edges are in this mst.
+    vector<vector<int>> mst;
+	vector<bool> inmst(n+1, false);
+
+	vector<bool> visited(n+1, false); 
+
+	priority_queue< vector<int> > q;
+
+	for ( auto i: adj_list[start]){ 
+		q.push({ -i.second, start, i.first });
 	}
+
+	visited[start] = true;
+	inmst[start] = true;
+
+	while(!q.empty()){
+		
+		auto a =  q.top(); q.pop();
+		
+		if (!inmst[a[2]]){
+			mst.push_back({a[1], a[2], -a[0]});
+			inmst[a[2]] = true;
+		}
 	
-	return vertex;
-}
 
-void findMST(int graph[V][V]){
+		if (!visited[a[2]]){
 
-	int parent[V];					// Stores MST
-	vector<int> value(V,INT_MAX);	// Used for edge relaxation
-	vector<bool> setMST(V,false);	// TRUE->Vertex is included in MST
+			visited[a[2]] = true;
 
-	// Assuming start point as Node-0
-	parent[0] = -1;	// start node has no parent
-	value[0] = 0;	// start node has value=0 to get picked 1st
+			for ( auto i: adj_list[a[2]]){    
 
-	// Form MST with (V-1) edges
-	for(int i = 0; i < V-1; ++i){
-
-		// Select best Vertex by applying greedy method
-		int U = selectMinVertex(value,setMST);
-		setMST[U] = true;	//Include new Vertex in MST
-
-		// Relax adjacent vertices (not yet included in MST)
-		for(int j=0;j<V;++j){
-
-			/* 3 constraints to relax:-
-			      1.Edge is present from U to j.
-			      2.Vertex j is not included in MST
-			      3.Edge weight is smaller than current edge weight
-			*/
-			if (graph[U][j]!=0 && setMST[j]==false && graph[U][j]<value[j]){
-
-				value[j] = graph[U][j];
-				parent[j] = U;
+					int source = a[2];
+					int destination = i.first;
+					int weight = i.second;
+					if (!inmst[destination]){
+						q.push({-weight, source, destination}); 
+					}
+					
 			}
+
 		}
 	}
-	//Print MST
-	for(int i=1;i<V;++i)
-		cout<<"U->V: "<<parent[i]<<"->"<<i<<"  wt = "<<graph[parent[i]][i]<<"\n";
+
+	cout << "\nThe Edges included in MST: \n";
+    for(int i = 0; i < mst.size(); i++){
+        cout << mst[i][0] << " "  << mst[i][1] << " " << mst[i][2] << "\n" ;
+    }
+
+
+
 }
 
-int main()
-{	// Graph in Adjacency Matrix.
-	int graph[V][V] = { {0, 4, 6, 0, 0, 0},
-						{4, 0, 6, 3, 4, 0},
-						{6, 6, 0, 1, 8, 0},
-						{0, 3, 1, 0, 2, 3},
-						{0, 4, 8, 2, 0, 7},
-						{0, 0, 0, 3, 7, 0} };
 
-	findMST(graph);	
-	return 0;
+
+
+int main(){
+    // Graph as an Adjacency List with n vertices assuming that all vertex numbers are <= n and having `m` edges.
+    // For weighted graph, use vector< vector< pair<int,int> > > adj_list(n+1);  and push { destination, weight }
+      
+    int n, m; cin >> n >> m;
+    int vertex, destination, weight;
+    vector< vector< pair<int,int> > > adj_list(n+1);
+    for (int i = 0; i < m; i++){
+            cin >> vertex >> destination >> weight;
+            adj_list[vertex].push_back({ destination, weight} );  
+			adj_list[destination].push_back({ vertex, weight} );  
+    }
+
+
+    Prims_Algo(adj_list, n, 1);
+
+      /* 
+    Input from CP Book:
+    6 8
+    1 2 3
+    1 5 5
+    2 5 6
+    2 3 5
+    5 6 2
+    3 6 3
+    3 4 9
+    6 4 7
+	-----
+	9 14
+	1 2 4
+	1 8 8
+	2 3 8
+	2 8 11
+	3 4 7
+	3 9 2
+	3 6 4
+	4 5 9
+	4 6 14
+	5 6 10
+	6 7 2
+	7 8 1
+	7 9 6
+	8 9 7
+	----
+	Ans: 37 ( https://www.geeksforgeeks.org/prims-mst-for-adjacency-list-representation-greedy-algo-6/ )
+    */
 }
-
-//TIME COMPLEXITY: O(V^2)
