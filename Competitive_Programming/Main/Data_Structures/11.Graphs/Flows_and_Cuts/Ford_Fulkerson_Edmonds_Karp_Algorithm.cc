@@ -1,82 +1,120 @@
+// Ref: https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/
+
+// C++ program for implementation of Ford Fulkerson algorithm
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-The Edmonds-Karp algorithm is an implementation of the Ford-Fulkerson method for computing a maximal flow in a flow network.
-It uses BFS for finding paths.
-*/
+// Number of vertices in given graph
+#define V 6
 
-const int INF = 1e9;
-int n = 6;
-vector<vector<int>> capacity(n+1, vector<int>(n+1));
-vector<vector<int>> adj(n+1);
+/* Returns true if there is a path from source 's' to sink 't' in residual graph. 
+Also fills parent[] to store the path */
+bool bfs(int rGraph[V][V], int s, int t, int parent[]){
 
-int bfs(int s, int t, vector<int>& parent) {
-    fill(parent.begin(), parent.end(), -1);
-    parent[s] = -2;
-    queue<pair<int, int>> q;
-    q.push({s, INF});
+	// Create a visited array and mark all vertices as not visited
+	bool visited[V];
+	memset(visited, 0, sizeof(visited));
 
-    while (!q.empty()) {
-        int cur = q.front().first;
-        int flow = q.front().second;
-        q.pop();
+	// Create a queue, enqueue source vertex and mark source vertex as visited
+	queue<int> q;
+	q.push(s);
+	visited[s] = true;
+	parent[s] = -1;
 
-        for (int next : adj[cur]) {
-            if (parent[next] == -1 && capacity[cur][next]) {
-                parent[next] = cur;
-                int new_flow = min(flow, capacity[cur][next]);
-                if (next == t)
-                    return new_flow;
-                q.push({next, new_flow});
-            }
-        }
-    }
+	// Standard BFS Loop
+	while (!q.empty()) {
 
-    return 0;
+		int u = q.front();
+		q.pop();
+
+		for (int v = 0; v < V; v++) {
+
+			if (visited[v] == false && rGraph[u][v] > 0) {
+
+				// If we find a connection to the sink node,
+				// then there is no point in BFS anymore We
+				// just have to set its parent and can return
+				// true
+				if (v == t) {
+					parent[v] = u;
+					return true;
+				}
+                
+				q.push(v);
+				parent[v] = u;
+				visited[v] = true;
+			}
+		}
+	}
+
+	// We didn't reach sink in BFS starting from source, so return false
+	return false;
 }
 
-int maxflow(int s, int t) {
-    int flow = 0;
-    vector<int> parent(n);
-    int new_flow;
+// Returns the maximum flow from s to t in the given graph
+int fordFulkerson(int graph[V][V], int s, int t){
 
-    while (new_flow = bfs(s, t, parent)) {
-        flow += new_flow;
-        int cur = t;
-        while (cur != s) {
-            int prev = parent[cur];
-            capacity[prev][cur] -= new_flow;
-            capacity[cur][prev] += new_flow;
-            cur = prev;
-        }
-    }
+	int u, v;
 
-    return flow;
+	// Create a residual graph and fill the residual graph
+	// with given capacities in the original graph as
+	// residual capacities in residual graph
+	int rGraph[V][V]; 
+
+    // Residual graph where rGraph[i][j]
+    // indicates residual capacity of edge
+    // from i to j (if there is an edge. If
+    // rGraph[i][j] is 0, then there is not)
+	for (u = 0; u < V; u++)
+		for (v = 0; v < V; v++)
+			rGraph[u][v] = graph[u][v];
+
+
+
+	int parent[V];     // This array is filled by BFS and to store path
+
+	int max_flow = 0;  // There is no flow initially
+
+	// Augment the flow while there is path from source to sink
+	while (bfs(rGraph, s, t, parent)) {
+
+		// Find minimum residual capacity of the edges along
+		// the path filled by BFS. Or we can say find the
+		// maximum flow through the path found.
+		int path_flow = INT_MAX;
+		for (v = t; v != s; v = parent[v]) {
+			u = parent[v];
+			path_flow = min(path_flow, rGraph[u][v]);
+		}
+
+		// update residual capacities of the edges and reverse edges along the path.
+		for (v = t; v != s; v = parent[v]) {
+			u = parent[v];
+			rGraph[u][v] -= path_flow;
+			rGraph[v][u] += path_flow;
+		}
+
+		// Add path flow to overall flow
+		max_flow += path_flow;
+	}
+
+	// Return the overall flow
+	return max_flow;
 }
+
 
 int main(){
-    int m; cin >> m;
-    int vertex, destination, weight;
-    for (int i = 0; i < m; i++){
-            cin >> vertex >> destination >> weight;
-            adj[vertex].push_back(destination);   
-            capacity[vertex][destination] = weight;
-            capacity[destination][vertex] = weight;
-            adj[destination].push_back(vertex); 
-    }
 
-    // Print
-    // for (int i = 1; i <= n; i++){
-    //     cout << "Vertex " << i << " -> ";
-    //     vector<int> a = adj[i];
-    //     for (int j = 0; j < a.size(); j++){
-    //         cout << a[j] << " ";
-    //     }
-    //     cout << endl;
-    // }
-    
-    int s = 1;  // Source
-    int t = 6;  // Sink
-    cout << maxflow(s,t);
+	int graph[V][V]= 
+
+         {  { 0, 16, 13, 0, 0, 0 },
+            { 0, 0, 10, 12, 0, 0 },
+			{ 0, 4, 0, 0, 14, 0  }, 
+            { 0, 0, 9, 0, 0, 20  },
+			{ 0, 0, 0, 7, 0, 4   }, 
+            { 0, 0, 0, 0, 0, 0   }  };
+
+	cout << "The maximum possible flow is " << fordFulkerson(graph, 0, 5);
+
+	return 0;
 }

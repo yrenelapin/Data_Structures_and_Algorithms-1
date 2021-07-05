@@ -1182,6 +1182,7 @@ so, when using pre-written codes, make necessary changes according to the proble
 
 - Note that Tree is always connected. So  there is no need to perform BFS/DFS more than once to traverse it.
 - Get the intuition ( or Naive Proof ) behind using Two DFS's or Two BFS's for solving a problem.
+- When using the pre-written codes related to graphs/trees in contests, make sure to check the Node values ranges. They may lie between [0,N-1] or [1,N].
 
 
 - std::memset, as is the case for any function, can only be called within a function. We can't simply call it in "global scope". [Example](https://stackoverflow.com/questions/40871661/error-expected-constructor-destructor-or-type-conversion-before-token-a)
@@ -1208,3 +1209,5 @@ so, when using pre-written codes, make necessary changes according to the proble
         x /= 10;
     }
     ```
+
+- In many Ad-hoc / Observation based questions ( Especially in CF ), The ordering of the elements( indices ) does not matter though there is a explicit condition in question. A careful observation of this fact makes the problem solvable very easily. [Example](https://codeforces.com/contest/1406/problem/B)

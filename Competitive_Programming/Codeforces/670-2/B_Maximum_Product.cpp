@@ -55,58 +55,20 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 
 void solve() {
-
     int n; cin >> n;
     vi v(n); fr(i,0,n-1) { cin >> v[i]; }
-    
-    sort(allr(v));
-
-    vi dp1(n+1,LLONG_MIN);      
-    vi dp2(n+1,LLONG_MIN);      
-    vi dp3(n+1,LLONG_MIN);      
-    vi dp4(n+1,LLONG_MIN);  
-    vi dp5(n+1,LLONG_MIN); 
-
-    // store maximum value of  in decreasing order in dp1
-    frr(i, n-1, 4){
-        dp1[i] = max(dp1[i+1], v[i]);
+    sort(all(v));
+    int ans = -INF;
+    fr(i,0,4){
+        int a = (n-1 + i)%n;
+        int b = (n-2 + i)%n;
+        int c = (n-3 + i)%n;
+        int d = (n-4 + i)%n;
+        int e = (n-5 + i)%n;
+        int curr = v[a]*v[b]*v[c]*v[d]*v[e];
+        ans = max(curr, ans);
     }
-   
-     //cout << dp1;
-     
-    // store maximum value of  in decreasing order in dp2
-    frr(i, n-2, 3){
-        int tmp = dp1[i+1]*v[i];
-        dp2[i] = max(dp2[i+1], tmp );
-    }
-
-   // cout << dp2;
-    
-    // store maximum value of  in decreasing order in dp3
-   frr(i, n-3, 2){
-       int tmp = dp2[i+1]*v[i];
-        dp3[i] = max(dp3[i+1], tmp );
-    }
-
-   // cout << dp3;
-
-    // store maximum value of  in decreasing order in dp4
-    frr(i, n-4, 1){
-        int tmp = dp3[i+1]*v[i];
-        dp4[i] = max(dp4[i+1],  tmp );
-    }
-
-   // cout << dp4;
-
-    frr(i, n-5, 0){
-        int tmp = dp4[i+1]*v[i];
-        dp5[i] = max(dp5[i+1], tmp );
-    }
-
-   //cout << dp5;
-
-    cout  << *max_element(all(dp5));
-
+    cout << ans;
 }
 
 signed main() {

@@ -1,11 +1,3 @@
-/*
-You are given a tree with n nodes numbered from 0 to n - 1 in the form of a parent array parent where parent[i] is the parent of ith node.
-The root of the tree is node 0. Find the kth ancestor of a given node.
-
-The kth ancestor of a tree node is the kth node in the path from that node to the root node.
-
-*/
-
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -70,50 +62,20 @@ int getKthAncestor(int node, int k) {
 
 
 int n = 8;
-
 vector<vector<int>> adj_list(n+1);
-vector<bool> visited(n+1, false);
-vector<int> distance_vec(n+1);
-queue<int> q;
-
-// Iterative -> O(|V| + |E|)
-void BFS(int vertex){
-
-    distance_vec[vertex] = 0;
-    visited[vertex] = true;
-    q.push(vertex);
-
-    while(!q.empty()){
-        int curr = q.front(); 
-        q.pop();
-
-        for(auto v: adj_list[curr]){
-            if (visited[v]) continue;
-            visited[v] = true;
-            distance_vec[v] = distance_vec[curr]+1;
-            q.push(v);
-        }
-
-    }
-
-}
-
-
-
 vector<int> parent;
-
-void lowest_comm_anc(int node1, int node2){
+int lowest_comm_anc(int node1, int node2){
 
 
     // Step1 : O(logn)
     int p1 = node1;
     int p2 = node2;
-    if (distance_vec[p1] > distance_vec[p2]){
-        int diff = distance_vec[p1] - distance_vec[p2];
+    if (depth[p1] > depth[p2]){
+        int diff = depth[p1] - depth[p2];
         p1 = getKthAncestor(p1, diff);
     }
-    else if (distance_vec[p1] < distance_vec[p2]){
-        int diff = distance_vec[p2] - distance_vec[p1];
+    else if (depth[p1] < depth[p2]){
+        int diff = depth[p2] - depth[p1];
         p2 = getKthAncestor(p2, diff);
     }
     else{
@@ -123,11 +85,12 @@ void lowest_comm_anc(int node1, int node2){
     // Step2 : O(n)
     for (int i = 1; i <= n; i++) {
         if (getKthAncestor(p1,i) == getKthAncestor(p2,i)){
-            cout << getKthAncestor(p1,i);
-            break;
+            return getKthAncestor(p1,i);
         }
 
     }
+
+    return -1;
 }
 
 
@@ -147,11 +110,11 @@ int main(){
 
     // For precomputing the ancestors.
     TreeAncestor(n, parent);
-
-    // For computing the levels of nodes.
-    BFS(1);
-
+    
     int node1, node2;
     cin >> node1 >> node2;
-    lowest_comm_anc(node1,node2);
+    int res = lowest_comm_anc(node1,node2);
+    if (res != -1){
+        cout << depth[node1]+depth[node2]- ( 2*depth[res] );
+    }
 }
