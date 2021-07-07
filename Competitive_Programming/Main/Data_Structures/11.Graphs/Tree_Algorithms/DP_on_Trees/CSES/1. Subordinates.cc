@@ -1,3 +1,7 @@
+/*
+Given the structure of a company, your task is to calculate for each employee the number of their subordinates.
+*/
+
 #include <bits/stdc++.h>
 using namespace std;
 

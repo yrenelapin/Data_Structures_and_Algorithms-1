@@ -41,30 +41,26 @@ template <typename T> T pw(T a,T p=M-2,T MOD=M){
 	return result;
 }
 
-void solve() {
-  string s;  cin >> s; ll n = s.size();
-
+bool isMatch(string s1, string s2){
+    int pos = 0; 
+    for (int i = 0; i< (int)s2.length(); i++)
+        // Greedily checking for the presence of each character in "hello"
+        if (s1[pos] == s2[i])
+            ++pos;
+    
+    if (pos == s1.length())
+        return true;
         
-        ll h = s.find('h');
-        ll e = s.find('e', h+1);  
-        ll l1 = s.find('l', e+1);  
-        ll l2 = s.find('l', l1+1);  
-        ll o = s.find('o', l2+1);  
-        //deb3(h,e,l1);deb2(l2, o);
-        if ( h!= -1 and e != -1 and o != -1 and l1 != -1 and l2 != -1){
-                    vl v = {h,e,l1,l2,o};
-                    if (is_sorted(all(v))){
-                        cout << "YES";
-                    }  else{
-                    cout << "NO";
-                }
-        }
-        else{
-            cout << "NO";
-        }
+    return false;
+}
 
-
-
+void solve() {
+   string s; cin>>s;
+    if (isMatch("hello", s))
+        cout<<"YES";
+    else
+        cout<<"NO";
+    return 0;
 }
 
 signed main() {

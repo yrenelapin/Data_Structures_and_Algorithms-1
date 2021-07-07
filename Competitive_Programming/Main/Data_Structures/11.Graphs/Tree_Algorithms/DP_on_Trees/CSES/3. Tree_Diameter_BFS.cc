@@ -1,10 +1,15 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-int n = 100;
+/*
+You are given a tree consisting of n nodes.
+The diameter of a tree is the maximum distance between two nodes. Your task is to determine the diameter of the tree.
+[ Given an undirected tree, we need to find the longest path of this tree where a path is defined as a sequence of nodes ]
+*/
+
+int n =  2*(1e5) + 5;
 vector< vector<int> > adj_list(n+1);
 
-// Given an undirected tree, we need to find the longest path of this tree where a path is defined as a sequence of nodes.
 
 // Iterative -> O(|V| + |E|)
 pair<int, int> BFS(int start){
@@ -63,49 +68,25 @@ void longestPathLength() {
 	// second bfs to find actual longest path
 	t2 = BFS(t1.first);
 
-	cout << "Longest path is from " << t1.first << " to "
-		<< t2.first << " of length " << t2.second;
+	cout << t2.second;
 }
 
 
-int main() {
-    // Graph as an Adjacency List with n vertices assuming that all vertex numbers are <= n and having `m` edges.
-  
-    adj_list[1] = {2, 3, 4};
-    adj_list[2] = {1,5, 6};
-    adj_list[4] = {1, 7};
-    adj_list[3] = {1};
-    adj_list[5] = {2};
-    adj_list[6] = {2};
-    adj_list[7] = {4};
-    longestPathLength();
+int main(){
 
-    /*
-    Sample Inputs:
-    10
-    9
-    1 2
-    2 7
-    7 9
-    7 8
-    2 3
-    3 4
-    3 5
-    5 6
-    3 10
-    ANS: 5
-    -----
-    6                                                                                      
-    5
-    1 3
-    1 4
-    1 2
-    2 5
-    2 6
-    ANS: 3
-    */
+    cin >> n;
+    if (n == 1){
+        cout << 0;
+        return 0;
+    }
+    int vertex, destination;
+    for (int i = 1; i <= n-1; i++){
+            cin >> vertex >> destination;  
+            adj_list[vertex].push_back(destination);
+            adj_list[destination].push_back(vertex);
+    }
 
+   longestPathLength();
 }
-
 
 // Ref: https://www.geeksforgeeks.org/longest-path-undirected-tree/
