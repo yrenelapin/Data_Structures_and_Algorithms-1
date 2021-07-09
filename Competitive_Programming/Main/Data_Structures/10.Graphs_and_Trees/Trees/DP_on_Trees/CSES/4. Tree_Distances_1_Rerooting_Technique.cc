@@ -59,7 +59,7 @@ void dfs(int src, int par, int par_ans) {
 
         if(child != par){
 
-            // To find ans or each child, we first need to ind par_ans & for it we have 2 options available
+            // To find ans for each child, we first need to ind par_ans & for it we have 2 options available
 
             // For 1st option, we neeed these two parts.
             int part_1 = (c_no == 0) ? INT_MIN : prefixMax[c_no - 1];
