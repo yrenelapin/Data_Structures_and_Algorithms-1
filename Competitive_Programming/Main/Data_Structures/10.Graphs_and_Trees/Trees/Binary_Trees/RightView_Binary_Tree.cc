@@ -1,10 +1,14 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 
 /*
-Given a list of numbers representing nodes of a Binary Tree along with "null" which represents 
-NULL in Level-Order sequence, write a program to construct a Binary Tree using this list.
+Given a list of numbers representing nodes of a Binary Tree along with "null" which represents NULL in Level-Order sequence, 
+write a program to construct a Binary Tree using this list and return the nodes from top to bottom that are visible from the 
+right side view of the constructed Binary Tree.
 */
+
+// Key Idea: They are the nodes that appear in the level order traversal at each level.
 
 struct Node{
     int data;
@@ -53,12 +57,8 @@ void build_tree(struct Node **root)
 {
     string temp;
     queue<Node *> queue;
-    while (1)
+    while (cin >> temp)
     {
-        cin >> temp;
-        if (temp == "-1")
-            break;
-
         if (temp == "null")
             *root = insert_node(*root, INT_MAX, queue);
         else
@@ -68,18 +68,36 @@ void build_tree(struct Node **root)
     return;
 }
 
+
 // Recursive
-void inOrderTrav(struct Node* node) {
-    if (node != NULL){
-        inOrderTrav(node->left);
-        cout << node->data << " ";
-        inOrderTrav(node->right);
+void find_levels(struct Node* node, int level, int &max_level){
+    
+    if (node == NULL){
+        return;
     }
+
+    if (max_level < level){
+        // This is the last node in the current level.
+        cout << node->data << " ";
+        max_level = level;
+    }
+     
+    // Note that right subtree should be traversed first inorder for the above 3 lines to print correctly.
+    // For more clarity, dry run a test case.
+    
+    find_levels(node->right, level+1, max_level);
+
+    find_levels(node->left, level+1, max_level);
+
 }
 
 int main(){
-    // NOTE: The way Input is provided may differ a lot depending upon the problem, platform, etc.
+
     build_tree(&root);
-    inOrderTrav(root);
+    int max_level = 0;
+
+    // Root node is anyhow visible
+    cout << root->data << " ";
+    find_levels(root, 0, max_level);
     return 0;
 }

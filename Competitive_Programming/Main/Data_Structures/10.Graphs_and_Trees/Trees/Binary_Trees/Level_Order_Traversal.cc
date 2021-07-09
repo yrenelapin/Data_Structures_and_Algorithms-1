@@ -46,10 +46,13 @@ void levelOrderTrav_Iter(struct Node* node) {
         auto curr_node = nodeQueue.front();
         nodeQueue.pop();
         cout << curr_node->data << " ";
-        nodeQueue.push(curr_node->left);
-        nodeQueue.push(curr_node->right);
+        if(curr_node->left != NULL)
+            nodeQueue.push(curr_node->left);
+        if(curr_node->right != NULL)
+            nodeQueue.push(curr_node->right);
     }
 }
+
 
 // -------------------------------------------------------------------------
 

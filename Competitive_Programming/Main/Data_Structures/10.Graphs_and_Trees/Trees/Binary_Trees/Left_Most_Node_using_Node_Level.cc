@@ -1,11 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-/*
-Given a list of numbers representing nodes of a Binary Tree along with "null" which represents 
-NULL in Level-Order sequence, write a program to construct a Binary Tree using this list.
-*/
-
 struct Node{
     int data;
     struct Node* left;
@@ -49,37 +44,54 @@ Node *insert_node(Node *root, int value, queue<Node *> &queue)
     return root;
 }
 
+vector<int> levelorder;
+
 void build_tree(struct Node **root)
 {
     string temp;
     queue<Node *> queue;
-    while (1)
+    while (cin >> temp)
     {
-        cin >> temp;
-        if (temp == "-1")
-            break;
-
         if (temp == "null")
             *root = insert_node(*root, INT_MAX, queue);
-        else
-            *root = insert_node(*root, stoi(temp), queue);
+        else{
+                levelorder.push_back(stoi(temp)); 
+                *root = insert_node(*root, stoi(temp), queue);
+            }       
     }
     *root = remove_null_nodes(*root);
     return;
 }
 
-// Recursive
-void inOrderTrav(struct Node* node) {
-    if (node != NULL){
-        inOrderTrav(node->left);
-        cout << node->data << " ";
-        inOrderTrav(node->right);
+
+map<int,int> level_store; 
+int last_level = 0;
+void find_levels(struct Node* node, int level){
+    if (node == NULL){
+        // `level-1` is stored because, for the Leaf Nodes, this call comes with `level+1`. To get actual level, we need to do -1.
+        last_level = max(last_level, level-1);
+        return;
+    }
+    else{
+        level_store[node->data] = level;
+        find_levels(node->left, level+1);
+        find_levels(node->right, level+1);
+        return ;
     }
 }
 
+
 int main(){
-    // NOTE: The way Input is provided may differ a lot depending upon the problem, platform, etc.
+
     build_tree(&root);
-    inOrderTrav(root);
+    find_levels(root, 0);
+
+    for (int i : levelorder){
+        if (level_store[i] == last_level){
+            cout << i ;
+            return 0;
+        }
+    }
+
     return 0;
 }

@@ -1220,3 +1220,7 @@ h -> Height of the tree, n-> Number of nodes in the tree. But WORST CASE SPACE C
     ```
 
 - In many Ad-hoc / Observation based questions ( Especially in CF ), The ordering of the elements( indices ) does not matter though there is a explicit condition in question. A careful observation of this fact makes the problem solvable very easily. [Example](https://codeforces.com/contest/1406/problem/B)
+
+- Try avoiding passing of vectors/some other large Data Strutures as arguments to functions. Even if we pass,
+Pass by reference `&`, otherwise it may lead to TLE.
+- Note that `int n = sizeof(arr)/sizeof(arr[0])` wont be accurate for Vectors unlike for arrays, since Vectors are dynamic in nature & also the way the contents of vectors are stored inside memory are different. So, always use arr.size() for vectors!

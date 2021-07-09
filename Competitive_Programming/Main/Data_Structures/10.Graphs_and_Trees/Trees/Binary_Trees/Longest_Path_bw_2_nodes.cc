@@ -1,10 +1,10 @@
+/*
+Given a list of numbers representing nodes of a Binary Tree along with "null" which represents NULL in Level-Order sequence, 
+write a program to construct a Binary Tree using this list and find the longest path between any two nodes.
+*/
 #include <bits/stdc++.h>
 using namespace std;
-
-/*
-Given a list of numbers representing nodes of a Binary Tree along with "null" which represents 
-NULL in Level-Order sequence, write a program to construct a Binary Tree using this list.
-*/
+#define int long long
 
 struct Node{
     int data;
@@ -53,12 +53,7 @@ void build_tree(struct Node **root)
 {
     string temp;
     queue<Node *> queue;
-    while (1)
-    {
-        cin >> temp;
-        if (temp == "-1")
-            break;
-
+    while (cin >> temp){
         if (temp == "null")
             *root = insert_node(*root, INT_MAX, queue);
         else
@@ -68,18 +63,31 @@ void build_tree(struct Node **root)
     return;
 }
 
-// Recursive
-void inOrderTrav(struct Node* node) {
-    if (node != NULL){
-        inOrderTrav(node->left);
-        cout << node->data << " ";
-        inOrderTrav(node->right);
-    }
+// We are computing the Longest path from a given node
+// to all the nodes in the subtree rooted at that node.
+// that is we are finding the depth of the subtree rooted at that node.
+int get_longest_path(struct Node *root, int &ans){
+    
+    if (root == NULL)
+        return 0;
+        
+    int left = get_longest_path(root->left, ans);
+    int right = get_longest_path(root->right, ans);
+    
+    // We are updating the required value for every node in a POSTORDER manner.
+    // For a given node, If we know the depths of its two children
+    // longest path in the subtree rooted at that node is 
+    // `depth[left]+ depth[right]`
+    ans = max(ans, left + right);
+
+    // Return the Longest path of the subtree rooted at given node.
+    return 1 + max(left, right);
 }
 
-int main(){
-    // NOTE: The way Input is provided may differ a lot depending upon the problem, platform, etc.
+signed main(){
     build_tree(&root);
-    inOrderTrav(root);
+    int ans = 0;
+    get_longest_path(root, ans);
+    cout << ans;
     return 0;
 }
