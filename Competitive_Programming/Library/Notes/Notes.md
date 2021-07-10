@@ -1185,6 +1185,7 @@ so, when using pre-written codes, make necessary changes according to the proble
 - When using the pre-written codes related to graphs/trees in contests, make sure to check the Node values ranges. They may lie between [0,N-1] or [1,N].
 -  Many of the Tree problems reduce to DP by just rooting the tree at some node & thinking on what are the possibilites for the root node to solve the problem such that we can make similar sub problems. Then, in most cases, our subproblems are all the Subtrees rooted at each node.
 - So, start solving the problem by DRAWING a general tree on Paper rooted at some node & think how to break the problem into subproblems!
+- Filling 2D DP in Trees can be tricky, Refer this classic [Example](https://codeforces.com/contest/161/submission/121837651).
 
 Binary Trees:
 - The AVERAGE space Complexity of PreOrder, PostOrder, InOrder Traversal in O(h) not O(n) for both Recursive/Iterative. where h = O(logn),
@@ -1192,6 +1193,8 @@ h -> Height of the tree, n-> Number of nodes in the tree. But WORST CASE SPACE C
 1. Because, In Iterative approach, The Stack/Queue data structures wont get filled to a size of `n`, they get filled & popped & on average only O(logn) elements stay. 
 2. In recursive approach, The addresses are removed from the stack when returning. This space is re-used when making a new call from a level closer to the root. So the maximum numbers of memory addresses on the stack at the same time is the tree height.
 - In all the 4 types of traversals, we pass the `root` of the tree to the function to initiate the traversal.
+- To traverse the tree from bottom to up, use the POST ORDER TRAVERSAL which means the node is visited only after the LEFT & RIGHT CHILDREN are visited, which inturn makes sure that we move from Bottom to Top, i.e. Leaves to Root of the tree. 
+Example : `Competitive_Programming\Main\Data_Structures\10.Graphs_and_Trees\Trees\Binary_Trees\Maximum_Sum_Path_in_Tree.cc`
 
 
 - std::memset, as is the case for any function, can only be called within a function. We can't simply call it in "global scope". [Example](https://stackoverflow.com/questions/40871661/error-expected-constructor-destructor-or-type-conversion-before-token-a)

@@ -24,13 +24,13 @@ Otherwise we get Segmentation Fault. To understand why this happens, just dry ru
 */
 
 /* Initial values of inStrt and inEnd should be 0 and len -1. They refer to the indexes of the Inorder Traversal array,
-The function doesn't do any error checking for cases where inorder and preorder do not form a tree */
-struct Node* buildTree(int in[], int post[], int inStrt, int inEnd, unordered_map<int, int>& mp, int &postIndex){
+The function doesn't do any error checking for cases where inorder and postorder do not form a tree */
+struct Node* buildTree(   vector<int> &in , vector<int> &post, int inStrt, int inEnd, unordered_map<int, int>& mp, int &postIndex){
 
 	if (inStrt > inEnd)
 		return NULL;
 
-	/* Pick current node from Preorder traversal using postIndex and increment postIndex */
+	/* Pick current node from postorder traversal using postIndex and decrement postIndex */
 	int curr = post[postIndex--];
 	struct Node* tNode = newNode(curr);
 
@@ -48,31 +48,43 @@ struct Node* buildTree(int in[], int post[], int inStrt, int inEnd, unordered_ma
 	return tNode;
 }
 
-void printPostorder(struct Node* node){
-	if (node == NULL)
-		return;
-    
-	printPostorder(node->left);
-	printPostorder(node->right);
-	printf("%d ", node->data);
+void printPreorder(struct Node* node){
+	if (node != NULL){
+	    printf("%d ", node->data);
+    	printPreorder(node->left);
+    	printPreorder(node->right);
+	}
 }
 
 int main(){
-
-    int in[] = { 4, 8, 2, 5, 1, 6, 3, 7 };
-    int post[] = { 8, 4, 5, 2, 6, 7, 3, 1 };
-    int n = sizeof(in) / sizeof(in[0]);
+   vector<int> in, post;
+   int temp;
+   while(1){
+       cin >> temp;
+       if (temp == -1){
+           break;
+       }
+       in.push_back(temp);
+   }
+   
+     while(1){
+       cin >> temp;
+       if (temp == -1){
+           break;
+       }
+       post.push_back(temp);
+    }
+       
+	int len = in.size();
 
 	unordered_map<int, int> mp;
-	for (int i = 0; i < n; i++)
+	for (int i = 0; i < len; i++)
 		mp[in[i]] = i;
+		
+    int postIndex = len-1;
+	struct Node* root = buildTree(in, post, 0, len - 1, mp, postIndex);
 
-    int postIndex = n-1;
-	struct Node* root = buildTree(in, post, 0, n - 1, mp, postIndex);
-
-	/* Let us test the built tree by printing Post Order traversal */
-	printf("Post Order traversal of the constructed tree is \n");
-	printPostorder(root);
+	printPreorder(root);
 }
 
 // Ref: https://www.geeksforgeeks.org/construct-a-binary-tree-from-postorder-and-inorder/
