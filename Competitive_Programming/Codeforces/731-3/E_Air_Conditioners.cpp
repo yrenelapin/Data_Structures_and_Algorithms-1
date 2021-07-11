@@ -61,15 +61,32 @@ void solve() {
   vi a(k); fr(i,0,k-1) { cin >> a[i]; }
   vi t(k); fr(i,0,k-1) { cin >> t[i]; }
 
-  fr(i,0, n-1){ 
-      int ans = INF;
-
-      fr(j, 0, k-1){
-          ans = min(ans, t[j] + abs(a[j]-(i+1)));
-      }
-
-      cout << ans << " ";
+  // ci is the temperature of air conditioner in cell i (or infinity if there is no air conditioner in this cell).
+  vi c(n, INT_MAX);
+  fr(i,0,k-1){
+      c[a[i]-1] = t[i];
   }
+
+  // Left_i is the temperature in cell i if we take only air conditioners with numbers less than or equal to i;
+  vi left(n, INT_MAX);
+  int previous = INT_MAX;
+  fr(i, 0, n-1){
+     previous = min(previous+1, c[i]);
+     left[i] = previous;
+  }
+
+  // Right_i is the temperature in cell i if we take only air conditioners with numbers greater than or equal to i;
+  vi right(n, INT_MAX);
+  previous = INT_MAX;
+  frr(i,n-1,0){
+     previous = min(previous+1, c[i]);
+     right[i] = previous;
+  }
+
+  fr(i,0,n-1){
+      cout << min(left[i], right[i]) << " ";
+  }
+
 }
 
 signed main() {

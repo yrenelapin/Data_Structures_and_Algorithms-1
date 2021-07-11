@@ -1227,3 +1227,13 @@ Example : `Competitive_Programming\Main\Data_Structures\10.Graphs_and_Trees\Tree
 - Try avoiding passing of vectors/some other large Data Strutures as arguments to functions. Even if we pass,
 Pass by reference `&`, otherwise it may lead to TLE.
 - Note that `int n = sizeof(arr)/sizeof(arr[0])` wont be accurate for Vectors unlike for arrays, since Vectors are dynamic in nature & also the way the contents of vectors are stored inside memory are different. So, always use arr.size() for vectors!
+
+- Sometimes, using Vector can cause TLE when compared to vector. 
+ Example -> [vector](https://cses.fi/problemset/result/2495316/), [array](https://cses.fi/problemset/result/2495314/)
+
+- Converting `char` to `std::string`:
+    ```
+    char c = 'g';
+    string str(1, c);
+    cout << str; // It prints `g`
+    ```
