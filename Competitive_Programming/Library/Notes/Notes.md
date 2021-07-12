@@ -1195,7 +1195,8 @@ h -> Height of the tree, n-> Number of nodes in the tree. But WORST CASE SPACE C
 - In all the 4 types of traversals, we pass the `root` of the tree to the function to initiate the traversal.
 - To traverse the tree from bottom to up, use the POST ORDER TRAVERSAL which means the node is visited only after the LEFT & RIGHT CHILDREN are visited, which inturn makes sure that we move from Bottom to Top, i.e. Leaves to Root of the tree. 
 Example : `Competitive_Programming\Main\Data_Structures\10.Graphs_and_Trees\Trees\Binary_Trees\Maximum_Sum_Path_in_Tree.cc`
-
+- Level order traversal ignoring the nulls can be used as the order in which the nodes are inserted into the BST & one can build BST using `insert`, if we know that the given Level Order traversal corresponds to a BST already and all the elements in the BST are UNIQUE.
+- If the Level Order of a BST is given where the nodes can have same elements (i.e, Non unique values), we cant construct the BST using `insert`. We need to use the general way of constructing a BINARY TREE from given LEVEL order Traversal.
 
 - std::memset, as is the case for any function, can only be called within a function. We can't simply call it in "global scope". [Example](https://stackoverflow.com/questions/40871661/error-expected-constructor-destructor-or-type-conversion-before-token-a)
 
