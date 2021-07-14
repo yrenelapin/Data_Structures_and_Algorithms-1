@@ -27,6 +27,7 @@ void topological_sort( vector< vector<int> > &graph, int n) {
     // If we need Lexicographically Smallest Topological Order, 
     // We use a MIN HEAP Priority Queue. `priority_queue<int,vector<int>, greater<int>> queue;`
 
+    vector<bool> visited(n+1, false);
     queue<int> queue;
     int cycle_check=0;
 
@@ -41,6 +42,7 @@ void topological_sort( vector< vector<int> > &graph, int n) {
     for (int i=1; i<=n; i++) {
         if (in_degree[i]==0) {
             queue.push(i);
+            visited[i] = true;
         }
     }
 
@@ -51,16 +53,22 @@ void topological_sort( vector< vector<int> > &graph, int n) {
 
         // remove edge
         for (auto i : graph[vertex]) {
-            if (--in_degree[i] == 0) {
-                queue.push(i);
+
+            if (!visited[i]){
+
+                if (--in_degree[i] == 0) {
+                    queue.push(i);
+                    visited[i] = true;
+                }
+
             }
+          
         }
         cycle_check++;
     }
     
     // We know, If any element is not processed, It means we have a Cycle.
     if (cycle_check != n) {
-        // has cycle
         cout << "-1";
         return;
     }

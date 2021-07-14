@@ -1,47 +1,39 @@
-// Ref : https://www.geeksforgeeks.org/check-if-a-given-graph-is-bipartite-using-dfs/ 
-
-// C++ program to check if a "connected"
-// graph is bipartite or not using DFS
 #include <bits/stdc++.h>
 using namespace std;
 
+int n = 10001;
+vector<bool> visited(n+1);
+vector<int> color(n+1);
+vector< vector<int> > adj (n + 1);
 
-// function to check whether a graph is bipartite or not
-bool isBipartite(vector< vector<int> >adj, int v,
-				vector<bool>& visited, vector<int>& color)
-{
-
-	for (int u : adj[v]) {
-
-		// if vertex u is not explored before
-		if (visited[u] == false) {
-
-			// mark present vertex as visited
-			visited[u] = true;
-
-			// mark its color opposite to its parent
-			color[u] = !color[v];
-
-			// if the subtree rooted at vertex v is not bipartite
-			if (!isBipartite(adj, u, visited, color))
-				return false;
-		}
-
-		// if two adjacent are colored with same color then
-		// the graph is not bipartite
-		else if (color[u] == color[v])
-			return false;
-	}
-	return true;
+// DFS
+bool isBipartite( int v, int col ){
+    visited[v] = true;
+    color[v] = col;
+    for(auto child: adj[v]){
+        
+        if (!visited[child]){
+             visited[child] = true;
+             
+             if (!isBipartite(child, !col)){
+                 return 0;
+             }
+        }
+        else{
+            if (color[child] == color[v]){
+                return 0;
+            }
+        }
+    }
+    
+    return 1;
+    
 }
 
-// Driver Code
 int main()
 {
-    int n, m;
+    int m;
     cin >> n >> m;
-    vector< vector<int> > adj (n + 1);
-
     int source, destination;
     for (int i = 0; i < m; i++)
     {
@@ -50,38 +42,12 @@ int main()
         adj[destination].push_back(source);
     }
 
-
-	// to keep a check on whether
-	// a node is discovered or not
-	vector<bool> visited(n + 1);
-
-	// to color the vertices
-	// of graph with 2 color
-	vector<int> color(n + 1);
-
-
-	// marking the source node as visited
-	visited[1] = true;
-
-	// marking the source node with a color
-	color[1] = 0;
-
-    // Since this is for Connected Graphs, We need not try with all the vertices as Source.
-	if (isBipartite(adj, 1, visited, color)) {
-		cout << "Yes";
+    // Assuming input is connected graph.
+    if (isBipartite(1, 1)) {
+	    cout << "Yes";
+    }
+	else{ cout << "No";
 	}
-	else {
-		cout << "No";
-	}
-
-	// This loop helps incase of Disconnected Graphs.
-    // for (int i = 1; i < len; i++){	
-	// 	if (!visited[i]){
-	// 		if (!isBipartite(adj, i, visited, color)){
-	// 			cout << "No";}
-	// 	}
-	// }
-    // cout << "Yes";
 
 	return 0;
 }

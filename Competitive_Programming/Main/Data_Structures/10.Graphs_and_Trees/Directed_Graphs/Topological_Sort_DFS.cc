@@ -1,84 +1,75 @@
-// Ref:  https://www.geeksforgeeks.org/detect-cycle-in-a-graph/
+/*
+Topological Sort on DAG using DFS :
+Given N vertices along with edges of a directed acyclic graph, write a program to implement topological sort using DFS.
+Note: Iterate over the adjacency list similar to standard DFS (retain the input order and iterate left to right within it).
+Input:
+First line contains a single integer N.
+Each of the next N lines contains space separated integers.
+In each line, the first integer has an edge with all the following integers (if they exist) except last one. -1 at the end represents end of line.
+Output:
+Print space separated integers representing topological order.
+*/
 
 #include <bits/stdc++.h>
 using namespace std;
 
 list<int> result ;
 
-// We use DFS approach.
-bool DFS(int vertex,   vector < vector<int> > graph, vector<bool> &visited, vector<bool> &recursion_stack)
-{   
-    // Processing then node.
-    visited[vertex] = true;
-    recursion_stack[vertex] = true;
-    
-    // For all the children of the vertex.
-    for (auto i : graph[vertex])
-    {   
-        // If a node is not visited, We check whether a cycle exists from the current node by doing DFS again. 
-        if (!visited[i] && DFS(i, graph, visited, recursion_stack))
-        {
-            return true;
-        }
-        
-        // If the node is visited, We will check if it is on recursion stack.
-        else if (recursion_stack[i])
-            return true;
-    }
-    
-    // vertex is removed from stack as in usual DFS since all its children are already visited.
-    recursion_stack[vertex] = false;
-    result.push_front(vertex);
-    // If no such cycle is found, return false.
-    return false;
-}
-
-string check_cycle(  vector < vector<int> > graph, int len)
+// We need Stack Functionality
+void DFS(int vertex, vector< vector<int> > adj_list , vector<bool> &visited, list<int> &result)
 {
-    vector<bool> visited(len, false);
-    vector<bool> recursion_stack(len, false);
-    
-    // This loop helps incase of Disconnected Graphs.
-    for (int i = 1; i < len; i++)
-    {   if (!visited[i]){
-            if (DFS(i, graph, visited, recursion_stack))
-            {
-                return "Yes";
-            }
-        }   
+    visited[vertex] = true;
+    for (auto i : adj_list[vertex])
+    {
+        if (!visited[i])
+        {
+            DFS(i, adj_list, visited, result);
+        }
     }
-    return "No";
+
+    // Notice that we are pushing the nodes after completion of processing.
+    result.push_front(vertex);
 }
 
+
+
+void topological_sort_DFS(   vector< vector<int> > &adj_list, vector<bool> &visited){
+   
+    for (int i = 1; i < visited.size() ; i++){
+        if (visited[i] == false){
+            DFS(i, adj_list, visited, result);
+        }
+    }
+}
 
 int main()
 {
-    int n, source, dest;
+    int n, source, destination;
     cin >> n;
 
-    vector < vector<int> > adj_list(n + 1);
+    // Since the vertices values range from 1 to n, we need `n+1` array size
+    vector< vector<int> > adj_list(n + 1); 
+
     for (int i = 0; i < n; i++)
     {
         cin >> source;
         while (1)
         {
-            cin >> dest;
-            if (dest == -1)
+            cin >> destination;
+            if (destination == -1)
                 break;
-            adj_list[source].push_back(dest);
+            adj_list[source].push_back(destination);
         }
     }
-
-    auto res = check_cycle(adj_list, n+1);
-    if (res == "No" ){
-            
-        for (auto itr = result.begin();  itr != result.end() ; itr++){
-            cout << *itr << " ";
-        }   
+    
+    // Creates a vector of size n+1 with all values defaulted as `false`.
+    vector<bool> visited(n + 1, false);
+    
+    topological_sort_DFS(adj_list, visited);
+    
+    for (auto itr = result.begin();  itr != result.end() ; itr++){
+        cout << *itr << " ";
     }
-    else{
-        cout << -1;
-        // Since Cycle is present, Toplogical sort cant be found.
-    }
+    
     return 0;
 }

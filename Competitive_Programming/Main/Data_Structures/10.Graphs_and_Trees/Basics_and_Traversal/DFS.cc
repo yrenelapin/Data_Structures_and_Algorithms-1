@@ -8,17 +8,45 @@ vector< vector<int> > adj_list(n+1);
 // Creates a vector of size n+1 with all values defaulted as `false`.
 vector<bool> visited(n + 1, false);
 
-
-// O(|V| + |E|)
+// Recursive - O(|V| + |E|)
 void DFS(int vertex){
 
     visited[vertex] = true;
     cout << vertex << " ";   // Process the node here.
  
     for (auto i : adj_list[vertex]){
-        if (!visited[i]){
+        if (!visited[i]){   
             DFS(i);
         }
+    }
+    
+    // Now the `vertex` node is processed.
+}
+
+// Iterative - O(|V| + |E|)
+void DFS_Iter(int vertex){
+
+    stack<int> s;
+    visited[vertex] = true;
+    s.push(vertex);
+
+    while(!s.empty()){
+
+        int curr = s.top(); s.pop();
+
+        // Process the Node
+        cout << curr << " ";
+
+        for (auto i : adj_list[curr]){
+            if (!visited[i]){
+                s.push(i);
+                // Dont forget the below line :)
+                visited[i] = true; 
+            }
+        }
+        
+        // Now the `curr` node is processed.
+
     }
 }
 

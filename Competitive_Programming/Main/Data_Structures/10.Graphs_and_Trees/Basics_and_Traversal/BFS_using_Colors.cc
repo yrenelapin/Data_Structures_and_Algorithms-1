@@ -3,8 +3,15 @@ using namespace std;
 
 int n = 1e5 + 1;
 
+
+/*
+0 -> White ( Unprocessed )
+1 -> Gray ( Processing )
+2 -> Black (Processed )
+*/
+
 vector<vector<int>> adj_list(n+1);
-vector<bool> visited(n+1, false);
+vector<bool> visited(n+1, false);  // color(n+1, 0)  
 vector<int> distance_vec(n+1);
 queue<int> q; // Queue is to store the vertices to be visited ( Adjacent vertices )
 
@@ -12,7 +19,7 @@ queue<int> q; // Queue is to store the vertices to be visited ( Adjacent vertice
 void BFS(int vertex){
 
     distance_vec[vertex] = 0;
-    visited[vertex] = true;
+    visited[vertex] = true;  // color[vertex] = 1
     q.push(vertex);
 
     while(!q.empty()){
@@ -23,13 +30,14 @@ void BFS(int vertex){
         cout << curr << " ";
 
         for(auto v: adj_list[curr]){
-            if (visited[v]) continue;
+            if (visited[v]) continue;  // color[v] == 1
             visited[v] = true;
             distance_vec[v] = distance_vec[curr]+1;
             q.push(v);
         }
 
         // Now the `curr` node is processed.
+        // color[vertex] = 2
 
     }
 
