@@ -58,7 +58,14 @@ using namespace number_theory;
 void solve() {
   // memset(dp,-1, sizeof(dp));
   int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int s = sqrt(n);
+  if (s*s == n){
+      cout << s;
+  }
+  else{
+      cout << s+1; 
+  }
+
 }
 
 signed main() {

@@ -55,10 +55,38 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 // int dp[n][n]; 
 
+
+// Adapted from GFG
+int minSteps(string S){
+    string new_str;
+    int N = S.length();
+    int i = 0;
+ 
+    while (i < N) {
+        new_str += S[i];
+        int j = i;
+        while (i < N && S[i] == S[j])
+            ++i;
+    }
+    return ceil((new_str.size() + 1) / 2.0);
+}
+
+
 void solve() {
-  // memset(dp,-1, sizeof(dp));
-  int n; cin >> n;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+  int n,a,b; cin >> n >> a >> b;
+  string s ; cin >> s;
+  
+  if (b >= 0){
+      int ans = a*n + b*n;
+      cout << ans;
+  }
+  else{
+      int ans =  a*n;
+      int req = minSteps(s);
+      ans += b*req;
+      cout << ans;
+  }
+
 }
 
 signed main() {

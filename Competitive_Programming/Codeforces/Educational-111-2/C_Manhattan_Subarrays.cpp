@@ -55,48 +55,61 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 // int dp[n][n]; 
 
+bool increasingTriplet(vector<int>& a) {
+
+    int i,n=a.size(),first=INT_MAX,second=INT_MAX;
+    if(n<3)
+        return false;
+
+    for(i=0;i<n;i++)
+    {
+        if(a[i]<first)
+            first = a[i];
+        else if(a[i]<second)
+            second = a[i];
+        else
+            return true;
+    }
+    return false;
+}
+
+
 void solve() {
-  // memset(dp,-1, sizeof(dp));
-  int n, m, t; cin >> n >>  m >> t;
+  int n; cin >> n; map<int,int> fre; 
 
-  vi problems(n);
-  fr(i,0,n-1){ cin >> problems[i]; }
+  vi neg(n);
+  vi v(n); fr(i,0,n-1) { cin >> v[i]; fre[v[i]]++;  neg[i] = -v[i]; }
 
-  vi assi(m);
-  fr(i,0,m-1){ cin >> assi[i]; }
-
-  vpi ass_m;
-  fr(i,0,m-1){
-      int tmp;
-      cin >> tmp;
-      ass_m.pb( {tmp,-assi[i]} );
+  if (!increasingTriplet(v) and !increasingTriplet(neg)){
+        int ans = 0;
+        fr(i,1,n){
+            ans += (n-i+1);
+        }
+        cout << ans;
   }
-    
-  sort(allr(ass_m));
+  else{
+      
+      bool done = 0;
 
-  int ha = m/2 - 1;
+      while(!done){
 
-  int time_con = 0;
-  fr(i,0,ha){
-      time_con += (-ass_m[i].se);
-  }
+            v.pob(); neg.pob();
 
-  sort(all(problems));
-  int ans = 0; 
-  int available = t - time_con;
+            if (!increasingTriplet(v) and !increasingTriplet(neg)){
+                 
+                    int ans = 0;
+                    fr(i,1,v.size()){
+                        ans += (n-i+1);
+                    }
 
-  fr(i,0,n-1){
-      if (available >= problems[i]){
-          available -= problems[i];
-          ans++;
+                    cout << ans; 
+                    done = 1;
+                    return;
+
+            }
       }
-      else{
-          break;
-      }
+
   }
-  
-  cout << ans;
-  
 
 
 }

@@ -56,23 +56,21 @@ using namespace number_theory;
 
 
 void solve() {
-
   int x; cin >> x;
-  int tmp =  1+ 8*x;
-  int sr = sqrt(tmp);
-  if (sr * sr == tmp){
-      cout << (sr-1)/2;
+  int pos = 0; int step = 1;
+
+  while (pos < x){
+      pos += step;
+      step++;
+  }
+
+  if (1+x == pos){
+      cout << step;
   }
   else{
-      int direct1 = (sr)/2 ;
-      int main1 = direct1*(direct1+1)/2;
-
-      int direct2 = (sr)/2 + 1 ;
-      int main2 = direct2*(direct2+1)/2;
-
-      cout << min ( direct1 + abs(main1-x) , direct2 + abs(main2-x) );
+      cout <<step-1;
   }
-
+  
 }
 
 signed main() {
