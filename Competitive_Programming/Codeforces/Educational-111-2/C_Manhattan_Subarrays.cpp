@@ -55,63 +55,51 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 // int dp[n][n]; 
 
-bool increasingTriplet(vector<int>& a) {
+bool ok(vector<int>a){
+    int n=a.size();
+    if(n<=2) return true;
 
-    int i,n=a.size(),first=INT_MAX,second=INT_MAX;
-    if(n<3)
-        return false;
+    // Can be proved
+    if(n>=5) return false;
 
-    for(i=0;i<n;i++)
-    {
-        if(a[i]<first)
-            first = a[i];
-        else if(a[i]<second)
-            second = a[i];
-        else
-            return true;
-    }
-    return false;
-}
-
-
-void solve() {
-  int n; cin >> n; map<int,int> fre; 
-
-  vi neg(n);
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; fre[v[i]]++;  neg[i] = -v[i]; }
-
-  if (!increasingTriplet(v) and !increasingTriplet(neg)){
-        int ans = 0;
-        fr(i,1,n){
-            ans += (n-i+1);
-        }
-        cout << ans;
-  }
-  else{
-      
-      bool done = 0;
-
-      while(!done){
-
-            v.pob(); neg.pob();
-
-            if (!increasingTriplet(v) and !increasingTriplet(neg)){
-                 
-                    int ans = 0;
-                    fr(i,1,v.size()){
-                        ans += (n-i+1);
-                    }
-
-                    cout << ans; 
-                    done = 1;
-                    return;
-
+    // If n==3 or n == 4, we check ( Use Brute force ) whether its possible to choose three i,j,k such that bad triple is formed. 
+    // We take elements whose i  < j < k
+    for(int i=0;i<n;i++){
+        for(int j=i+1;j<n;j++){
+            for(int k=j+1;k<n;k++){
+                // If they form either ai≤aj≤ak or ai≥aj≥ak
+                if((a[i]<=a[j] && a[j]<=a[k]) || (a[i]>=a[j] && a[j]>=a[k])) return false;
             }
-      }
+        }
+    }
+    return true;
+}
+ 
+ 
+void solve(){
+    int n;
+    cin>>n;
+    vector<int>a(n);
+    for(int i=0;i<n;i++) cin>>a[i];
 
-  }
+    int ans=0;
+    for(int i=0;i<n;i++){
 
+        // vector `b` stores one subarray from all the possible subarrays each time.
+        vector<int>b;  
+        for(int j=i;j<n;j++){
+            b.push_back(a[j]);
 
+            // If its good subarray, increment the counter.
+            if(ok(b)) ans++;
+
+            // Once a subarray is not good, Subarray's consisting this subarray are also not good.
+            else break;
+        }
+        
+    }
+
+    cout << ans;
 }
 
 signed main() {
