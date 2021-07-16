@@ -2,7 +2,7 @@
 using namespace std;
 #define fi first
 #define se second
-// #define int long long                                  
+#define int long long                                  
 #define pb push_back
 #define pob pop_back
 #define all(x) (x).begin(), (x).end()
@@ -57,36 +57,23 @@ using namespace number_theory;
 
 void solve() {
   int n, k; cin >> n >> k;
-  map<int,int> freq;
-  vi c(n); fr(i,0,n-1) { cin >> c[i]; freq[c[i]]++; }
-
-//   map<int,int, std::greater<int> > fre_ele;
-//   trav(e, freq){
-//       fre_ele[e.se] = e.fi;
-//   }
-
-//   int color =  fre_ele.begin()->second;
+  vi c(n); fr(i,0,n-1) { cin >> c[i]; }
   
   int final_ans = INT_MAX;
+
   fr(col,1,100){  
 
-        queue<int> q;
-        fr(i,0,n-1){
-            if (c[i] != col){
-                q.push(i);
-            }
-        } 
-
-
         int ans = 0;
-        while(!q.empty()){
-            int mini =  q.front();
-            int maxi =  q.front()+k-1;
-            ans++;
-            while( q.front() >= mini and q.front() <= maxi  ){
-                q.pop();
-            }
 
+        for(int i = 0; i<n; ){
+
+            if (c[i] != col){
+                ans++;
+                i += k;
+            }
+            else{
+                i++;
+            }
         }
 
         final_ans = min(final_ans,ans);

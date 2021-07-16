@@ -1199,6 +1199,7 @@ h -> Height of the tree, n-> Number of nodes in the tree. But WORST CASE SPACE C
 Example : `Competitive_Programming\Main\Data_Structures\10.Graphs_and_Trees\Trees\Binary_Trees\Maximum_Sum_Path_in_Tree.cc`
 - Level order traversal ignoring the nulls can be used as the order in which the nodes are inserted into the BST & one can build BST using `insert`, if we know that the given Level Order traversal corresponds to a BST already and all the elements in the BST are UNIQUE.
 - If the Level Order of a BST is given where the nodes can have same elements (i.e, Non unique values), we cant construct the BST using `insert`. We need to use the general way of constructing a BINARY TREE from given LEVEL order Traversal.
+- Most of the Binary Tree problems that look very difficult at the first look can actually be solved very easily by just performing some traversal (Pre/Post/In/Level) and computing some quantities like Levels, HorizLevels, etc. Example: `Competitive_Programming\Main\Data_Structures\10.Graphs_and_Trees\Trees\Binary_Trees\Vertical_Order_Traversal.cc`
 
 - std::memset, as is the case for any function, can only be called within a function. We can't simply call it in "global scope". [Example](https://stackoverflow.com/questions/40871661/error-expected-constructor-destructor-or-type-conversion-before-token-a)
 
