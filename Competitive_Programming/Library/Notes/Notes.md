@@ -1241,6 +1241,12 @@ Pass by reference `&`, otherwise it may lead to TLE.
     string str(1, c);
     cout << str; // It prints `g`
     ```
+- Taking a string with spaces as input, i.e. Taking entire line as input into a string. Becareful with new lines, `\n` when using this syntax, `getline(cin,str)` with normal inputs, `cin >> a` simultaneously.
+    ```
+    string str;
+    getline(cin, str);
+    ```
+-  Most of the `parenthesis matching` problems can be solved by just tracking the count of Opening & Closing parenthesis & coutning valid sets every time they encounter a CLOSING BRACKET. Also sometimes, Stacks/queues may be useful.
 
 # Maths:
 
