@@ -5,6 +5,11 @@ Given a text T and a Pattern P, We need to find the start indices of all the occ
 #include <bits/stdc++.h>
 using namespace std;
 
+/*
+References for understanding in addition to ibhubs content:
+https://youtu.be/BXCEFAzhxGY
+https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
+*/
 
 // Fills lps[] for given patttern pat[0..m-1] in O(m)
 // lps indicates longest proper prefix which is also suffix. A proper prefix is prefix with whole string not allowed.
@@ -22,7 +27,6 @@ void computeLPSArray(string pat, int m, vector<int> &lps){
 			lps[i] = len;
 			i++;
 		}
-
 		else{
 			if (len != 0) {
 				len = lps[len - 1];
@@ -35,6 +39,7 @@ void computeLPSArray(string pat, int m, vector<int> &lps){
 		}
 	}
 }
+
 
 // The time complexity of KMP algorithm is O(n) in the worst case.
 void KMPsearch(string pat, string txt){
