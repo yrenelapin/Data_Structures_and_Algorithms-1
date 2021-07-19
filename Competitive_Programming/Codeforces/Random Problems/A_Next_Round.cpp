@@ -57,23 +57,16 @@ using namespace number_theory;
 
 void solve() {
   // memset(dp,-1, sizeof(dp));
-  int n,k; cin >> n >> k;
-  vi v(n); fr(i,0,n-1) { cin >> v[i]; }
-  int score = v[k-1];
-
-  if (score > 0){
-       int ans = k;
-        fr(i,k,n-1){
-            if (v[i] >= score){
-                ans++;
-            }
+    int n,k; cin >> n >> k;
+    vi v(n); fr(i,0,n-1) { cin >> v[i]; }
+    int score = v[k-1];
+    int ans = 0;
+    fr(i,0,n-1){
+        if (v[i] >= score and v[i] > 0){
+            ans++;
         }
-        cout << ans;
-  }
-  else{
-      cout << 0;
-  }
-  
+    }    
+    cout << ans;
 }
 
 signed main() {

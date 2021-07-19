@@ -55,13 +55,14 @@ using namespace number_theory;
 // ----------------------------------------------------------------------------------------------------------------------//
 // int dp[n][n]; 
 
-
-// Adapted from GFG
 int minSteps(string S){
     string new_str;
     int N = S.length();
     int i = 0;
- 
+    // We are generating a new string, that contains no adjacent repeated elements.
+    // Once we construct that string, We can calcluate the no of steps req. to make the new one empty.
+    // Since it has no repeated adjacent elements, removing half elements in the string is sufficient.
+    // For more clarity, dry run a sample test case.
     while (i < N) {
         new_str += S[i];
         int j = i;

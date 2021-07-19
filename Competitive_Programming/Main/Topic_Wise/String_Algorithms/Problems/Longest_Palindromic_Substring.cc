@@ -1,44 +1,43 @@
 // Longest Palindromic "Substring"
+// A O(n^2) time and O(1) space program to find the longest palindromic substring
+// Ref: https://www.geeksforgeeks.org/longest-palindromic-substring-set-2/
 
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-int longest_palindrome(string &s)
-{
+int longest_palindrome(string &s){  
+
+    int n = s.size();
+
     if (s.empty())
         return 0;
-    if (s.size() == 1)
-        return 1;
 
     int min_start = 0, max_len = 1;
 
-    //Expand around the centre to check for a palindrome
-    for (int i = 0; i < s.size();){
+    // Expand around the centre to check for a palindrome
+    for (int i = 1; i < s.size(); i++){
 
-        // Check to see if there is any chance to get a bigger palindrome
-        if (s.size() - i <= max_len / 2)
-            break;
-    
-        int j = i, k = i;
-        // Skip duplicate characters.
-        while (k < s.size() - 1 && s[k + 1] == s[k])
-            ++k;
-
-        i = k + 1;
-        while (k < s.size() - 1 && j > 0 && s[k + 1] == s[j - 1])
-        {
-            // Extending the scope of one position to left and right
-            ++k;
-            --j;
+        // Find longest even length palindrome.
+        int low = i-1, high = i;
+        while( low >= 0 and high < n  and s[low] == s[high] ){
+            if (high-low+1 > max_len){
+                max_len = high-low+1;
+                min_start = low;
+            }
+            low--; high++;
         }
 
-        int new_len = k - j + 1;
-        if (new_len > max_len)
-        {
-            min_start = j;
-            max_len = new_len;
+
+        // Find longest odd length palindrome.
+        low = i-1; high = i+1;
+        while( low >= 0 and high < n  and s[low] == s[high] ){
+            if (high-low+1 > max_len){
+                max_len = high-low+1;
+                min_start = low;
+            }
+            low--; high++;
         }
     }
 
